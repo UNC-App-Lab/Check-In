@@ -8,7 +8,9 @@ Clone project using HTTPS URL:
 `git clone https://gitlab.com/unc-app-lab/check-in-backend.git`
 
 Suggested IDE: Visual Studio Code
+
 `cd <check-in-backend directory>`
+
 `code .` to open in VS Code
 
 After cloning project run:
