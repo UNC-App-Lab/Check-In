@@ -28,6 +28,7 @@ Suggested IDE: Visual Studio Code
 ## Run Django application
 
 `cd backend`
+
 `python manage.py runserver`
 
 ## Local host addresses
