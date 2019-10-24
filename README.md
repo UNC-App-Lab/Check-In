@@ -39,7 +39,7 @@ Start the server: `python manage.py runserver`
 
 Instance of Django application: `http://localhost:8000`
 
-Admin dashboard (database for checkins): `http://localhost:8000/admin` (ask App Lab staff for username and password credentials)
+Admin dashboard (database for checkins): `http://localhost:8000/admin` (ask App Lab staff for login credentials)
 
 Before accessing the API, install the `djangorestframework` and `django-cord-headers` using Pipev:
 `pipenv install djangorestframework django-cors-headers`
