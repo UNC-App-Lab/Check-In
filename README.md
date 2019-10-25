@@ -46,5 +46,5 @@ Before accessing the API, install the `djangorestframework` and `django-cord-hea
 
 API: `http://localhost:8000/api/checkins`
 
-
+-
 
