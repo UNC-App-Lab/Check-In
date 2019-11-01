@@ -9,7 +9,7 @@ Clone project using HTTPS URL:
 
 Suggested IDE: Visual Studio Code
 
-`cd <check-in-backend directory>`
+`cd check-in-backend`
 
 `code .` to open in VS Code
 
@@ -45,6 +45,4 @@ Before accessing the API, install the `djangorestframework` and `django-cord-hea
 `pipenv install djangorestframework django-cors-headers`
 
 API: `http://localhost:8000/api/checkins`
-
--
 
