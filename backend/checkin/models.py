@@ -4,6 +4,7 @@ from django.db import models
 
 class Checkin(models.Model):
     name = models.CharField(max_length=30)
+    PID = models.CharField(max_length=9)
     date = models.DateField()           # YYYY-MM-DD format
     timeIn = models.TimeField()         # HH:MM[:ss[.uuuuuu]] format
     timeOut = models.TimeField()        # HH:MM[:ss[.uuuuuu]] format
