@@ -1,13 +1,31 @@
-# Backend for the App Lab Check-in System 
+# Check in System for the App Lab
 
-Backend repository for the App Lab visitors check-in system using Django and Python
+People will scan their one card (or else manually enter their PID) when they arrive. They'll see App Lab rules/guidelines as well as some possibilities for what to do when they're there.
+
+Suggested IDE: Visual Studio Code
 
 ## Clone project
 Clone project using HTTPS URL:
 
-`git clone https://gitlab.com/unc-app-lab/check-in-backend.git`
+`https://gitlab.com/unc-app-lab/check-in-backend.git`
 
-Suggested IDE: Visual Studio Code
+# Frontend for the App Lab Check-in System 
+
+Frontend for the App Lab visitors check-in system using React and Javascript
+
+After cloning project run:
+
+`npm install`
+
+To run locally:
+
+`cd frontend`
+
+`npm start`
+
+# Backend for the App Lab Check-in System 
+
+Backend for the App Lab visitors check-in system using Django and Python
 
 `cd check-in-backend`
 
