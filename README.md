@@ -7,7 +7,7 @@ Suggested IDE: Visual Studio Code
 ## Clone project
 Clone project using HTTPS URL:
 
-`https://gitlab.com/unc-app-lab/check-in-backend.git`
+`git clone https://gitlab.com/unc-app-lab/check-in-backend.git`
 
 # Frontend for the App Lab Check-in System 
 
