@@ -13,13 +13,13 @@ Clone project using HTTPS URL:
 
 Frontend for the App Lab visitors check-in system using React and Javascript
 
-After cloning project run:
+After cloning project:
+
+`cd frontend`
 
 `npm install`
 
 To run locally:
-
-`cd frontend`
 
 `npm start`
 
@@ -27,7 +27,7 @@ To run locally:
 
 Backend for the App Lab visitors check-in system using Django and Python
 
-`cd check-in-backend`
+`cd backend`
 
 `code .` to open in VS Code
 
@@ -45,7 +45,7 @@ Backend for the App Lab visitors check-in system using Django and Python
 
 ## Run Django application
 
-`cd backend`
+`cd backend/backend`
 
 `python manage.py runserver`
 
