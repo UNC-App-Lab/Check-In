@@ -41,7 +41,9 @@ function SubmitCheckIn(){
   console.log("made it inside the function")
 
   axios.get('http://127.0.0.1:8000/api/checkins/')
-    .then(console.log("it worked!"))
+    .then(res => {
+      console.log(res.data[0].PID);
+    })
 }
  
 export default checkIn;
