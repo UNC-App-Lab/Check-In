@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './AppLab.png';
 import './App.css';
 import axios from "axios";
-// import * as Datetime from 'react-datetime';
+import * as Datetime from 'react-datetime';
 
 import {
   BrowserRouter as Router,
@@ -94,6 +94,9 @@ function SubmitCheckIn(){
   const item = {
     name: "Anna",
     PID: "730093280", 
+    date: Datetime.date.today,
+    timeIn: Datetime.time,
+    timeOut: Datetime.time,
     reason: "idk",
     checkedIn: true,
     staff: "Isha"
