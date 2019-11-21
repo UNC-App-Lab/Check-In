@@ -1,6 +1,9 @@
 import React from 'react';
 import logo from './AppLab.png';
 import './App.css';
+import axios from "axios";
+// import * as Datetime from 'react-datetime';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -77,7 +80,7 @@ function CheckIn() {
           <input type="text" name="reason" />
           </label>
         </div>
-        <input class="submit" type="submit" value="Submit" onclick="SubmitCheckIn()"/>
+        <input class="submit" type="submit" value="Submit" onClick={SubmitCheckIn()}/>
       </form>
     </div>
   );
@@ -88,5 +91,15 @@ function CheckOut() {
 }
 
 function SubmitCheckIn(){
+  const item = {
+    name: "Anna",
+    PID: "730093280", 
+    reason: "idk",
+    checkedIn: true,
+    staff: "Isha"
+   };
+  console.log("made it inside the function")
 
+  axios.get('http://127.0.0.1:8000/api/checkins/', item)
+    .then(console.log("it worked!"))
 }
