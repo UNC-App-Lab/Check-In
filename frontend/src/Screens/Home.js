@@ -1,8 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
 import logo from '../AppLab.png';
-import CheckIn from './CheckIn';
-import CheckOut from './CheckOut';
 import { NavLink } from 'react-router-dom';
 import '../App.css';
 

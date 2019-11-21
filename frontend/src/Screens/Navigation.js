@@ -8,8 +8,6 @@ const Navigation = () => {
     return (
        <div>
           <NavLink to="/">Home</NavLink>
-          {/* <NavLink to="/check-in">Check In</NavLink>
-          <NavLink to="/contact">Check Out</NavLink> */}
        </div>
     );
 }

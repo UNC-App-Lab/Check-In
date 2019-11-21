@@ -2,48 +2,47 @@ import React from 'react';
 import axios from "axios";
 import '../App.css';
 
-// import * as Datetime from 'react-datetime';
- 
 const checkIn = () => {
-    return (
-            <div class="checkin">
-              <h2>Check In</h2>
-              <form>
-                <div class="textbox">
-                  <label>
-                    PID:
-                  <input type="text" name="pid" />
-                  </label>
-                </div>
-                <div class="textbox">
-                  <label>
-                    Reason:
-                  <input type="text" name="reason" />
-                  </label>
-                </div>
-                <input class="submit" type="submit" value="Submit" onClick={SubmitCheckIn()}/>
-              </form>
-            </div>
-          );
+  return (
+    <div class="checkin">
+      <h2>Check In</h2>
+      <form>
+        <div class="textbox">
+          <label>
+            PID:
+                  <input type="text" name="pid" id="pid" />
+          </label>
+        </div>
+        <div class="textbox">
+          <label>
+            Reason:
+                  <input type="text" name="reason" id="reason" />
+          </label>
+        </div>
+        <input class="submit" type="submit" value="Submit" 
+        onClick={() => { SubmitCheckIn(document.getElementById("pid").value, document.getElementById("reason").value) }} />
+      </form>
+    </div>
+  );
 }
 
-function SubmitCheckIn(){
-//   const item = {
-//     name: "Anna",
-//     PID: "730093280", 
-//     date: Datetime.date.today,
-//     timeIn: Datetime.time,
-//     timeOut: Datetime.time,
-//     reason: "idk",
-//     checkedIn: true,
-//     staff: "Isha"
-//    };
-  console.log("made it inside the function")
+function SubmitCheckIn(pid, reason) {
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes();
 
-  axios.get('http://127.0.0.1:8000/api/checkins/')
-    .then(res => {
-      console.log(res.data[0].PID);
-    })
+  const item = {
+    name: "Student", // remove later
+    PID: pid,
+    date: date,
+    timeIn: time,
+    timeOut: '05:30', // leave empty
+    reason: reason,
+    checkedIn: true,
+    staff: ""
+  };
+
+  axios.post('http://127.0.0.1:8000/api/checkins/', item)
 }
- 
+
 export default checkIn;
