@@ -54,7 +54,22 @@ button {
   background-color:	#99BADD;
 	border-radius:18px;
 	border:1px solid 	#99BADD;
-	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:28px;
+	font-weight:bold;
+  height: 150px;
+  width: 20%;
+  text-decoration:none;
+  margin-right: 3%;
+}
+
+.home {
+  margin-top: 50px;
+  background-color:	#99BADD;
+	border-radius:18px;
+	border:1px solid 	#99BADD;
 	cursor:pointer;
 	color:#ffffff;
 	font-family:Arial;
@@ -63,6 +78,25 @@ button {
   height: 150px;
   width: 50%;
   text-decoration:none;
+}
+
+.dialog {
+  margin-top: 50px;
+  background-color:	#99BADD;
+	border-radius:18px;
+	border:1px solid 	#99BADD;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:28px;
+	font-weight:bold;
+  height: 150px;
+  width: 40%;
+  text-decoration:none;
+}
+
+.dialogdiv {
+text-align: center;
 }
 
 button:hover {
@@ -75,6 +109,10 @@ button:active {
 
 .checkin {
   padding-left: 30px;
+  text-align: center;
+}
+
+.checkout {
   text-align: center;
 }
 

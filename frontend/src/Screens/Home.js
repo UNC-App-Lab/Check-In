@@ -17,13 +17,13 @@ const home = () => {
                 </div>
                 <div class="column">
                     <NavLink to="/check-in">
-                        <button type="button">
+                        <button type="button" class="home">
                             Check In
                         </button>
                     </NavLink>
                     <br></br>
                     <NavLink to="/check-out">
-                    <button type="button">
+                    <button type="button" class="home">
                             Check Out
                         </button>
                     </NavLink>
