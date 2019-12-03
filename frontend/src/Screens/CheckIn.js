@@ -32,7 +32,7 @@ function SubmitCheckIn(pid, reason) {
   var time = today.getHours() + ":" + today.getMinutes();
 
   const item = {
-    name: "Student", // remove later
+    name: "Student", // add name input field, make blank=false
     PID: pid,
     date: date,
     timeIn: time,
@@ -42,7 +42,10 @@ function SubmitCheckIn(pid, reason) {
     staff: ""
   };
 
+  // add asterisk to anything required
+
   axios.post('http://127.0.0.1:8000/api/checkins/', item)
 }
 
 export default checkIn;
+

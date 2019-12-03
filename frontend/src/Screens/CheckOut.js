@@ -2,19 +2,49 @@ import React from 'react';
 import axios from "axios";
 
 
-const checkOut = () => {
-    return (
-        <div>
-            <h2>Check Out</h2>
-            {/* go through all database entries, if checkIn=true then display */}
-        </div>
-    );
+export default class CheckOut extends React.Component {
+
+    state = { visitors: [] };
+
+    getVisitors() {
+        axios.get('http://127.0.0.1:8000/api/checkins/')
+            .then(res => {
+                this.setState({ visitors: res.data });
+            })
+    }
+
+    componentDidMount(){
+        this.getVisitors();
+    }
+
+    checkOut(obj){
+
+    }
+
+    render() {
+        let { visitors } = this.state;
+
+        return (
+            <div>
+                <h2>Check Out</h2>
+                <div>
+                    <section>
+                        {visitors.map((data, index) => (
+                            <button key={index} onClick={() => this.checkOut(data)}>
+                                <p>{data.name}</p>
+                                <p>{data.PID}</p>
+                            </button>
+                        ))}
+                    </section>
+                </div>
+            </div >
+        );
+    }
 }
 
-function DisplayPIDs() {
-    axios.get('http://127.0.0.1:8000/api/checkins/')
-    .then(res => {return res.data})
-        
-}
+// only display if checkedIn = true
 
-export default checkOut;
+// if clicked => mark checkedIn as false and remove button from screen
+// set tiemOut to current time
+
+// dialog box
