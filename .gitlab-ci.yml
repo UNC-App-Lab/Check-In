@@ -1,18 +1,4 @@
-image: node:latest
-
-before_script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
-    - gem install dpl
-
-stages:
-    - production
-    
-production:
-    type: deploy
-    stage: production
-    image: ruby:latest
-    script:
-        - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
-    only:
-        - master
+trigger_build:
+  stage: deploy
+  script:
+    - "curl -X POST -F token=TOKEN -F ref=REF_NAME https://gitlab.com/api/v4/projects/14960811/trigger/pipeline"
