@@ -123,7 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+PROJECT_DIR = os.path.dirname(os.path.abspath('manage.py'))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 # we whitelist localhost:3000 because that's where frontend will be served
 CORS_ORIGIN_ALLOW_ALL = False
