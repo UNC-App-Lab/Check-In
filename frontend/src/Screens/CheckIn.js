@@ -44,7 +44,7 @@ export default class CheckIn extends React.Component {
               PID:
                   <input type="text" name="pid" id="pid" />
             </label>
-            <p>(Scanner can be used to input PID</p>
+            <p>(Scanner can be used to input PID)</p>
           </div>
           <div class="textbox">
             <label>
