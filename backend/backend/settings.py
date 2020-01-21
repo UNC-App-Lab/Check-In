@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',            
+    'corsheaders',
     'rest_framework',
-    'checkin'   
+    'checkin'
 ]
 
 MIDDLEWARE = [
@@ -130,6 +130,7 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 # we whitelist localhost:3000 because that's where frontend will be served
 CORS_ORIGIN_ALLOW_ALL = False
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000', 'http://127.0.0.1:8000']
+CORS_ORIGIN_WHITELIST = ['https://app-lab-check-in.herokuapp.com/']
+# CORS_ORIGIN_WHITELIST = ['http://localhost:3000', 'http://127.0.0.1:8000']
 
 ALLOWED_HOSTS = ['https://app-lab-check-in.herokuapp.com/', '127.0.0.1:8000']
