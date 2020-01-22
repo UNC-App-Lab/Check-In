@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',            
+    'corsheaders',
     'rest_framework',
-    'checkin'   
+    'checkin'
 ]
 
 MIDDLEWARE = [
@@ -125,8 +125,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 PROJECT_DIR = os.path.dirname(os.path.abspath('manage.py'))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # we whitelist localhost:3000 because that's where frontend will be served
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+
+# ALLOWED_HOSTS = ['https://app-lab-check-in.herokuapp.com/', '127.0.0.1:8000']

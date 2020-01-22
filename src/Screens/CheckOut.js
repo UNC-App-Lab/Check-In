@@ -56,8 +56,13 @@ export default class CheckOut extends React.Component {
             staff: obj.staff
         };
 
+<<<<<<< HEAD
         axios.put(`http://127.0.0.1:8000/api/checkins/${obj.id}/`, item)
         //axios.put(`https://app-lab-check-in.herokuapp.com/${obj.id}/`, item)
+=======
+        //axios.put(`http://127.0.0.1:8000/api/checkins/${obj.id}/`, item)
+        axios.put(`https://app-lab-check-in.herokuapp.com/api/checkins/${obj.id}/`, item)
+>>>>>>> 8ae078e3c616216d41f760f55c033ae102f8f848
 
         // navigate back to home
         this.props.history.push('');

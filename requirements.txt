@@ -1,1 +1,3 @@
-poetry run pip freeze
+django>=2.1.2
+gunicorn==19.7.1
+# whitenoise==3.3.1
