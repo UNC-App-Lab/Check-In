@@ -10,8 +10,8 @@ export default class CheckOut extends React.Component {
     state = { visitors: [] };
 
     getVisitors() {
-        //axios.get('http://127.0.0.1:8000/api/checkins/')
-        axios.get('https://app-lab-check-in.herokuapp.com/api/checkins/')
+        axios.get('http://127.0.0.1:8000/api/checkins/')
+        //axios.get('https://app-lab-check-in.herokuapp.com/api/checkins/')
             .then(res => {
                 let arr = res.data.filter(elem => elem.checkedIn === true)
                 this.setState({ visitors: arr });
@@ -56,8 +56,8 @@ export default class CheckOut extends React.Component {
             staff: obj.staff
         };
 
-        //axios.put(`http://127.0.0.1:8000/api/checkins/${obj.id}/`, item)
-        axios.put(`https://app-lab-check-in.herokuapp.com/${obj.id}/`, item)
+        axios.put(`http://127.0.0.1:8000/api/checkins/${obj.id}/`, item)
+        //axios.put(`https://app-lab-check-in.herokuapp.com/${obj.id}/`, item)
 
         // navigate back to home
         this.props.history.push('');
