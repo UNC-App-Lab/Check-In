@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from checkin import views
 from rest_framework import routers
+from checkin.views import index
 
 router = routers.DefaultRouter()                 
 router.register(r'checkins', views.CheckinView, 'checkin')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)), 
+    path("", index, name="index")
 ]
+

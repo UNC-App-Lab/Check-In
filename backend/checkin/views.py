@@ -5,4 +5,9 @@ from .models import Checkin
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
-    queryset = Checkin.objects.all()              
+    queryset = Checkin.objects.all()          
+
+def index(request):
+    # return render(request, "src/index.js")    
+    return render(request, "index.html")    
+
