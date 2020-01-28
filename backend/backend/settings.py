@@ -128,9 +128,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 PROJECT_DIR = os.path.dirname(os.path.abspath('manage.py'))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "build", "static"),  # update the STATICFILES_DIRS
-)
+STATICFILES_DIRS = (os.path.join("check-in-backend", "build", "static")) # update the STATICFILES_DIRS
 
 
 # we whitelist localhost:8000 because that's where frontend will be served
