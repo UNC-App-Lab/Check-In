@@ -14,6 +14,8 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# this makes frontend work on server but not backend:
+# BASE_DIR = os.path.abspath(__file__)
 
 
 # Quick-start development settings - unsuitable for production
@@ -126,12 +128,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 PROJECT_DIR = os.path.dirname(os.path.abspath('manage.py'))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-#STATICFILES_DIRS = (
- #   os.path.join(BASE_DIR, 'frontend', "build", "static"),  # update the STATICFILES_DIRS
-#)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "build", "static"),  # update the STATICFILES_DIRS
+)
 
 
-# we whitelist localhost:3000 because that's where frontend will be served
-CORS_ORIGIN_ALLOW_ALL = False
+# we whitelist localhost:8000 because that's where frontend will be served
+CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+CORS_ORIGIN_WHITELIST = ['http://localhost:8000']

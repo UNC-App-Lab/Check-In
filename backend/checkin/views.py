@@ -9,8 +9,4 @@ class CheckinView(viewsets.ModelViewSet):
     queryset = Checkin.objects.all()          
 
 def index(request):
-    return render(request, "build/index.html")    
-
-
-
-
+    return render(request, "build/index.html", {})
