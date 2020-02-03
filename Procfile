@@ -1,3 +1,3 @@
 release: python backend/manage.py migrate && npm run build
-web: node index.js
+web: node src/index.js
 
