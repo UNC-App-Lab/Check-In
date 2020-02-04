@@ -1,2 +1,2 @@
 release: python backend/manage.py migrate && npm run build
-web: python backend/manage.py runserver
+web: cd backend && gunicorn check-in-backend.wsgi
