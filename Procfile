@@ -1,2 +1,2 @@
-release: python backend/manage.py migrate && npm run build && pipenv && pip install gunicorn
-web: gunicorn check-in-backend.wsgi
+release: python backend/manage.py migrate && npm run build
+web: cd backend && gunicorn backend.wsgi
