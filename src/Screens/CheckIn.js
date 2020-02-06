@@ -22,8 +22,7 @@ export default class CheckIn extends React.Component {
   
     // add asterisk to anything required
   
-    axios.post('http://127.0.0.1:8000/api/checkins/', item)
-    //axios.post('https://app-lab-check-in.herokuapp.com/api/checkins/', item)
+    axios.post('/api/checkins/', item)
   
     // navigate back to home
     this.props.history.push('');
