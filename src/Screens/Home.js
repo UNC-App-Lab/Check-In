@@ -9,7 +9,7 @@ import '../App.css';
 
 const home = () => {
     return (
-        <div>
+        <div class="container">
             <div class="row">
                 <div class="column">
                     <h1>  Welcome to the</h1>
@@ -17,13 +17,13 @@ const home = () => {
                 </div>
                 <div class="column">
                     <NavLink to="/check-in">
-                        <button type="button" class="home">
+                        <button type="button">
                             Check In
                         </button>
                     </NavLink>
                     <br></br>
                     <NavLink to="/check-out">
-                    <button type="button" class="home">
+                    <button type="button">
                             Check Out
                         </button>
                     </NavLink>

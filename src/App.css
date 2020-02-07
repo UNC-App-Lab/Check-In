@@ -29,6 +29,29 @@ input {
   font-size:30pt;
 }
 
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkin {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout {
+  text-align: center;
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .row:after {
   content: "";
   display: table;
@@ -39,18 +62,11 @@ input {
   display: flex;
 }
 
-.column {
-  flex: 50%;
-  text-align: center;
-  margin: auto;
-}
-
 ul {
   font-family: "Arial", Gadget, sans-serif;
 }
 
 button {
-  margin-top: 50px;
   background-color:	#99BADD;
 	border-radius:18px;
 	border:1px solid 	#99BADD;
@@ -59,25 +75,8 @@ button {
 	font-family:Arial;
 	font-size:28px;
 	font-weight:bold;
-  height: 150px;
-  width: 20%;
-  text-decoration:none;
-  margin-right: 3%;
-}
-
-.home {
-  margin-top: 50px;
-  background-color:	#99BADD;
-	border-radius:18px;
-	border:1px solid 	#99BADD;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:28px;
-	font-weight:bold;
-  height: 150px;
-  width: 50%;
-  text-decoration:none;
+  height: 50px;
+  width: 200px;
 }
 
 .dialog {
@@ -107,15 +106,6 @@ button:active {
 	top:1px;
 }
 
-.checkin {
-  padding-left: 30px;
-  text-align: center;
-}
-
-.checkout {
-  text-align: center;
-}
-
 .textbox {
   padding: 15px;
 }
@@ -131,7 +121,7 @@ button:active {
 	font-family:Arial;
 	font-size:28px;
 	font-weight:bold;
-  height: 130px;
+  height: 20%;
   width: 20%;
   text-decoration:none;
 }
