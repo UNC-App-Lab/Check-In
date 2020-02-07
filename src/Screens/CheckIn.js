@@ -33,7 +33,7 @@ export default class CheckIn extends React.Component {
     return (
       <div class="checkin">
         <h2>Check In</h2>
-        <form>
+        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value) }}>
           <div class="textbox">
             <label>
               Name:
@@ -53,8 +53,7 @@ export default class CheckIn extends React.Component {
                   <input type="text" name="reason" id="reason" />
             </label>
           </div>
-          <input class="submit" type="submit" value="Submit"
-            onClick={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value) }} />
+          <button type="submit">Submit</button>
         </form>
       </div>
     );
