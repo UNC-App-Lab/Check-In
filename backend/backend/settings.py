@@ -135,6 +135,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # we whitelist localhost:8000 because that's where frontend will be served
 CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:8000']
+CORS_ORIGIN_WHITELIST = ['http://localhost:8000', 'https://app-lab-check-in.herokuapp.com/']
 
 # django_heroku.settings(locals())

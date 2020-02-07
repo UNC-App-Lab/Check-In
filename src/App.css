@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  width: 115%;
+  width: 75%;
 }
 
 h1 {
@@ -24,14 +24,12 @@ label {
 }
 
 input {
-  /* height:40px;
-  width: 300px; */
   font-size:30pt;
 }
 
 .container {
   display: flex;
-  justify-content: space-between;
+  margin: 25px 50px 75px 100px;
 }
 
 .checkin {
@@ -43,11 +41,11 @@ input {
 .checkout {
   text-align: center;
   display: flex;
+  flex-direction: column;
 }
 
 .column {
   flex-direction: column;
-  text-align: center;
   display: flex;
   justify-content: space-evenly;
 }

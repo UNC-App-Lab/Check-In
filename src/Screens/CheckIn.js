@@ -22,7 +22,8 @@ export default class CheckIn extends React.Component {
   
     // add asterisk to anything required
   
-    axios.post('/api/checkins/', item)
+   axios.post('/api/checkins/', item);
+
   
     // navigate back to home
     this.props.history.push('');
