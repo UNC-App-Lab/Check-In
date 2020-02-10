@@ -10,25 +10,23 @@ import '../App.css';
 const home = () => {
     return (
         <div class="container">
-            <div class="row">
                 <div class="column">
                     <h1>  Welcome to the</h1>
-                    <img src={logo} className="App-logo" alt="logo" />
+                    <img src={logo} class="App-logo" alt="logo" />
                 </div>
                 <div class="column">
                     <NavLink to="/check-in">
-                        <button type="button">
+                        <button class="home" type="button">
                             Check In
                         </button>
                     </NavLink>
                     <br></br>
                     <NavLink to="/check-out">
-                    <button type="button">
+                    <button class="home" type="button">
                             Check Out
                         </button>
                     </NavLink>
                 </div>
-            </div>
         </div>
     );
 }
