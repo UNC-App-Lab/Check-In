@@ -21,7 +21,7 @@ from checkin.views import index
 
 router = routers.DefaultRouter()                 
 router.register(r'checkins', views.CheckinView, 'checkin')
-handler404 = 'check-in-backend.backend.checkin.views.view_404'
+handler404 = 'checkin.views.view_404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
