@@ -20,8 +20,8 @@ export default class CheckIn extends React.Component {
       staff: ""
     };
   
-    // add asterisk to anything required
-  
+
+  // need to figure out how to send authorization token in http requests 
    axios.post('/api/checkins/', item);
 
   
