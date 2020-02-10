@@ -21,10 +21,13 @@ from checkin.views import index
 
 router = routers.DefaultRouter()                 
 router.register(r'checkins', views.CheckinView, 'checkin')
+# handler404 = 'checkin.views.view_404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)), 
-    path("", index, name="index")
+    path("", index, name="index"),
+    path('check-in/', index),
+    path('check-out/', index)
 ]
 
