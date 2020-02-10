@@ -5,6 +5,16 @@ import '../App.css';
 export default class CheckIn extends React.Component {
 
   SubmitCheckIn(name, pid, reason) {
+    // if form empty, don't submit
+    if(pid === ""){
+      alert("Please enter in a valid PID");
+      return;
+    }
+    if(reason === ""){
+      alert("Please enter a reason for visit");
+      return;
+    }
+
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var time = today.getHours() + ":" + today.getMinutes();
@@ -53,7 +63,7 @@ export default class CheckIn extends React.Component {
                   <input type="text" name="reason" id="reason" />
             </label>
           </div>
-          <button type="submit">Submit</button>
+          <button>Submit</button>
         </form>
       </div>
     );
