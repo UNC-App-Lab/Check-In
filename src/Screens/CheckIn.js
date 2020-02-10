@@ -6,37 +6,35 @@ export default class CheckIn extends React.Component {
 
   SubmitCheckIn(name, pid, reason) {
     // if form empty, don't submit
-    if(pid === ""){
+    if (pid === "") {
       alert("Please enter in a valid PID");
-      return;
-    }
-    if(reason === ""){
+    } else if (reason === "") {
       alert("Please enter a reason for visit");
-      return;
+    } else {
+
+      var today = new Date();
+      var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+
+      const item = {
+        name: name, // add name input field, make blank=false
+        PID: pid,
+        date: date,
+        timeIn: time,
+        timeOut: '00:00', // leave empty
+        reason: reason,
+        checkedIn: true,
+        staff: ""
+      };
+
+
+      // need to figure out how to send authorization token in http requests 
+      axios.post('/api/checkins/', item);
+
+
+      // navigate back to home
+      this.props.history.push('');
     }
-
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes();
-  
-    const item = {
-      name: name, // add name input field, make blank=false
-      PID: pid,
-      date: date,
-      timeIn: time,
-      timeOut: '00:00', // leave empty
-      reason: reason,
-      checkedIn: true,
-      staff: ""
-    };
-  
-
-  // need to figure out how to send authorization token in http requests 
-   axios.post('/api/checkins/', item);
-
-  
-    // navigate back to home
-    this.props.history.push('');
   }
 
   render() {
