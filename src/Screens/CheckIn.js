@@ -6,11 +6,11 @@ export default class CheckIn extends React.Component {
 
   SubmitCheckIn(name, pid, reason) {
     // if form empty, don't submit
-    if (pid === "") {
-      alert("Please enter in a valid PID");
-    } else if (reason === "") {
-      alert("Please enter a reason for visit");
-    } else {
+    // if (pid === "") {
+    //   alert("Please enter in a valid PID");
+    // } else if (reason === "") {
+    //   alert("Please enter a reason for visit");
+    // } else {
 
       var today = new Date();
       var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -34,7 +34,7 @@ export default class CheckIn extends React.Component {
 
       // navigate back to home
       this.props.history.push('');
-    }
+    //}
   }
 
   render() {
