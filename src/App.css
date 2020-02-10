@@ -73,8 +73,9 @@ button {
 	font-family:Arial;
 	font-size:28px;
 	font-weight:bold;
-  height: 50px;
+  height: 100px;
   width: 200px;
+  text-align: center;
 }
 
 .dialog {
