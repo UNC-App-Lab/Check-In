@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from rest_framework import viewsets          
 from .serializers import CheckinSerializer      
-from .models import Checkin                     
+from .models import Checkin     
+from rest_framework.decorators import api_view                
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
@@ -11,7 +12,7 @@ class CheckinView(viewsets.ModelViewSet):
 @api_view(["POST", "GET"])
 def index(request):
     return render(request, "build/index.html", {})
-    
+
 @api_view(["POST", "GET"])
 def view_404(request, exception=None):
     return redirect ('/')
