@@ -27,10 +27,8 @@ export default class CheckIn extends React.Component {
         staff: ""
       };
 
-
       // need to figure out how to send authorization token in http requests 
       axios.post('/api/checkins/', item);
-
 
       // navigate back to home
       this.props.history.push('');

@@ -8,8 +8,10 @@ class CheckinView(viewsets.ModelViewSet):
     serializer_class = CheckinSerializer          
     queryset = Checkin.objects.all()          
 
+@api_view(["POST", "GET"])
 def index(request):
     return render(request, "build/index.html", {})
-
+    
+@api_view(["POST", "GET"])
 def view_404(request, exception=None):
     return redirect ('/')
