@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  width: 75%;
+  max-width: 700px;
 }
 
 h1 {
@@ -27,9 +27,9 @@ input {
   font-size:30pt;
 }
 
-.container {
+.container {  
+  margin: 25px 100px 75px 100px;
   display: flex;
-  margin: 25px 50px 75px 100px;
 }
 
 .checkin {
@@ -44,20 +44,25 @@ input {
   flex-direction: column;
 }
 
+.home{
+  height: 100%;
+  width: 100%;
+}
+
 .column {
-  flex-direction: column;
   display: flex;
   justify-content: space-evenly;
+  flex-direction: column;
 }
 
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.grid {
+  display: inline;  
 }
-
-.row {
-  display: flex;
+.gridEl {
+  margin-left: 25px;
+  margin-bottom: 25px;
+  height: 100%;
+  width: 25%;
 }
 
 ul {
@@ -73,8 +78,6 @@ button {
 	font-family:Arial;
 	font-size:28px;
 	font-weight:bold;
-  height: 100px;
-  width: 200px;
   text-align: center;
 }
 

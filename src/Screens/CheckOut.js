@@ -69,14 +69,14 @@ export default class CheckOut extends React.Component {
             <div class="checkout">
                 <h2>Check Out</h2>
                 <p>Select your name to check out</p>
-                <div>
-                    <section>
+                <div class="grid">
+                    <section class="grid">
                         {visitors.map((data, index) => (
-                            <button key={index} onClick={() => this.submit(data)}>
+                            <button class="gridEl" key={index} onClick={() => this.submit(data)}>
                                 <p>{data.name}</p>
                                 <p>{data.PID}</p>
                             </button>
-                        ))}
+                        ))} 
                     </section>
                 </div>
             </div >
