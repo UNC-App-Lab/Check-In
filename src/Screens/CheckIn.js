@@ -28,7 +28,18 @@ export default class CheckIn extends React.Component {
       };
 
       // need to figure out how to send authorization token in http requests 
-      axios.post('/api/checkins/', item);
+      //axios.post('/api/checkins/', item);
+
+      axios({ method: 'POST', url: '/api/checkins/', headers: {autorizacion: localStorage.token}, data: { 
+        name: name,
+        PID: pid,
+        date: date,
+        timeIn: time,
+        timeOut: '00:00',
+        reason: reason,
+        checkedIn: true,
+        staff: ""
+      } });
 
       // navigate back to home
       this.props.history.push('');
