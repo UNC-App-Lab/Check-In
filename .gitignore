@@ -1,2 +1,5 @@
 node_modules
 backend/backend/db.sqlite3
+# this is the one that actually being changed
+backend/db.sqlite3
+db.sqlite3
