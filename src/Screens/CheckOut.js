@@ -57,7 +57,7 @@ export default class CheckOut extends React.Component {
 
         //axios.put(`/api/checkins/${obj.id}/`, item)
 
-        axios({ method: 'PUT', url: `/api/checkins/${obj.id}/`, headers: {autorizacion: localStorage.token}, data: { 
+        axios({ method: 'PUT', url: `/api/checkins/${obj.id}/`, headers: {authorization: localStorage.token}, data: { 
             name: obj.name,
             PID: obj.PID,
             date: obj.date,
