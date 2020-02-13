@@ -21,7 +21,6 @@ export default class CheckOut extends React.Component {
         this.getVisitors();
     }
 
-
     submit = (obj) => {
         confirmAlert({
             customUI: ({ onClose }) => {
