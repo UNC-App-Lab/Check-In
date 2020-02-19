@@ -88,13 +88,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #     }
 # }
 
+# Postgres database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'checkin-db'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'checkin-db', 
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
