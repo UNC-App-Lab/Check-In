@@ -13,6 +13,8 @@ django-cors-headers = "*"
 gunicorn = "*"
 whitenoise = "*"
 psycopg2-binary = "*"
+dj-database-url = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
