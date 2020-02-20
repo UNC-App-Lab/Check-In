@@ -96,17 +96,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Postgres database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'checkindb', 
-        'USER': 'applab',
-        'PASSWORD': 'applabpassword',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'checkindb', 
+    #     'USER': 'applab',
+    #     'PASSWORD': 'applabpassword',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432'
+    # }
 }
 
-#DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
