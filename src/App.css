@@ -38,6 +38,11 @@ input {
   flex-direction: column;
 }
 
+.check-in {
+  width: 200px;
+  height: 75px;
+}
+
 .checkout {
   text-align: center;
   display: flex;
@@ -45,14 +50,15 @@ input {
 }
 
 .home{
-  height: 100%;
-  width: 100%;
+  height: 300%;
+  width: 150%;
 }
 
 .column {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
+  padding-left: 30px;
 }
 
 .grid {

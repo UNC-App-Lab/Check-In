@@ -70,7 +70,7 @@ export default class CheckIn extends React.Component {
                   <input type="text" name="reason" id="reason" />
             </label>
           </div>
-          <button>Submit</button>
+          <button class="check-in">Submit</button>
         </form>
       </div>
     );
