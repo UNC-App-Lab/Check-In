@@ -1,6 +1,7 @@
 # Check in System for the App Lab
 
-People will scan their one card (or else manually enter their PID) when they arrive. They'll see App Lab rules/guidelines as well as some possibilities for what to do when they're there.
+People will scan their one card (or else manually enter their PID) when they arrive. 
+They'll submit their name, PID, and reason on the check-in page and then check out when they leave. 
 
 Suggested IDE: Visual Studio Code
 
@@ -8,6 +9,8 @@ Suggested IDE: Visual Studio Code
 Clone project using HTTPS URL:
 
 `git clone https://gitlab.com/unc-app-lab/check-in-backend.git`
+
+`cd` to check-in-backend and `code .` to open in VS code
 
 # Frontend for the App Lab Check-in System 
 
@@ -19,17 +22,9 @@ After cloning project:
 
 `npm install`
 
-To run locally:
-
-`npm start`
-
 # Backend for the App Lab Check-in System 
 
 Backend for the App Lab visitors check-in system using Django and Python
-
-`cd backend`
-
-`code .` to open in VS Code
 
 ## Prequisites
 1. Python
@@ -37,25 +32,27 @@ Backend for the App Lab visitors check-in system using Django and Python
 
 ## Installations
 
+`cd backend`
+
 `pip install pipenv`
 
-`pipenv shell`
+`pipenv shell` & `cd backend` again
 
 `pipenv install django`
 
-## Run Django application
+## Run application (both Django database and React front-end)
 
-`cd backend/backend`
+`cd backend`
 
 `python manage.py runserver`
 
 ## Local host addresses
 
-After the commands and installations are completed correctly, you can view the Django application, admin dashboard, and APIs on the following local host addresses:
+After the commands and installations are completed correctly, you can view the web application, Django admin dashboard, and APIs on the following local host addresses:
 
 Start the server: `python manage.py runserver`
 
-Instance of Django application: `http://localhost:8000`
+Instance of front-end application: `http://localhost:8000`
 
 Admin dashboard (database for checkins): `http://localhost:8000/admin` (ask App Lab staff for login credentials)
 
