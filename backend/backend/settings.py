@@ -156,6 +156,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CORS_ORIGIN_ALLOW_ALL = True
 
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:8000', 'http://50.19.103.36:5000', 'https://app-lab-check-in.herokuapp.com']
+CORS_ORIGIN_WHITELIST = ['http://localhost:8000', 'http://50.19.103.36:5000', 'https://app-lab-check-in.herokuapp.com', 'https://applab-checkin.herokuapp.com']
 
 # django_heroku.settings(locals())
