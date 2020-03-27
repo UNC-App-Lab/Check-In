@@ -33,7 +33,7 @@ SECRET_KEY = '=od%1kocldgpxyv&cyc9(lj636%$b7!)3&f(l+%7b^^3316u5b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["app-lab-check-in.herokuapp.com", '127.0.0.1']
+ALLOWED_HOSTS = ["applab-checkin.herokuapp.com", '127.0.0.1']
 
 
 # Application definition
@@ -156,6 +156,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CORS_ORIGIN_ALLOW_ALL = True
 
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:8000', 'http://50.19.103.36:5000', 'https://app-lab-check-in.herokuapp.com']
+CORS_ORIGIN_WHITELIST = ['http://localhost:8000', 'http://50.19.103.36:5000', 'https://app-lab-check-in.herokuapp.com', 'https://applab-checkin.herokuapp.com']
 
 # django_heroku.settings(locals())

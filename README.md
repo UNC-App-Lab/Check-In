@@ -18,8 +18,6 @@ Frontend for the App Lab visitors check-in system using React and Javascript
 
 After cloning project:
 
-`cd frontend`
-
 `npm install`
 
 # Backend for the App Lab Check-in System 
@@ -42,6 +40,8 @@ Backend for the App Lab visitors check-in system using Django and Python
 
 ## Run application (both Django database and React front-end)
 
+Make sure you're in the backend directory that contains the `manage.py` file:
+
 `cd backend`
 
 `python manage.py runserver`
@@ -54,10 +54,26 @@ Start the server: `python manage.py runserver`
 
 Instance of front-end application: `http://localhost:8000`
 
-Admin dashboard (database for checkins): `http://localhost:8000/admin` (ask App Lab staff for login credentials)
+Admin dashboard (database for checkins): `http://localhost:8000/admin` (ask App Lab staff for login credentials or view on Leadership Team Trello Useful Links)
 
 Before accessing the API, install the `djangorestframework` and `django-cord-headers` using Pipev:
 `pipenv install djangorestframework django-cors-headers`
 
 API: `http://localhost:8000/api/checkins`
 
+## Create new KPI page
+
+To create a new KPI, go to the `KPIs` folder and create a new javascript file (model this file after existing KPI pages).
+
+To create a url route for your new page, go to App.js in the root folder, and import your component at the top of the file. 
+
+eg. `import KPI1 from './KPIs/KPI-1';`
+
+Then, inside the `<Switch>` component, add a new route for your KPI.
+
+eg.  `<Route path="/kpi-1" component={KPI1}/>`
+
+Finally, add your new KPI page to the KPI Listings page. To do so, go to the `KPIs` folder and open `KPI-Listings.js`. Add a new nav link to your page.
+
+eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
+ 
