@@ -15,14 +15,11 @@
         }
     },
     "image": "heroku/nodejs",
-<<<<<<< HEAD
-=======
     "addons": [
         {
             "plan": "heroku-postgresql:hobby-dev"
         }
     ],
->>>>>>> f168c3dc41f4ee5dde04be78748992fb6b9d5fa8
     "buildpacks": [
         {
             "url": "heroku/python"
