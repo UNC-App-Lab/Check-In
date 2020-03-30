@@ -2,25 +2,33 @@
     "name": "App Lab Check In",
     "description": "Check In system for UNC App Lab",
     "keywords": [
-      "check",
-      "in"
+        "check",
+        "in"
     ],
     "website": "https://applab-checkin.herokuapp.com/",
     "repository": "https://github.com/UNC-App-Lab/Check-In",
     "logo": "https://applab-checkin.herokuapp.com/public/AppLab.png",
     "formation": {
-      "web": {
-        "quantity": 2,
-        "size": "Performance-M"
-      }
+        "web": {
+            "quantity": 2,
+            "size": "Performance-M"
+        }
     },
     "image": "heroku/nodejs",
+    "addons": [
+        {
+            "plan": "heroku-postgresql:hobby-dev"
+        }
+    ],
     "buildpacks": [
-      {
-        "url": "heroku/python"
-      },
-      {
-        "url": "heroku/nodejs"
-      }
-    ]
-  }
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "heroku/nodejs"
+        }
+    ],
+    "scripts": {
+        "postdeploy": "bundle exec rake db:seed"
+    }
+}
