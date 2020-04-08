@@ -23,6 +23,6 @@
         }
     ],
     "scripts": {
-        "postdeploy": "bundle exec rake bootstrap"
+        "predeploy": "python backend/manage.py migrate && npm run build"
     }
 }
