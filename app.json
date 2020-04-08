@@ -23,6 +23,6 @@
         }
     ],
     "scripts": {
-        "postdeploy": "bundle exec rake db:seed"
+        "postdeploy": "bundle exec rake bootstrap"
     }
 }
