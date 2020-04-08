@@ -28,6 +28,8 @@ urlpatterns = [
     path('api/', include(router.urls)), 
     path("", index, name="index"),
     path('check-in/', index),
-    path('check-out/', index)
+    path('check-out/', index),
+    path('kpi/', index),
+    path('kpi-1/', index)
 ]
 
