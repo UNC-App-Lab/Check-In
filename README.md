@@ -65,7 +65,7 @@ API: `http://localhost:8000/api/checkins`
 
 You can find the KPI listing page at `https://applab-checkin.herokuapp.com/kpi`
 
-To create a new KPI, go to the `KPIs` folder and create a new javascript file (model this file after existing KPI pages).
+To create a new KPI, go to the `KPIs` folder (`src/KPIs)` and create a new javascript file (model this file after existing KPI pages).
 
 To create a url route for your new page, go to App.js in the root folder, and import your component at the top of the file. 
 
@@ -75,12 +75,11 @@ Then, inside the `<Switch>` component, add a new route for your KPI.
 
 eg.  `<Route path="/kpi-1" component={KPI1}/>`
 
-Add your new KPI page to the KPI Listings page. To do so, go to the `KPIs` folder and open `KPI-Listings.js`. Add a new nav link to your page.
-
-eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
-
-Lastly, add your KPI page to `backend/backend/urls.py` by adding an additional url pattern to the list:
+Next, add your KPI page to `backend/backend/urls.py` by adding an additional url pattern to the list:
 eg. `path('kpi-1/', index)`
 
+Lastly, add your new KPI page to the KPI Listings page. To do so, go to the `KPIs` folder and open `KPI-Listings.js`. Add a new nav link to your page.
+
+eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
 
  
