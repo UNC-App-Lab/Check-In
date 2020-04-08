@@ -5,7 +5,10 @@ import '../App.css';
 const kpi1 = () => {
     return (
         <div>
-                KPI PAGE
+            KPI PAGE
+            <div>
+                Trying to get review apps to work
+            </div>
         </div>
     );
 }
