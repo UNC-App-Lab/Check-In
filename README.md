@@ -82,4 +82,8 @@ Lastly, add your new KPI page to the KPI Listings page. To do so, go to the `KPI
 
 eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
 
- 
+ ## How to use Heroku Review Apps
+
+ To see what your new changes will look like deployed, on github make a pull request for the branch you are working on.
+
+ Under the pipeline tab in the checkin-prod project (you need to be added as a collaborator to access) 
