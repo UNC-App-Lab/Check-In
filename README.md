@@ -84,6 +84,12 @@ eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
 
  ## How to use Heroku Review Apps
 
- To see what your new changes will look like deployed, on github make a pull request for the branch you are working on.
+ To see what your new changes will look like deployed, make a pull request on GitHub for the branch you are working on.
 
- Under the pipeline tab in the checkin-prod project (you need to be added as a collaborator to access) 
+ In Heroku, under the pipeline tab in the checkin-prod project (you need to be added as a collaborator to access) your branch should be automatically deploying as a review app. Find out the name of your review app and make sure to add it to the `ALLOWED_HOSTS` list in the `backend/backend/settings.py` file.
+
+ The review app name should look something like `checkin-prod-<branch_name>-<random_chars>`. 
+
+ The url you need add to `ALLOWED_HOSTS` should therefore look like this: `"checkin-prod-<branch_name>-<random_chars>.herokuapp.com"`
+
+ Commit and push these changes to your branch and then make sure you review app redeploys. You should now be able to click "Open App" to view your deployed branch.
