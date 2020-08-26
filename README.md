@@ -41,9 +41,7 @@ Backend for the App Lab visitors check-in system using Django and Python
 
 ## Run application (both Django database and React front-end)
 
-Make sure you're in the backend directory that contains the `manage.py` file:
-
-`cd backend`
+Make sure you're in the backend directory that contains the `manage.py` file (`cd backend` from the root folder):
 
 `python manage.py runserver`
 
