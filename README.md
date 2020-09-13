@@ -4,6 +4,7 @@ People will scan their OneCard (or else manually enter their PID) when they arri
 They'll submit their name, PID, and reason on the check-in page and then check out when they leave. 
 
 Check-In App Page: http://app-lab-check-in.herokuapp.com/
+
 Django Database: http://app-lab-check-in.herokuapp.com/admin/
 
 Suggested IDE: Visual Studio Code
