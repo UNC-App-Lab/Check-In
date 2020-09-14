@@ -35,6 +35,20 @@ def visitor_chart(request):
         'data': data
     })
 
+def visitor_chart2(request):
+    labels = []
+    data = []
+
+    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
+    for entry in queryset:
+        labels.append(entry['weekstart'])
+        data.append(entry['count'])
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
+
 def visitor_chart10(request):
     labels = []
     data = []

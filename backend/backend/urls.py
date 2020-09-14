@@ -33,6 +33,7 @@ urlpatterns = [
     path('dashboard/', include('checkin.urls')),
     #path('dashboard/', views.dashboard_with_checkin, name="dashboard"),
     path('visitor-chart/', views.visitor_chart, name="visitor-chart"),
+    path('visitor-chart2/', views.visitor_chart2, name="visitor-chart2"),
     path('visitor-chart10/', views.visitor_chart10, name="visitor-chart10"),
     path('kpi/', index),
     path('kpi-1/', index),

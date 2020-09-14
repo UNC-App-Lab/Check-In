@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     {% load static %}
     <script src="{% static 'KPI1.js' %}"></script>
+    <script src="{% static 'KPI2.js' %}"></script>
     <script src="{% static 'testKPI.js' %}"></script>
 </head>
 
@@ -13,6 +14,9 @@
   <h1 style="text-align: center;">App Lab KPIs Dashboard</h1>
   <div id="container" style="width: 40%;">
     <canvas id="visitor-chart" data-url="{% url 'visitor-chart' %}"></canvas>
+  </div>
+  <div id="container2" style="width: 40%;">
+    <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
   </div>
   <div id="container10" style="width: 40%;">
     <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
