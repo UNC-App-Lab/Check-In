@@ -9,6 +9,10 @@ const listings = () => {
             <NavLink to="/kpi-1">
                 KPI 1
             </NavLink>
+            <br></br>
+            <NavLink to="/kpi-2">
+                KPI 2
+            </NavLink>
         </div>
     );
 }

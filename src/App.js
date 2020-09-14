@@ -7,6 +7,7 @@ import CheckOut from './Screens/CheckOut';
 import Navigation from './Screens/Navigation';
 import KPIListings from './KPIs/KPI-Listings';
 import KPI1 from './KPIs/KPI-1';
+import KPI2 from './KPIs/KPI-2';
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
              <Route path="/check-out" component={CheckOut}/>
              <Route path="/kpi" component={KPIListings}/>
              <Route path="/kpi-1" component={KPI1}/>
+             <Route path="/kpi-2" component={KPI2}/>
            </Switch>
         </div> 
       </BrowserRouter>

@@ -7,7 +7,7 @@ const kpi1 = () => {
         <div>
             KPI PAGE
             <div>
-                Trying to get review apps to work
+                <p>Trying to get review apps to work</p>
             </div>
         </div>
     );
