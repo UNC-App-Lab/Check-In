@@ -29,7 +29,13 @@ urlpatterns = [
     path("", index, name="index"),
     path('check-in/', index),
     path('check-out/', index),
+    # path('/dashboard', views.visitor_chart, name='visitor-chart'),
+    path('dashboard/', include('checkin.urls')),
+    #path('dashboard/', views.dashboard_with_checkin, name="dashboard"),
+    path('visitor-chart/', views.visitor_chart, name="visitor-chart"),
+    path('visitor-chart10/', views.visitor_chart10, name="visitor-chart10"),
     path('kpi/', index),
-    path('kpi-1/', index)
+    path('kpi-1/', index),
+    path('kpi-2/', index)
 ]
 

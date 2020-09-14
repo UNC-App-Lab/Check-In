@@ -146,10 +146,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
 PROJECT_DIR = os.path.dirname(os.path.abspath('manage.py'))
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "..", "build", "static"), ) # update the STATICFILES_DIRS
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "backend", "static")
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "..", "build", "static"), os.path.join(BASE_DIR, "..", "backend", "checkin", "templates")) # update the STATICFILES_DIRS
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # we whitelist localhost:8000 because that's where frontend will be served

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Checkin Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    {% load static %}
+    <script src="{% static 'KPI1.js' %}"></script>
+    <script src="{% static 'testKPI.js' %}"></script>
+</head>
+
+<body>
+  <h1 style="text-align: center;">App Lab KPIs Dashboard</h1>
+  <div id="container" style="width: 40%;">
+    <canvas id="visitor-chart" data-url="{% url 'visitor-chart' %}"></canvas>
+  </div>
+  <div id="container10" style="width: 40%;">
+    <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
+  </div>
+</body>
+
+<!-- <head>
+    <meta charset="UTF-8">
+    <title>Checkin Dashboard</title>
+    <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.flexmonster.com/demo.css">
+    <script>
+        function processData(dataset) {
+            var result = []
+            dataset = JSON.parse(dataset);
+            dataset.forEach(item => result.push(item.fields));
+            return result;
+        }
+        $.ajax({
+            url: $("#checkin-table-container").attr("data-url"),
+            dataType: 'json',
+            success: function(data) {
+                new Flexmonster({
+                    container: "#checkin-table-container",
+                    componentFolder: "https://cdn.flexmonster.com/",
+                    width: "100%",
+                    height: 430,
+                    toolbar: true,
+                    report: {
+                        dataSource: {
+                            type: "json",
+                            data: processData(data)
+                        },
+                        slice: {}
+                    }
+                });
+                new Flexmonster({
+                    container: "#checkin-chart-container",
+                    componentFolder: "https://cdn.flexmonster.com/",
+                    width: "100%",
+                    height: 430,
+                    //toolbar: true,
+                    report: {
+                        dataSource: {
+                            type: "json",
+                            data: processData(data)
+                        },
+                        slice: {},
+                        "options": {
+                            "viewType": "charts",
+                            "chart": {
+                                "type": "pie"
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <div id="checkin-table-container" data-url="{% url 'checkin_data' %}"></div>
+  <div id="checkin-chart-container"></div>
+</body> -->
