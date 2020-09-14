@@ -10,9 +10,7 @@
 
 4) In dashboard.html, insert new container div within body element, similar to the existing containers: 
 
-`<div id="container2" style="width: 40%;">
-    <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
-</div>`
+`<div id="container2" style="width: 40%;"> <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas> </div>`
 
 5) In backend/backend/urls.py file, insert a path for the chart's data: `path('visitor-chart2/', views.visitor_chart2, name="visitor-chart2")`
 
