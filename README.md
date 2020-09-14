@@ -64,30 +64,7 @@ Before accessing the API, install the `djangorestframework` and `django-cord-hea
 
 API: `http://localhost:8000/api/checkins`
 
-# KPIs and Review Apps
-
-## Create new KPI page
-
-You can find the KPI listing page at `https://applab-checkin.herokuapp.com/kpi`
-
-Create a new branch for you to begin working on a KPI.
-
-To create a new KPI, go to the `KPIs` folder (`src/KPIs)` and create a new javascript file (model this file after existing KPI pages).
-
-To create a url route for your new page, go to App.js in the root folder, and import your component at the top of the file. 
-
-eg. `import KPI1 from './KPIs/KPI-1';`
-
-Then, inside the `<Switch>` component, add a new route for your KPI.
-
-eg.  `<Route path="/kpi-1" component={KPI1}/>`
-
-Next, add your KPI page to `backend/backend/urls.py` by adding an additional url pattern to the list:
-eg. `path('kpi-1/', index)`
-
-Lastly, add your new KPI page to the KPI Listings page. To do so, go to the `KPIs` folder and open `KPI-Listings.js`. Add a new nav link to your page.
-
-eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
+# Review Apps
 
  ## How to use Heroku Review Apps
 
