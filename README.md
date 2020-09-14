@@ -1,70 +1,24 @@
-# Check in System for the App Lab
+# Check-In Data KPIs Dashboard
 
-People will scan their one card (or else manually enter their PID) when they arrive. 
-They'll submit their name, PID, and reason on the check-in page and then check out when they leave. 
+## Add new KPI to Dashboard Page
 
-Suggested IDE: Visual Studio Code
+1) Define new function in backend/checkin/views.py (model off of the existing visitor_chart functions)
 
-## Clone project
-Clone project using HTTPS URL:
+2) In checkin/templates directory, create a new file named KPI#.js (e.g., KPI2.js) with jquery function to render the chart (make sure to set `var $visitorChart` equal to `$("#visitor-chart#")`, e.g. `var $visitorChart = $("#visitor-chart2");`)
 
-`git clone https://gitlab.com/unc-app-lab/check-in-backend.git`
+3) In checkin/templates/dashboard.html, add the script src for this file under the existing scripts within head element: `<script src="{% static 'KPI2.js' %}"></script>`
 
-`cd` to check-in-backend and `code .` to open in VS code
+4) In dashboard.html, insert new container div within body element, similar to the existing containers: 
 
-# Frontend for the App Lab Check-in System 
+`<div id="container2" style="width: 40%;">
 
-Frontend for the App Lab visitors check-in system using React and Javascript
+    <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
 
-After cloning project:
+</div>`
 
-`npm install`
+5) In backend/backend/urls.py file, insert a path for the chart's data: `path('visitor-chart2/', views.visitor_chart2, name="visitor-chart2")`
 
-# Backend for the App Lab Check-in System 
-
-Backend for the App Lab visitors check-in system using Django and Python
-
-## Prequisites
-1. Python
-2. Pip
-3. Postgres
-
-## Installations
-
-`cd backend`
-
-`pip install pipenv`
-
-`pipenv shell` & `cd backend` again
-
-`pipenv install django`
-
-## Run application (both Django database and React front-end)
-
-Make sure you're in the backend directory that contains the `manage.py` file:
-
-`cd backend`
-
-`python manage.py runserver`
-
-## Local host addresses
-
-After the commands and installations are completed correctly, you can view the web application, Django admin dashboard, and APIs on the following local host addresses:
-
-Start the server: `python manage.py runserver`
-
-Instance of front-end application: `http://localhost:8000`
-
-Admin dashboard (database for checkins): `http://localhost:8000/admin` (ask App Lab staff for login credentials or view on Leadership Team Trello Useful Links)
-
-Before accessing the API, install the `djangorestframework` and `django-cord-headers` using Pipev:
-`pipenv install djangorestframework django-cors-headers`
-
-API: `http://localhost:8000/api/checkins`
-
-# KPIs and Review Apps
-
-## Create new KPI page
+## (Older method, Ignore) Create new KPI page
 
 You can find the KPI listing page at `https://applab-checkin.herokuapp.com/kpi`
 
@@ -86,15 +40,3 @@ eg. `path('kpi-1/', index)`
 Lastly, add your new KPI page to the KPI Listings page. To do so, go to the `KPIs` folder and open `KPI-Listings.js`. Add a new nav link to your page.
 
 eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
-
- ## How to use Heroku Review Apps
-
- To see what your new changes will look like deployed, make a pull request on GitHub for the branch you are working on.
-
- In Heroku, under the pipeline tab in the checkin-prod project (you need to be added as a collaborator to access) your branch should be automatically deploying as a review app. Find out the name of your review app and make sure to add it to the `ALLOWED_HOSTS` list in the `backend/backend/settings.py` file.
-
- The review app name should look something like `checkin-prod-<branch_name>-<random_chars>`. 
-
- The url you need add to `ALLOWED_HOSTS` should therefore look like this: `"checkin-prod-<branch_name>-<random_chars>.herokuapp.com"`
-
- Commit and push these changes to your branch and then make sure you review app redeploys. You should now be able to click "Open App" to view your deployed branch.
