@@ -7,7 +7,8 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from django.core import serializers       
 from django.db.models import Count, DateField
-from django.db.models.functions import TruncWeek       
+from django.db.models.functions import TruncWeek
+from datetime import datetime       
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
@@ -38,6 +39,9 @@ def visitor_chart(request):
 def visitor_chart2(request):
     labels = []
     data = []
+
+    # oldestWeek = TruncWeek(min(Checkin.objects.values('date')))
+    # currWeek = datetime.date.today()
 
     queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
     for entry in queryset:
