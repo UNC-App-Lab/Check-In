@@ -59,7 +59,7 @@ Instance of front-end application: `http://localhost:8000`
 
 Admin dashboard (database for checkins): `http://localhost:8000/admin` (ask App Lab staff for login credentials or view on Leadership Team Trello Useful Links)
 
-Before accessing the API, install the `djangorestframework` and `django-cord-headers` using Pipev:
+Before accessing the API, install the `djangorestframework` and `django-cors-headers` using Pipev:
 `pipenv install djangorestframework django-cors-headers`
 
 API: `http://localhost:8000/api/checkins`
