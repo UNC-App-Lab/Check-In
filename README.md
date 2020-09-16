@@ -1,4 +1,4 @@
-# Check in System for the App Lab
+# Check-In System for the App Lab
 
 People will scan their OneCard (or else manually enter their PID) when they arrive. 
 They'll submit their name, PID, and reason on the check-in page and then check out when they leave. 
