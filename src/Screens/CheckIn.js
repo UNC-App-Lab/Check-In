@@ -6,10 +6,8 @@ export default class CheckIn extends React.Component {
 
   SubmitCheckIn(name, pid, reason) {
     //if form empty, don't submit
-    if (pid === "") {
-      alert("Please enter in a valid PID");
-    } else if (reason === "") {
-      alert("Please enter a reason for visit");
+    if ((name === "" && pid === "") || reason === "") {
+      alert("Please enter a reason for visit and either name or PID (or both)");
     } else {
 
       var today = new Date();
