@@ -1,6 +1,6 @@
 # App Lab Check-In System
 
-People will scan their OneCard (or else manually enter their PID) when they arrive. 
+Visitors will enter their PID (or scan their OneCard) when they arrive. 
 They'll submit their name, PID, and reason on the check-in page and then check out when they leave. 
 
 Check-In App Page: http://app-lab-check-in.herokuapp.com/
