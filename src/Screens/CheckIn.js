@@ -4,10 +4,15 @@ import '../App.css';
 
 export default class CheckIn extends React.Component {
 
-  SubmitCheckIn(name, pid, reason) {
+  SubmitCheckIn(name, pid, reason, noPID) {
     //if form empty, don't submit
-    if ((name === "" && pid === "") || reason === "") {
-      alert("Please enter name or PID (or both) and reason for visit");
+    // if noPID = true, make sure name and reason are there
+    // if noPID = false, make sure name and PID and reason are there
+    if (noPID === true && (name === "" || reason === "")) {
+      alert("Please enter name and reason for visit");
+    }
+    else if (noPID === false && (name === "" || pid === "" || reason === "")) {
+      alert("Please enter name, PID, and reason for visit");
     } else {
 
       var today = new Date();
@@ -21,8 +26,9 @@ export default class CheckIn extends React.Component {
         timeIn: time,
         timeOut: '00:00', // leave empty
         reason: reason,
+        staff: "",
         checkedIn: true,
-        staff: ""
+        hasPID: !noPID
       };
 
       // need to figure out how to send authorization token in http requests 
@@ -35,8 +41,9 @@ export default class CheckIn extends React.Component {
         timeIn: time,
         timeOut: '00:00',
         reason: reason,
+        staff: "",
         checkedIn: true,
-        staff: ""
+        hasPID: !noPID
       } });
 
       // navigate back to home
@@ -48,7 +55,7 @@ export default class CheckIn extends React.Component {
     return (
       <div class="checkin">
         <h2>Check In</h2>
-        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value) }}>
+        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked) }}>
           <div class="textbox">
             <label>
               Name:
@@ -59,8 +66,10 @@ export default class CheckIn extends React.Component {
             <label>
               PID:
                   <input type="text" name="pid" id="pid" />
-            </label>
-            <p>(Scanner can be used to input PID)</p>
+            </label><br></br>
+            <input type="checkbox" id="noPID" class="noPID" />
+            <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
+            {/* <p>(Scanner can be used to input PID)</p> */}
           </div>
           <div class="textbox">
             <label>
