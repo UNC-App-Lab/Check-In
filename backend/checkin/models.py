@@ -9,8 +9,9 @@ class Checkin(models.Model):
     timeIn = models.TimeField()         # HH:MM[:ss[.uuuuuu]] format
     timeOut = models.TimeField(blank=True)        # HH:MM[:ss[.uuuuuu]] format
     reason = models.TextField()
-    checkedIn = models.BooleanField(default=False)
     staff = models.CharField(max_length=150, blank=True)
+    checkedIn = models.BooleanField(default=False)
+    hasPID = models.BooleanField(default=True)
     comments = models.TextField(blank=True)
 
     def _str_(self):

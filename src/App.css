@@ -6,25 +6,25 @@
   max-width: 700px;
 }
 
-h1 {
-  color:#727274;
-  font-family: "Arial", Gadget, sans-serif;
+button {
+  background-color:	#99BADD;
+	border-radius:18px;
+	border:1px solid 	#99BADD;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:28px;
+	font-weight:bold;
+  text-align: center;
 }
 
-h2 {
-  color:#727274;
-  font-family: "Arial", Gadget, sans-serif;
-  font-size: 50px;
+button:hover {
+	background-color:#638CB7;
 }
 
-label {
-  font-size: 40px;
-  color:#727274;
-  font-family: "Arial", Gadget, sans-serif;
-}
-
-input {
-  font-size:30pt;
+button:active {
+	position:relative;
+	top:1px;
 }
 
 .container {  
@@ -49,42 +49,11 @@ input {
   flex-direction: column;
 }
 
-.home{
-  height: 300%;
-  width: 150%;
-}
-
 .column {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
   padding-left: 30px;
-}
-
-.grid {
-  display: inline;  
-}
-.gridEl {
-  margin-left: 25px;
-  margin-bottom: 25px;
-  height: 100%;
-  width: 25%;
-}
-
-ul {
-  font-family: "Arial", Gadget, sans-serif;
-}
-
-button {
-  background-color:	#99BADD;
-	border-radius:18px;
-	border:1px solid 	#99BADD;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:28px;
-	font-weight:bold;
-  text-align: center;
 }
 
 .dialog {
@@ -106,16 +75,48 @@ button {
 text-align: center;
 }
 
-button:hover {
-	background-color:#638CB7;
+.grid {
+  display: inline;  
 }
-button:active {
-	position:relative;
-	top:1px;
+.gridEl {
+  margin-left: 25px;
+  margin-bottom: 25px;
+  height: 100%;
+  width: 25%;
 }
 
-.textbox {
-  padding: 15px;
+.home{
+  height: 300%;
+  width: 150%;
+}
+
+h1 {
+  color:#727274;
+  font-family: "Arial", Gadget, sans-serif;
+}
+
+h2 {
+  color:#727274;
+  font-family: "Arial", Gadget, sans-serif;
+  font-size: 50px;
+}
+
+input {
+  font-size:30pt;
+}
+
+label {
+  font-size: 40px;
+  color:#727274;
+  font-family: "Arial", Gadget, sans-serif;
+}
+
+#noPID {
+  margin-left: 120px;
+}
+
+#noPIDLabel {
+  font-size: 25px;
 }
 
 .submit {
@@ -140,4 +141,12 @@ button:active {
 .submit:active {
 	position:relative;
 	top:1px;
+}
+
+.textbox {
+  padding: 15px;
+}
+
+ul {
+  font-family: "Arial", Gadget, sans-serif;
 }
