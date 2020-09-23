@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-# Check-In Data KPIs Dashboard
-
-## Add new KPI to Dashboard Page
-
-1) Define new function in backend/checkin/views.py (model off of the existing visitor_chart functions)
-=======
 # App Lab Check-In System
 
 Visitors will enter their PID (or scan their OneCard) when they arrive. 
@@ -15,31 +8,7 @@ Check-In App Page: http://app-lab-check-in.herokuapp.com/
 Django Database: http://app-lab-check-in.herokuapp.com/admin/
 
 Suggested IDE: Visual Studio Code
->>>>>>> 4e9dbe8ab11b3856291b82d4ad1b2b7aa2a80c8a
 
-2) In checkin/templates directory, create a new file named KPI#.js (e.g., KPI2.js) with jquery function to render the chart (make sure to set `var $visitorChart` equal to `$("#visitor-chart#")`, e.g. `var $visitorChart = $("#visitor-chart2");`)
-
-3) In checkin/templates/dashboard.html, add the script src for this file under the existing scripts within head element: `<script src="{% static 'KPI2.js' %}"></script>`
-
-4) In dashboard.html, insert new container div within body element, similar to the existing containers: 
-
-`<div id="container2" style="width: 40%;"> <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas> </div>`
-
-5) In backend/backend/urls.py file, insert a path for the chart's data: `path('visitor-chart2/', views.visitor_chart2, name="visitor-chart2")`
-
-<<<<<<< HEAD
-## (Older method, Ignore) Create new KPI page
-
-You can find the KPI listing page at `https://applab-checkin.herokuapp.com/kpi`
-
-Create a new branch for you to begin working on a KPI.
-
-To create a new KPI, go to the `KPIs` folder (`src/KPIs)` and create a new javascript file (model this file after existing KPI pages).
-
-To create a url route for your new page, go to App.js in the root folder, and import your component at the top of the file. 
-
-eg. `import KPI1 from './KPIs/KPI-1';`
-=======
 After cloning project:
 
 `npm install`
@@ -85,7 +54,6 @@ Before accessing the API, install the `djangorestframework` and `django-cors-hea
 API: `http://localhost:8000/api/checkins`
 
 # Review Apps
->>>>>>> 4e9dbe8ab11b3856291b82d4ad1b2b7aa2a80c8a
 
  ## How to use Heroku Review Apps
 
@@ -95,10 +63,36 @@ API: `http://localhost:8000/api/checkins`
 
  The review app name should look something like `checkin-prod-<branch_name>-<random_chars>`. 
 
-<<<<<<< HEAD
-eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
-=======
  The url you need add to `ALLOWED_HOSTS` should therefore look like this: `"checkin-prod-<branch_name>-<random_chars>.herokuapp.com"`
 
  Commit and push these changes to your branch and then make sure you review app redeploys. You should now be able to click "Open App" to view your deployed branch.
->>>>>>> 4e9dbe8ab11b3856291b82d4ad1b2b7aa2a80c8a
+
+# Check-In Data KPIs Dashboard
+
+ ## Add new KPI to Dashboard Page
+
+1) Define new function in backend/checkin/views.py (model off of the existing visitor_chart functions)
+
+2) In checkin/templates directory, create a new file named KPI#.js (e.g., KPI2.js) with jquery function to render the chart (make sure to set `var $visitorChart` equal to `$("#visitor-chart#")`, e.g. `var $visitorChart = $("#visitor-chart2");`)
+
+3) In checkin/templates/dashboard.html, add the script src for this file under the existing scripts within head element: `<script src="{% static 'KPI2.js' %}"></script>`
+
+4) In dashboard.html, insert new container div within body element, similar to the existing containers: 
+
+`<div id="container2" style="width: 40%;"> <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas> </div>`
+
+5) In backend/backend/urls.py file, insert a path for the chart's data: `path('visitor-chart2/', views.visitor_chart2, name="visitor-chart2")`
+
+## (Older method, Ignore) Create new KPI page
+
+You can find the KPI listing page at `https://applab-checkin.herokuapp.com/kpi`
+
+Create a new branch for you to begin working on a KPI.
+
+To create a new KPI, go to the `KPIs` folder (`src/KPIs)` and create a new javascript file (model this file after existing KPI pages).
+
+To create a url route for your new page, go to App.js in the root folder, and import your component at the top of the file. 
+
+eg. `import KPI1 from './KPIs/KPI-1';`
+
+eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
