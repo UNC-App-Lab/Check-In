@@ -4,6 +4,13 @@ import '../App.css';
 
 export default class CheckIn extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {isChecked: false};
+    //this.handleChecked = this.handleChecked.bind(this);
+    this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
+  }
+
   SubmitCheckIn(name, pid, reason, noPID) {
     //if form empty, don't submit
     // if noPID = true, make sure name and reason are there
@@ -51,6 +58,10 @@ export default class CheckIn extends React.Component {
     }
   }
 
+  handleChecked() {
+    this.setState({isChecked: !this.state.isChecked});
+  }
+
   render() {
     return (
       <div class="checkin">
@@ -65,9 +76,9 @@ export default class CheckIn extends React.Component {
           <div class="textbox">
             <label>
               PID:
-                  <input type="text" name="pid" id="pid" />
+                  <input type="text" name="pid" id="pid" disabled={this.state.isChecked} />
             </label><br></br>
-            <input type="checkbox" id="noPID" class="noPID" />
+            <input type="checkbox" id="noPID" class="noPID" onChange = {this.handleChecked}/>
             <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
             {/* <p>(Scanner can be used to input PID)</p> */}
           </div>
