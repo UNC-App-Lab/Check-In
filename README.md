@@ -83,6 +83,8 @@ API: `http://localhost:8000/api/checkins`
 
 5) In backend/backend/urls.py file, insert a path for the chart's data: `path('visitor-chart2/', views.visitor_chart2, name="visitor-chart2")`
 
+6) Run `python manage.py collectstatic --noinput --clear` in outer backend folder before `python manage.py runserver` to refresh static files 
+
 ## (Older method, Ignore) Create new KPI page
 
 You can find the KPI listing page at `https://applab-checkin.herokuapp.com/kpi`

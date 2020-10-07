@@ -6,8 +6,8 @@ from .models import Checkin
 from rest_framework.decorators import api_view  
 from django.http import JsonResponse
 from django.core import serializers       
-from django.db.models import Count, DateField
-from django.db.models.functions import TruncWeek
+from django.db.models import Count, DateField, Sum, F
+from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime       
 
 class CheckinView(viewsets.ModelViewSet):       
@@ -43,10 +43,15 @@ def visitor_chart2(request):
     # oldestWeek = TruncWeek(min(Checkin.objects.values('date')))
     # currWeek = datetime.date.today()
 
-    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
+    #queryset = Checkin.objects.annotate(totalTime = F('timeOut') - F('timeIn'))
+    queryset = Checkin.objects.annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
+    # annotate: timeOut - timeIn = time
+    # sum of time, group by weekstart
+    # weekstart on x axis, sum on y
+
     for entry in queryset:
         labels.append(entry['weekstart'])
-        data.append(entry['count'])
+        data.append(entry['sumHours'] / 60)
     
     return JsonResponse(data={
         'labels': labels,
