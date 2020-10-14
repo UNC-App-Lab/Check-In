@@ -18,7 +18,7 @@ After cloning project:
 Backend for the App Lab visitors check-in system using Django and Python
 
 ## Prequisites
-1. Python
+1. Python 3.7.4
 2. Pip
 3. Postgres
 
