@@ -30,7 +30,10 @@ Backend for the App Lab visitors check-in system using Django and Python
 
 `pipenv shell` & `cd backend` again
 
-`pipenv install django`
+`pipenv install django` - if you see an error installing psycopg2:
+
+1. Install postgres via homebrew and expose the source header files by modifying LDFLAGS and CPPFLAGS env vars (https://github.com/pypa/pipenv/issues/3991):
+2. Run `export LDFLAGS="-L/usr/local/opt/openssl/lib"` and `export CPPFLAGS="-I/usr/local/opt/openssl/include"`
 
 ## Additional Instructions
 
