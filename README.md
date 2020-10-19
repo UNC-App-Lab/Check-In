@@ -7,6 +7,8 @@ Check-In App Page: http://app-lab-check-in.herokuapp.com/
 
 Django Database: http://app-lab-check-in.herokuapp.com/admin/
 
+KPIs Dashboard: http://app-lab-check-in.herokuapp.com/dashboard
+
 Suggested IDE: Visual Studio Code
 
 After cloning project:
