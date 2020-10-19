@@ -32,6 +32,16 @@ Backend for the App Lab visitors check-in system using Django and Python
 
 `pipenv install django`
 
+## Additional Instructions
+
+(Without these instructions, you will likely see the following error when trying to run the server: `django.db.utils.OperationalError: FATAL:  role "applab" does not exist`)
+
+1. Make sure that Python and Postgres are added to Environment/Path Variables - the commands `python --version` and `psql postgres` or `psql -U postgres` should work on the command line. 
+2. On the terminal (doesn't have to be within the repository), run `psql postgres` or `psql -U postgres`. 
+3. Within postgres, run the commands `CREATE USER applab;` and `CREATE DATABASE checkindb;`.
+4. Back within the repository and backend directory that contains the `manage.py` file (`cd backend` from the root folder), run `python manage.py migrate`.
+5. In the same backend directory, run `python manage.py createsuperuser`. This command creates a superuser account to access the Django admin interface locally - make sure to remember the credentials (suggested username and password are `applab`), and the email can be left blank. 
+
 ## Run application (both Django database and React front-end)
 
 Make sure you're in the backend directory that contains the `manage.py` file (`cd backend` from the root folder):
