@@ -5,7 +5,7 @@ from .serializers import CheckinSerializer
 from .models import Checkin     
 from rest_framework.decorators import api_view  
 from django.http import JsonResponse
-from django.core import serializers       
+from django.core import serializers   
 from django.db.models import Count, DateField, Sum, F
 from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime       
@@ -57,6 +57,36 @@ def visitor_chart2(request):
         'labels': labels,
         'data': data
     })
+
+def visitor_chart4(request):
+    labels = []
+    data = []
+    newdates = []
+
+    # oldestWeek = TruncWeek(min(Checkin.objects.values('date')))
+    # currWeek = datetime.date.today()
+
+    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(hours = ExtractHour('timeOut') - ExtractHour('timeIn'), minutes = ExtractMinute('timeOut') - ExtractMinute('timeIn')).order_by('weekstart')
+    print(queryset)
+    for entry in queryset:
+        if str(entry['weekstart']) in newdates:
+            continue
+        else: 
+            newdates.append(str(entry['weekstart'])) 
+
+    for entry in queryset:
+        if entry['weekstart'] in labels:
+            data.insert(newdates.index(str(entry['weekstart'])), ((entry['hours']+ (entry['minutes']/60)) + data[newdates.index(str(entry['weekstart']))]))
+            data.pop((newdates.index(str(entry['weekstart']))) + 1)
+
+        else:
+            labels.append(entry['weekstart'])
+            data.append(entry['hours'] + (entry['minutes']/60))
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })    
 
 def visitor_chart10(request):
     labels = []
