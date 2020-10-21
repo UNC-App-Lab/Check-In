@@ -6,9 +6,9 @@ from .models import Checkin
 from rest_framework.decorators import api_view  
 from django.http import JsonResponse
 from django.core import serializers       
-from django.db.models import Count, DateField, Sum, F
+from django.db.models import Count, DateField, Sum, F, Min
 from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
-from datetime import datetime       
+from datetime import datetime, date, timedelta       
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
@@ -26,8 +26,32 @@ def visitor_chart(request):
     labels = []
     data = []
 
+    oldestWeek = Checkin.objects.earliest('date')
+    currWeek = Checkin.objects.latest('date')
+
+    def daterange(date1, date2):
+        for n in range(int ((date2 - date1).days)+1):
+            yield date1 + timedelta(n)
+
+    dates = set()
+    for week in daterange(getattr(oldestWeek, 'date'), getattr(currWeek, 'date')):
+        start = week - timedelta(days=week.weekday())
+        dates.add(start)
+    
+    dates = sorted(list(dates))
+
     queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
-    for entry in queryset:
+    queryData = queryset.values('weekstart', 'count')
+
+    finalSet = []
+    for d in dates:
+        finalCount = 0
+        for val in queryData:
+            if val['weekstart'] == d:
+                finalCount = val['count']
+        finalSet.append({'weekstart': d, 'count' : finalCount})
+
+    for entry in finalSet:
         labels.append(entry['weekstart'])
         data.append(entry['count'])
     
@@ -40,16 +64,32 @@ def visitor_chart2(request):
     labels = []
     data = []
 
-    # oldestWeek = TruncWeek(min(Checkin.objects.values('date')))
-    # currWeek = datetime.date.today()
+    oldestWeek = Checkin.objects.earliest('date')
+    currWeek = Checkin.objects.latest('date')
 
-    #queryset = Checkin.objects.annotate(totalTime = F('timeOut') - F('timeIn'))
-    queryset = Checkin.objects.annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
-    # annotate: timeOut - timeIn = time
-    # sum of time, group by weekstart
-    # weekstart on x axis, sum on y
+    def daterange(date1, date2):
+        for n in range(int ((date2 - date1).days)+1):
+            yield date1 + timedelta(n)
 
-    for entry in queryset:
+    dates = set()
+    for week in daterange(getattr(oldestWeek, 'date'), getattr(currWeek, 'date')):
+        start = week - timedelta(days=week.weekday())
+        dates.add(start)
+
+    dates = sorted(list(dates))
+
+    queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
+    queryData = queryset.values('weekstart', 'sumHours')
+    
+    finalSet = []
+    for d in dates:
+        hours = 0
+        for val in queryData:
+            if val['weekstart'] == d:
+                hours = val['sumHours']
+        finalSet.append({'weekstart': d, 'sumHours' : hours})
+
+    for entry in finalSet:
         labels.append(entry['weekstart'])
         data.append(entry['sumHours'] / 60)
     
