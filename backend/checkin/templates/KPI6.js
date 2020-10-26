@@ -9,7 +9,7 @@ $(function() {
           data: {
             labels: data.labels,
             datasets: [{
-              backgroundColor: '#145A89',
+              backgroundColor: '#99BADD',
               data: data.data, 
             }]          
           },
