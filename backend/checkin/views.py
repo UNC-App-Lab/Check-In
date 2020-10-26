@@ -98,6 +98,29 @@ def visitor_chart2(request):
         'data': data
     })
 
+def visitor_chart6(request):
+    labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    data = [0, 0, 0, 0, 0]
+
+    # Get all the data
+    queryset = Checkin.objects.all()
+
+    # Iterate over all the dates
+    for entry in queryset.values("date"):
+        # Get the raw datetime object from the entry
+        dateObj = list(entry.values())[0]
+        # Get the weekday, where 0 is monday and 6 is sunday
+        weekdayIndex = dateObj.weekday()
+        # Nobody checks in on weekends
+        if (weekdayIndex == 5 or weekdayIndex == 6):
+            continue
+        data[weekdayIndex] += 1
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
+
 def visitor_chart10(request):
     labels = []
     data = []
