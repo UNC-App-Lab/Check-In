@@ -113,10 +113,21 @@ label {
 
 #noPID {
   margin-left: 120px;
+  width: 16px;
+  height: 16px;
+}
+
+#firstTime {
+  width: 20px;
+  height: 20px;
 }
 
 #noPIDLabel {
   font-size: 25px;
+}
+
+#firstTimeLabel {
+  font-size: 30px;
 }
 
 .submit {

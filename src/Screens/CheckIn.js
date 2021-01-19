@@ -6,9 +6,12 @@ export default class CheckIn extends React.Component {
 
   constructor() {
     super();
-    this.state = {isChecked: false};
+    this.state = {
+      isChecked: false,
+      firstTime: false};
     //this.handleChecked = this.handleChecked.bind(this);
     this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
+    this.handleFirstTimeChecked = this.handleFirstTimeChecked.bind(this);
   }
 
   SubmitCheckIn(name, pid, reason, noPID) {
@@ -62,6 +65,10 @@ export default class CheckIn extends React.Component {
     this.setState({isChecked: !this.state.isChecked});
   }
 
+  handleFirstTimeChecked() {
+    this.setState({firstTime: !this.state.firstTime});
+  }
+
   render() {
     return (
       <div class="checkin">
@@ -87,6 +94,16 @@ export default class CheckIn extends React.Component {
               Reason:
                   <input type="text" name="reason" id="reason" />
             </label>
+          </div>
+          <div>
+            <input type="checkbox" id="firstTime" class="firstTime" onChange = {this.handleFirstTimeChecked}/>
+            <label id="firstTimeLabel" for="firstTime"> Check if you are visiting the App Lab for the first time</label>
+          </div>
+          <div class="textbox" style={{display: this.state.firstTime ? 'block' : 'none' }}>
+            <label>
+              How did you hear about us?
+            </label><br></br>
+            <input type="text" name="hear" id="hear" />
           </div>
           <button class="check-in">Submit</button>
         </form>
