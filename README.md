@@ -15,16 +15,16 @@ After cloning project:
 
 `npm install`
 
-# Backend for the App Lab Check-in System 
+## Backend Set-Up
 
 Backend for the App Lab visitors check-in system using Django and Python
 
-## Prequisites
+### Prequisites
 1. Python 3.7.4
 2. Pip
 3. Postgres
 
-## Installations
+### Installations
 
 `cd backend`
 
@@ -38,7 +38,7 @@ Backend for the App Lab visitors check-in system using Django and Python
  
 After initial setup and installations, only the commands `cd backend`, `pipenv shell`, and `cd backend` again will need to be run before starting the server when re-opening the application. 
 
-## Additional Instructions
+### Additional Instructions
 
 (Without these instructions, you will likely see the following error when trying to run the server: `django.db.utils.OperationalError: FATAL:  role "applab" does not exist`)
 
@@ -48,13 +48,15 @@ After initial setup and installations, only the commands `cd backend`, `pipenv s
 4. Back within the repository and backend directory that contains the `manage.py` file (`cd backend` from the root folder), run `python manage.py migrate`.
 5. In the same backend directory, run `python manage.py createsuperuser`. This command creates a superuser account to access the Django admin interface locally - make sure to remember the credentials (suggested username and password are `applab`), and the email can be left blank. 
 
-## Run application (both Django database and React front-end)
+## Application Info
+
+### Run application (both Django database and React front-end)
 
 Make sure you're in the backend directory that contains the `manage.py` file (`cd backend` from the root folder):
 
 `python manage.py runserver`
 
-## Local host addresses
+### Local host addresses
 
 After the commands and installations are completed correctly, you can view the web application, Django admin dashboard, and APIs on the following local host addresses:
 
@@ -69,23 +71,19 @@ Before accessing the API, install the `djangorestframework` and `django-cors-hea
 
 API: `http://localhost:8000/api/checkins`
 
-# Review Apps
+### Making changes
 
- ## How to use Heroku Review Apps
+After making changes to the front-end (src folder), run `npm run build` in the root folder to see the changes the next time the app is run locally or deployed. 
 
- To see what your new changes will look like deployed, make a pull request on GitHub for the branch you are working on.
+Updating fields in the database:
 
- In Heroku, under the pipeline tab in the checkin-prod project (you need to be added as a collaborator to access) your branch should be automatically deploying as a review app. Find out the name of your review app and make sure to add it to the `ALLOWED_HOSTS` list in the `backend/backend/settings.py` file.
+1. Add, remove, or change the desired field(s) in backend/checkin/models.py.
+2. In the terminal (in the backend directory containing the manage.py file), run `python manage.py makemigrations checkin` and `python manage.py migrate todo`.
+3. Update backend/checkin/admin.py and backend/checkin/serializers.py with the altered fields. 
 
- The review app name should look something like `checkin-prod-<branch_name>-<random_chars>`. 
+## Check-In Data KPIs Dashboard
 
- The url you need add to `ALLOWED_HOSTS` should therefore look like this: `"checkin-prod-<branch_name>-<random_chars>.herokuapp.com"`
-
- Commit and push these changes to your branch and then make sure you review app redeploys. You should now be able to click "Open App" to view your deployed branch.
-
-# Check-In Data KPIs Dashboard
-
- ## Add new KPI to Dashboard Page
+ ### Add new KPI to Dashboard Page
 
 1) Define new function in backend/checkin/views.py (model off of the existing visitor_chart functions)
 
@@ -101,16 +99,16 @@ API: `http://localhost:8000/api/checkins`
 
 6) Run `python manage.py collectstatic --noinput --clear` in outer backend folder before `python manage.py runserver` to refresh static files 
 
-## (Older method, Ignore) Create new KPI page
+## Review Apps
 
-You can find the KPI listing page at `https://applab-checkin.herokuapp.com/kpi`
+ ### How to use Heroku Review Apps
 
-Create a new branch for you to begin working on a KPI.
+ To see what your new changes will look like deployed, make a pull request on GitHub for the branch you are working on.
 
-To create a new KPI, go to the `KPIs` folder (`src/KPIs)` and create a new javascript file (model this file after existing KPI pages).
+ In Heroku, under the pipeline tab in the checkin-prod project (you need to be added as a collaborator to access) your branch should be automatically deploying as a review app. Find out the name of your review app and make sure to add it to the `ALLOWED_HOSTS` list in the `backend/backend/settings.py` file.
 
-To create a url route for your new page, go to App.js in the root folder, and import your component at the top of the file. 
+ The review app name should look something like `checkin-prod-<branch_name>-<random_chars>`. 
 
-eg. `import KPI1 from './KPIs/KPI-1';`
+ The url you need add to `ALLOWED_HOSTS` should therefore look like this: `"checkin-prod-<branch_name>-<random_chars>.herokuapp.com"`
 
-eg: `<NavLink to="/kpi-1"> KPI 1 </NavLink>`
+ Commit and push these changes to your branch and then make sure you review app redeploys. You should now be able to click "Open App" to view your deployed branch.
