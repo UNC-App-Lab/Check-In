@@ -97,7 +97,7 @@ Updating fields in the database:
 
 5) In backend/backend/urls.py file, insert a path for the chart's data: `path('visitor-chart2/', views.visitor_chart2, name="visitor-chart2")`
 
-6) Run `python manage.py collectstatic --noinput --clear` in outer backend folder before `python manage.py runserver` to refresh static files 
+6) (Optional) Hard refresh the dashboard page on the browser or run `python manage.py collectstatic --noinput --clear` in outer backend folder before `python manage.py runserver` to refresh static files if needed 
 
 ## Review Apps
 
