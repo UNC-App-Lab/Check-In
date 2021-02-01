@@ -42,7 +42,6 @@ def visitor_chart(request):
         dates.add(start)
     
     dates = sorted(list(dates))
-    print(dates)
 
     queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
     queryData = queryset.values('weekstart', 'count')
