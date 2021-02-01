@@ -6,20 +6,26 @@ export default class CheckIn extends React.Component {
 
   constructor() {
     super();
-    this.state = {isChecked: false};
+    this.state = {
+      isChecked: false,
+      firstTime: false};
     //this.handleChecked = this.handleChecked.bind(this);
     this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
+    this.handleFirstTimeChecked = this.handleFirstTimeChecked.bind(this);
   }
 
-  SubmitCheckIn(name, pid, reason, noPID) {
+  SubmitCheckIn(name, pid, reason, noPID, firstVisit, hear) {
     //if form empty, don't submit
     // if noPID = true, make sure name and reason are there
     // if noPID = false, make sure name and PID and reason are there
-    if (noPID === true && (name === "" || reason === "")) {
+    if (noPID && (name === "" || reason === "")) {
       alert("Please enter name and reason for visit");
     }
-    else if (noPID === false && (name === "" || pid === "" || reason === "")) {
+    else if (!noPID && (name === "" || pid === "" || reason === "")) {
       alert("Please enter name, PID, and reason for visit");
+    } 
+    else if (firstVisit && hear === "") {
+      alert("Please enter how you heard about the App Lab");
     } else {
 
       var today = new Date();
@@ -35,7 +41,9 @@ export default class CheckIn extends React.Component {
         reason: reason,
         staff: "",
         checkedIn: true,
-        hasPID: !noPID
+        hasPID: !noPID,
+        firstTime: false,
+        heard_about_al_through: ""
       };
 
       // need to figure out how to send authorization token in http requests 
@@ -50,7 +58,9 @@ export default class CheckIn extends React.Component {
         reason: reason,
         staff: "",
         checkedIn: true,
-        hasPID: !noPID
+        hasPID: !noPID,
+        firstTime: firstVisit,
+        heard_about_al_through: hear
       } });
 
       // navigate back to home
@@ -62,11 +72,15 @@ export default class CheckIn extends React.Component {
     this.setState({isChecked: !this.state.isChecked});
   }
 
+  handleFirstTimeChecked() {
+    this.setState({firstTime: !this.state.firstTime});
+  }
+
   render() {
     return (
       <div class="checkin">
         <h2>Check In</h2>
-        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked) }}>
+        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, document.getElementById("hear").value) }}>
           <div class="textbox">
             <label>
               Name:
@@ -87,6 +101,16 @@ export default class CheckIn extends React.Component {
               Reason:
                   <input type="text" name="reason" id="reason" />
             </label>
+          </div>
+          <div>
+            <input type="checkbox" id="firstTime" class="firstTime" onChange = {this.handleFirstTimeChecked}/>
+            <label id="firstTimeLabel" for="firstTime"> Check if you are visiting the App Lab for the first time</label>
+          </div>
+          <div class="textbox" style={{display: this.state.firstTime ? 'block' : 'none' }}>
+            <label>
+              How did you hear about us?
+            </label><br></br>
+            <input type="text" name="hear" id="hear" />
           </div>
           <button class="check-in">Submit</button>
         </form>

@@ -1,11 +1,11 @@
 const dayStrings = {
-    1: "Sunday",
+    // 1: "Sunday",
     2: "Monday",
     3: "Tuesday",
     4: "Wednesday",
     5: "Thursday",
     6: "Friday",
-    7: "Saturday"
+    // 7: "Saturday"
 };
 
 $(function () {
@@ -27,7 +27,9 @@ $(function () {
                 Object.entries(dayHours).forEach(([hour, visitCount]) => {
                     min = Math.min(min, hour);
                     max = Math.max(max, hour);
-                    dataResult.push({x: parseInt(hour), y: dayStrings[day], v: visitCount});
+                    if (day > 1 && day < 7) {
+                        dataResult.push({x: parseInt(hour), y: dayStrings[day], v: visitCount});
+                    }
                 })
             })
             new Chart(ctx, {
@@ -111,7 +113,7 @@ $(function () {
                                 fontSize: 15,
                                 fontStyle: 'bold'
                               },
-                            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
 							gridLines: {
 								display: false
                             }

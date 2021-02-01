@@ -30,6 +30,8 @@ def visitor_chart(request):
     oldestWeek = Checkin.objects.earliest('date')
     currWeek = Checkin.objects.latest('date')
 
+    print(getattr(oldestWeek, 'date'))
+
     def daterange(date1, date2):
         for n in range(int ((date2 - date1).days)+1):
             yield date1 + timedelta(n)

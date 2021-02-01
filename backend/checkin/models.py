@@ -12,6 +12,8 @@ class Checkin(models.Model):
     staff = models.CharField(max_length=150, blank=True)
     checkedIn = models.BooleanField(default=False)
     hasPID = models.BooleanField(default=True)
+    firstTime = models.BooleanField(default=False)
+    heard_about_al_through = models.CharField(max_length=400, blank=True)
     comments = models.TextField(blank=True)
 
     def _str_(self):

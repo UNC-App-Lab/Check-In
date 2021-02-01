@@ -17,28 +17,38 @@
     <script src="{% static 'KPI6.js' %}"></script>
     <script src="{% static 'KPIVisitsPerHour.js' %}"></script>
     <script src="{% static 'testKPI.js' %}"></script>
+    <style>
+        .item {
+            flex-grow: 1;
+        }
+        .item + .item {
+            margin-left: 2%;
+        }
+    </style>
 </head>
 
 <body>
   <h1 style="text-align: center;">App Lab KPIs Dashboard</h1>
-  <div id="container" style="width: 40%;">
-    <canvas id="visitor-chart" data-url="{% url 'visitor-chart' %}"></canvas>
-  </div>
-  <div id="container2" style="width: 40%;">
-    <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
-  </div>
-  <div id="container6" style="width: 40%;">
-    <canvas id="visitor-chart6" data-url="{% url 'visitor-chart6' %}"></canvas>
-  </div>
-  <div id="container7" style="width: 40%; display: flex; flex-direction: column;">
-    <canvas id="visitor-chart7" data-url="{% url 'visitor-chart7' %}"></canvas>
-    <div style="display: flex;">
-        <div id="chart7-min">0</div>
-        <canvas id="chart7-box"></canvas>
-        <div id="chart7-max">0</div>
+  <div class="graphs" style="display: flex; flex-wrap: wrap; justify-content: center;">
+    <div id="item container" style="width: 40%;">
+        <canvas id="visitor-chart" data-url="{% url 'visitor-chart' %}"></canvas>
+    </div>
+    <div id="item container2" style="width: 40%;">
+        <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
+    </div>
+    <div id="item container6" style="width: 40%;">
+        <canvas id="visitor-chart6" data-url="{% url 'visitor-chart6' %}"></canvas>
+    </div>
+    <div id="container7" style="width: 40%; display: flex; flex-direction: column;">
+        <canvas id="visitor-chart7" data-url="{% url 'visitor-chart7' %}"></canvas>
+        <div style="display: flex;">
+            <div id="chart7-min">0</div>
+            <canvas id="chart7-box"></canvas>
+            <div id="chart7-max">0</div>
+        </div>
     </div>
   </div>
-    <!-- <div id="container10" style="width: 40%;">
+  <!-- <div id="container10" style="width: 40%; padding: 0; margin: auto; display: block;">
     <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
   </div> -->
 </body>
