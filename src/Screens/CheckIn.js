@@ -131,7 +131,6 @@ export default class CheckIn extends React.Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: "placeholder",
       value,
       onChange: this.onChange
     };
