@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "moment": "^2.27.0",
     "react": "^16.13.1",
+    "react-autosuggest": "^10.1.0",
     "react-confirm-alert": "^2.6.1",
     "react-datetime": "^2.16.3",
     "react-dom": "^16.13.1",

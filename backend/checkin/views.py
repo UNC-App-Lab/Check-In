@@ -107,6 +107,7 @@ def visitor_chart6(request):
 
     # Get all the data
     queryset = Checkin.objects.all()
+    print(type(queryset))
 
     # Iterate over all the dates
     for entry in queryset.values("date"):

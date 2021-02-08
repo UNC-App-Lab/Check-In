@@ -1,6 +1,35 @@
 import React from 'react';
 import axios from "axios";
 import '../App.css';
+import Autosuggest from 'react-autosuggest';
+
+const options = ['Flyer', 'Poster', 'Friend', 'Class Announcement', 'Web Search'];
+
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getSuggestions(value) {
+  const escapedValue = escapeRegexCharacters(value.trim());
+  
+  if (escapedValue === '') {
+    return [];
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i');
+
+  return options.filter(option => regex.test(option));
+}
+
+function getSuggestionValue(suggestion) {
+  return suggestion;
+}
+
+function renderSuggestion(suggestion) {
+  return (
+    <span class='suggestion'>{suggestion}</span>
+  );
+}
 
 export default class CheckIn extends React.Component {
 
@@ -8,10 +37,15 @@ export default class CheckIn extends React.Component {
     super();
     this.state = {
       isChecked: false,
-      firstTime: false};
-    //this.handleChecked = this.handleChecked.bind(this);
+      firstTime: false,
+      value: '',
+      suggestions: []
+    };
     this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
     this.handleFirstTimeChecked = this.handleFirstTimeChecked.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
+    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
   }
 
   SubmitCheckIn(name, pid, reason, noPID, firstVisit, hear) {
@@ -76,11 +110,35 @@ export default class CheckIn extends React.Component {
     this.setState({firstTime: !this.state.firstTime});
   }
 
+  onChange = (event, { newValue, method }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+  
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value)
+    });
+  };
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
+
   render() {
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      placeholder: "placeholder",
+      value,
+      onChange: this.onChange
+    };
     return (
       <div class="checkin">
         <h2>Check In</h2>
-        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, document.getElementById("hear").value) }}>
+        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}>
           <div class="textbox">
             <label>
               Name:
@@ -110,7 +168,16 @@ export default class CheckIn extends React.Component {
             <label>
               How did you hear about us?
             </label><br></br>
-            <input type="text" name="hear" id="hear" />
+            {/* <input type="text" name="hear" id="hear" /> */}
+            <Autosuggest
+              name="hear"
+              id="hear"
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              inputProps={inputProps} />
           </div>
           <button class="check-in">Submit</button>
         </form>
