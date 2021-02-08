@@ -66,6 +66,8 @@ Instance of front-end application: `http://localhost:8000`
 
 Admin dashboard (database for checkins): `http://localhost:8000/admin` (login credentials are what were set in `createsuperuser` command during setup)
 
+KPIs dashboard: `http://localhost:8000/dashboard`
+
 Before accessing the API, install the `djangorestframework` and `django-cors-headers` using Pipev:
 `pipenv install djangorestframework django-cors-headers`
 
