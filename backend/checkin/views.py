@@ -30,8 +30,6 @@ def visitor_chart(request):
     oldestWeek = Checkin.objects.earliest('date')
     currWeek = Checkin.objects.latest('date')
 
-    print(getattr(oldestWeek, 'date'))
-
     def daterange(date1, date2):
         for n in range(int ((date2 - date1).days)+1):
             yield date1 + timedelta(n)
@@ -107,7 +105,7 @@ def visitor_chart6(request):
 
     # Get all the data
     queryset = Checkin.objects.all()
-    print(type(queryset))
+    # print(type(queryset))
 
     # Iterate over all the dates
     for entry in queryset.values("date"):

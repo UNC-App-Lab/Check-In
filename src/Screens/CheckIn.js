@@ -3,7 +3,10 @@ import axios from "axios";
 import '../App.css';
 import Autosuggest from 'react-autosuggest';
 
-const options = ['Flyer', 'Poster', 'Friend', 'Class Announcement', 'Web Search'];
+const options = ['Flyer', 'Poster', 'Friend', 'Class Announcement', 
+'Web Search', 'Facebook', 'Instagram', 'Newsletter', 'Website', 
+'App Lab Website', 'Sign in CS Building', 'Email (Class)', 
+'Email (Department)'];
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
