@@ -64,7 +64,7 @@ Start the server: `python manage.py runserver`
 
 Instance of front-end application: `http://localhost:8000`
 
-Admin dashboard (database for checkins): `http://localhost:8000/admin` (ask App Lab staff for login credentials or view on Leadership Team Trello Useful Links)
+Admin dashboard (database for checkins): `http://localhost:8000/admin` (login credentials are what were set in `createsuperuser` command during setup)
 
 Before accessing the API, install the `djangorestframework` and `django-cors-headers` using Pipev:
 `pipenv install djangorestframework django-cors-headers`
