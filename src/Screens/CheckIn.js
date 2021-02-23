@@ -3,16 +3,22 @@ import axios from "axios";
 import '../App.css';
 import Autosuggest from 'react-autosuggest';
 
-const options = ['Flyer', 'Poster', 'Friend', 'Class Announcement', 
-'Web Search', 'Facebook', 'Instagram', 'Newsletter', 'Website', 
-'App Lab Website', 'Sign in CS Building', 'Email (Class)', 
-'Email (Department)'];
+const options = 
+['Flyer', 'Poster', 'Sign in CS Building',
+'Friend', 'Word of Mouth', 
+'Class Announcement', 'Email (Class)',
+'Club Announcement', 'Email (Club)', 'Newsletter (Club)', 'WICS',
+'Email (Department)', 'CS Newsletter', 'Newsletter (Department)', 'Department Announcement',
+'Facebook', 'Instagram', 'Discord', 'Slack', 'App Lab Slack', 
+'Website', 'App Lab Website', 'Web Search', 'Google'];
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function getSuggestions(value) {
+  if (value === "" || value.trim().length === 0) { return options; }
+
   const escapedValue = escapeRegexCharacters(value.trim());
   
   if (escapedValue === '') {
@@ -33,6 +39,10 @@ function renderSuggestion(suggestion) {
     <span class='suggestion'>{suggestion}</span>
   );
 }
+
+function shouldRenderSuggestions(value, reason) {
+  return value.trim().length > 0 || reason === "suggestions-revealed" || reason === "suggestions-updated" || reason === "render";
+};
 
 export default class CheckIn extends React.Component {
 
@@ -170,7 +180,6 @@ export default class CheckIn extends React.Component {
             <label>
               How did you hear about us?
             </label><br></br>
-            {/* <input type="text" name="hear" id="hear" /> */}
             <Autosuggest
               name="hear"
               id="hear"
@@ -179,7 +188,8 @@ export default class CheckIn extends React.Component {
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={renderSuggestion}
-              inputProps={inputProps} />
+              shouldRenderSuggestions={shouldRenderSuggestions}
+              inputProps={inputProps}  />
           </div>
           <button class="check-in">Submit</button>
         </form>
@@ -187,3 +197,6 @@ export default class CheckIn extends React.Component {
     );
   }
 }
+
+
+// shouldRenderSuggestions={(v,r) => v.trim().length > 0 || r == 'suggestions-revealed'}
