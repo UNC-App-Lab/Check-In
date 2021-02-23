@@ -11,7 +11,7 @@ from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime, date, timedelta  
 from functools import reduce
 # from django_pandas.io import read_frame
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
