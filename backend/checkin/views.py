@@ -10,7 +10,7 @@ from django.db.models import Count, DateField, Sum, F, Min
 from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime, date, timedelta  
 from functools import reduce
-from django_pandas.io import read_frame
+# from django_pandas.io import read_frame
 from matplotlib import pyplot as plt
 
 class CheckinView(viewsets.ModelViewSet):       
