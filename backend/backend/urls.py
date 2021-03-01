@@ -34,6 +34,7 @@ urlpatterns = [
     #path('dashboard/', views.dashboard_with_checkin, name="dashboard"),
     path('visitor-chart/', views.visitor_chart, name="visitor-chart"),
     path('visitor-chart2/', views.visitor_chart2, name="visitor-chart2"),
+    path('visitor-chart4/', views.visitor_chart4, name="visitor-chart4"),
     path('visitor-chart6/', views.visitor_chart6, name="visitor-chart6"),
     path('visitor-chart7/', views.visitor_chart7, name="visitor-chart7"),
     path('visitor-chart10/', views.visitor_chart10, name="visitor-chart10"),
