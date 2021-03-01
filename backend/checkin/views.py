@@ -150,8 +150,8 @@ def visitor_chart4(request):
                 data[0]['data'][x] = None
         # only 14 weeks instead of 16 in Fall 2020 so remove last two data points for that semester
         if (dataIndex == 1):
-            data[dataIndex]['data'].pop()
-            data[dataIndex]['data'].pop()
+            data[1]['data'].pop()
+            data[1]['data'].pop()
         # 3/1/21 is week 7 of Spring 2021 (remove weeks after that for now)
         if (dataIndex == 2):
             for x in range(8, 17):
