@@ -15,6 +15,7 @@
     <script src="{% static 'KPI1.js' %}"></script>
     <script src="{% static 'KPI2.js' %}"></script>
     <script src="{% static 'KPI4.js' %}"></script>
+    <script src="{% static 'KPI5.js' %}"></script>
     <script src="{% static 'KPI6.js' %}"></script>
     <script src="{% static 'KPIVisitsPerHour.js' %}"></script>
     <script src="{% static 'testKPI.js' %}"></script>
@@ -40,6 +41,9 @@
     </div>
     <div id="item container4" style="width: 40%;">
         <canvas id="visitor-chart4" data-url="{% url 'visitor-chart4' %}"></canvas>
+    </div>
+    <div id="item container5" style="width: 40%;">
+        <canvas id="visitor-chart5" data-url="{% url 'visitor-chart5' %}"></canvas>
     </div>
     <div id="item container6" style="width: 40%;">
         <canvas id="visitor-chart6" data-url="{% url 'visitor-chart6' %}"></canvas>

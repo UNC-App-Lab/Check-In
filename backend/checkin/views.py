@@ -161,7 +161,6 @@ def visitor_chart4(request):
         'fill': 'false',
         'lineTension': 0
     })
-    # filter timeframe for semester dates
     startDate = datetime.strptime('2020-01-09', '%Y-%m-%d').date()
     endDate = datetime.strptime('2020-04-24', '%Y-%m-%d').date()
     addSem(startDate, endDate, 0)
@@ -197,6 +196,99 @@ def visitor_chart4(request):
 
     # suggested colors for future semesters: #e8c3b9, #c45850
 
+# Visitor Hours Per Week by Semester Line Chart
+def visitor_chart5(request):
+    # Set up objects to return for graphing
+    labels = []
+    for x in range(1, 17):
+        labels.append("Week " + str(x))
+    
+    data = []
+    # each semester will be a map that looks like this that is added to data array:
+    # { 
+    #     data: [86,114,106,106,107,111,133,221,783,2478],
+    #     label: "Africa",
+    #     borderColor: "#3e95cd",
+    #     fill: false
+    # }
+
+    # Helper time series function
+    def daterange(date1, date2):
+        for n in range(int ((date2 - date1).days)+1):
+            yield date1 + timedelta(n)
+
+    # Function for each semester
+    def addSem(startDate, endDate, dataIndex):
+        # create set of all start dates between semester start and end
+        dates = set()
+        for week in daterange(startDate, endDate):
+            start = week - timedelta(days=week.weekday())
+            dates.add(start)
+        dates = sorted(list(dates))
+        # get total hours per week in queryData (unordered set)
+        queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
+        queryData = queryset.values('weekstart', 'sumHours')
+        # put hours per week (in sequential order) in data array that will be returned
+        finalSet = []
+        for d in dates:
+            hours = 0
+            for val in queryData:
+                if val['weekstart'] == d:
+                    hours = val['sumHours']
+            finalSet.append({'weekstart': d, 'sumHours' : hours})
+        for x in finalSet:
+            data[dataIndex]['data'].append(x['sumHours'] / 60)
+        # didn't start using check-in app till week 7 in Spring 2020
+        if (dataIndex == 0):
+            for x in range (0,7):
+                data[0]['data'][x] = None
+        # 3/1/21 is week 7 of Spring 2021 (remove weeks after that for now)
+        if (dataIndex == 2):
+            for x in range(8, 17):
+                data[2]['data'].pop()
+    
+    # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2020",
+        'borderColor': "#3e95cd",
+        'fill': 'false',
+        'lineTension': 0
+    })
+    startDate = datetime.strptime('2020-01-09', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2020-04-24', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 0)
+    
+    # Fall 2020: Mon. Aug 17 - Tues. Nov 17 (14 weeks)
+    data.append({
+        'data': [],
+        'label': "Fall 2020",
+        'borderColor': "#8e5ea2",
+        'fill': 'false',
+        'lineTension': 0
+    }) 
+    startDate = datetime.strptime('2020-08-17', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2020-11-17', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 1)
+
+    # Spring 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2021",
+        'borderColor': "#3cba9f",
+        'fill': 'false',
+        'lineTension': 0
+    }) 
+    startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 2)
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
+
+    # suggested colors for future semesters: #e8c3b9, #c45850
 
 # Visits per Weekday Chart
 def visitor_chart6(request):
