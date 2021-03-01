@@ -12,10 +12,12 @@ djangorestframework = "*"
 django-cors-headers = "*"
 gunicorn = "*"
 whitenoise = "*"
+matplotlib = "*"
 psycopg2-binary = "*"
 dj-database-url = "*"
 python-dotenv = "*"
 psycopg2 = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"

@@ -10,8 +10,6 @@ from django.db.models import Count, DateField, Sum, F, Min
 from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime, date, timedelta  
 from functools import reduce
-# from django_pandas.io import read_frame
-# from matplotlib import pyplot as plt
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
@@ -25,6 +23,7 @@ def index(request):
 def view_404(request, exception=None):
     return redirect ('/')
 
+# Visitors Per Week Chart
 def visitor_chart(request):
     labels = []
     data = []
@@ -63,6 +62,7 @@ def visitor_chart(request):
         'data': data
     })
 
+# Visitor Hours per Week Chart
 def visitor_chart2(request):
     labels = []
     data = []
@@ -101,17 +101,106 @@ def visitor_chart2(request):
         'data': data
     })
 
+# Visitors Per Week by Semester Line Chart
+def visitor_chart4(request):
+
+    # Set up objects to return for graphing
+    labels = []
+    for x in range(1, 17):
+        labels.append("Week " + str(x))
+    
+    data = []
+    # each semester will be a map that looks like this that is added to data array:
+    # { 
+    #     data: [86,114,106,106,107,111,133,221,783,2478],
+    #     label: "Africa",
+    #     borderColor: "#3e95cd",
+    #     fill: false
+    # }
+
+    # Helper time series function
+    def daterange(date1, date2):
+        for n in range(int ((date2 - date1).days)+1):
+            yield date1 + timedelta(n)
+
+    # Function for each semester
+    def addSem(startDate, endDate, dataIndex):
+        # create set of all start dates between semester start and end
+        dates = set()
+        for week in daterange(startDate, endDate):
+            start = week - timedelta(days=week.weekday())
+            dates.add(start)
+        dates = sorted(list(dates))
+        # get count per week in queryData (unordered set)
+        queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
+        queryData = queryset.values('weekstart', 'count')
+        # put count per week (in sequential order) in data array that will be returned
+        finalSet = []
+        for d in dates:
+            finalCount = 0
+            for val in queryData:
+                if val['weekstart'] == d:
+                    finalCount = val['count']
+            finalSet.append({'weekstart': d, 'count' : finalCount})
+        for x in finalSet:
+            data[dataIndex]['data'].append(x['count'])
+        # only 14 weeks instead of 16 in Fall 2020 so remove last two data points for that semester
+        if (dataIndex == 1):
+            data[dataIndex]['data'].pop()
+            data[dataIndex]['data'].pop()
+    
+    # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2020",
+        'borderColor': "#3e95cd",
+        'fill': 'false',
+        'lineTension': 0
+    })
+    # filter timeframe for semester dates
+    startDate = datetime.strptime('2020-01-09', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2020-04-24', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 0)
+    
+    # Fall 2020: Mon. Aug 17 - Tues. Nov 17 (14 weeks)
+    data.append({
+        'data': [],
+        'label': "Fall 2020",
+        'borderColor': "#8e5ea2",
+        'fill': 'false',
+        'lineTension': 0
+    }) 
+    startDate = datetime.strptime('2020-08-17', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2020-11-17', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 1)
+
+    # Spring 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2021",
+        'borderColor': "#3cba9f",
+        'fill': 'false',
+        'lineTension': 0
+    }) 
+    startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 2)
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
+
+    # suggested colors for future semesters: #e8c3b9, #c45850
+
+
+# Visits per Weekday Chart
 def visitor_chart6(request):
     labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     data = [0, 0, 0, 0, 0]
 
     # Get all the data
     queryset = Checkin.objects.all()
-
-    # pandas testing
-    # df = read_frame(queryset)
-    # print(df.head())
-    #df['hasPID'].value_counts().plot.pie()
 
     # Iterate over all the dates
     for entry in queryset.values("date"):
@@ -128,7 +217,8 @@ def visitor_chart6(request):
         'labels': labels,
         'data': data
     })
-    
+
+# Visits per Weekday-Hour Heatmap Chart
 def visitor_chart7(request):
     label = "Visitors per Hour"
     day_strings = {
