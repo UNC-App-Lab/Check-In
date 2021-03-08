@@ -148,9 +148,9 @@ def visitor_chart4(request):
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
-        # 3/1/21 is week 7 of Spring 2021 (remove weeks after that for now)
+        # 3/8/21 is week 8 of Spring 2021 (remove weeks after that for now)
         if (dataIndex == 2):
-            for x in range(8, 17):
+            for x in range(9, 17):
                 data[2]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
@@ -242,9 +242,9 @@ def visitor_chart5(request):
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
-        # 3/1/21 is week 7 of Spring 2021 (remove weeks after that for now)
+        # 3/8/21 is week 8 of Spring 2021 (remove weeks after that for now)
         if (dataIndex == 2):
-            for x in range(8, 17):
+            for x in range(9, 17):
                 data[2]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)

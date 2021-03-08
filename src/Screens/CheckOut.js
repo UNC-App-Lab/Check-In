@@ -87,7 +87,7 @@ export default class CheckOut extends React.Component {
                         ))} 
                     </section>
                 </div>
-            </div >
+            </div>
         );
     }
 }
