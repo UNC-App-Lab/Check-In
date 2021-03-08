@@ -1,5 +1,5 @@
 $(function () {
-    var $visitorChart = $("#visitor-chart10");
+    var $visitorChart = $("#visitor-chart20");
     $.ajax({
       url: $visitorChart.data("url"),
       success: function (data) {

@@ -20,7 +20,7 @@ $(function() {
             },
             title: {
               display: true,
-              text: 'Visitors Per Weekday',
+              text: 'Visitors Per Weekday (Aggregate)',
               fontSize: 18,
               fontStyle: 'bold'
             },

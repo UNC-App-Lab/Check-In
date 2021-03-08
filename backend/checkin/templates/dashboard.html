@@ -14,12 +14,11 @@
     {% load static %}
     <script src="{% static 'KPI1.js' %}"></script>
     <script src="{% static 'KPI2.js' %}"></script>
+    <script src="{% static 'KPI3.js' %}"></script>
     <script src="{% static 'KPI4.js' %}"></script>
-    <script src="{% static 'KPI5.js' %}"></script>
     <script src="{% static 'KPI6.js' %}"></script>
     <script src="{% static 'KPIVisitsPerHour.js' %}"></script>
-    <script src="{% static 'testKPI.js' %}"></script>
-    <script src="{% static 'testPyplot.py' %}"></script>
+    <!-- <script src="{% static 'testKPI.js' %}"></script> -->
     <style>
         .item {
             flex-grow: 1;
@@ -33,92 +32,31 @@
 <body>
   <h1 style="text-align: center;">App Lab KPIs Dashboard</h1>
   <div class="graphs" style="display: flex; flex-wrap: wrap; justify-content: center;">
-    <div id="item container" style="width: 40%;">
-        <canvas id="visitor-chart" data-url="{% url 'visitor-chart' %}"></canvas>
+    <div id="item container1" style="width: 40%;">
+        <canvas id="visitor-chart1" data-url="{% url 'visitor-chart1' %}"></canvas>
     </div>
     <div id="item container2" style="width: 40%;">
         <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
     </div>
+    <div id="item container3" style="width: 40%;">
+        <canvas id="visitor-chart3" data-url="{% url 'visitor-chart3' %}"></canvas>
+    </div>
     <div id="item container4" style="width: 40%;">
         <canvas id="visitor-chart4" data-url="{% url 'visitor-chart4' %}"></canvas>
-    </div>
-    <div id="item container5" style="width: 40%;">
-        <canvas id="visitor-chart5" data-url="{% url 'visitor-chart5' %}"></canvas>
     </div>
     <div id="item container6" style="width: 40%;">
         <canvas id="visitor-chart6" data-url="{% url 'visitor-chart6' %}"></canvas>
     </div>
-    <div id="container7" style="width: 40%; display: flex; flex-direction: column;">
-        <canvas id="visitor-chart7" data-url="{% url 'visitor-chart7' %}"></canvas>
+    <div id="container9" style="width: 40%; display: flex; flex-direction: column;">
+        <canvas id="visitor-chart9" data-url="{% url 'visitor-chart9' %}"></canvas>
         <div style="display: flex;">
-            <div id="chart7-min">0</div>
-            <canvas id="chart7-box"></canvas>
-            <div id="chart7-max">0</div>
+            <div id="chart9-min">0</div>
+            <canvas id="chart9-box"></canvas>
+            <div id="chart9-max">0</div>
         </div>
     </div>
   </div>
-  <!-- <div id="container10" style="width: 40%; padding: 0; margin: auto; display: block;">
-    <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
+  <!-- <div id="container20" style="width: 40%; padding: 0; margin: auto; display: block;">
+    <canvas id="visitor-chart20" data-url="{% url 'visitor-chart20' %}"></canvas>
   </div> -->
 </body>
-
-<!-- <head>
-    <meta charset="UTF-8">
-    <title>Checkin Dashboard</title>
-    <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.flexmonster.com/demo.css">
-    <script>
-        function processData(dataset) {
-            var result = []
-            dataset = JSON.parse(dataset);
-            dataset.forEach(item => result.push(item.fields));
-            return result;
-        }
-        $.ajax({
-            url: $("#checkin-table-container").attr("data-url"),
-            dataType: 'json',
-            success: function(data) {
-                new Flexmonster({
-                    container: "#checkin-table-container",
-                    componentFolder: "https://cdn.flexmonster.com/",
-                    width: "100%",
-                    height: 430,
-                    toolbar: true,
-                    report: {
-                        dataSource: {
-                            type: "json",
-                            data: processData(data)
-                        },
-                        slice: {}
-                    }
-                });
-                new Flexmonster({
-                    container: "#checkin-chart-container",
-                    componentFolder: "https://cdn.flexmonster.com/",
-                    width: "100%",
-                    height: 430,
-                    //toolbar: true,
-                    report: {
-                        dataSource: {
-                            type: "json",
-                            data: processData(data)
-                        },
-                        slice: {},
-                        "options": {
-                            "viewType": "charts",
-                            "chart": {
-                                "type": "pie"
-                            }
-                        }
-                    }
-                });
-            }
-        });
-    </script>
-</head>
-<body>
-  <h1>Dashboard</h1>
-  <div id="checkin-table-container" data-url="{% url 'checkin_data' %}"></div>
-  <div id="checkin-chart-container"></div>
-</body> -->

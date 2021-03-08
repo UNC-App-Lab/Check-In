@@ -23,86 +23,8 @@ def index(request):
 def view_404(request, exception=None):
     return redirect ('/')
 
-# Visitors Per Week Chart
-def visitor_chart(request):
-    labels = []
-    data = []
-
-    oldestWeek = Checkin.objects.earliest('date')
-    currWeek = Checkin.objects.latest('date')
-
-    def daterange(date1, date2):
-        for n in range(int ((date2 - date1).days)+1):
-            yield date1 + timedelta(n)
-
-    dates = set()
-    for week in daterange(getattr(oldestWeek, 'date'), getattr(currWeek, 'date')):
-        start = week - timedelta(days=week.weekday())
-        dates.add(start)
-    
-    dates = sorted(list(dates))
-
-    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
-    queryData = queryset.values('weekstart', 'count')
-
-    finalSet = []
-    for d in dates:
-        finalCount = 0
-        for val in queryData:
-            if val['weekstart'] == d:
-                finalCount = val['count']
-        finalSet.append({'weekstart': d, 'count' : finalCount})
-
-    for entry in finalSet:
-        labels.append(entry['weekstart'])
-        data.append(entry['count'])
-    
-    return JsonResponse(data={
-        'labels': labels,
-        'data': data
-    })
-
-# Visitor Hours per Week Chart
-def visitor_chart2(request):
-    labels = []
-    data = []
-
-    oldestWeek = Checkin.objects.earliest('date')
-    currWeek = Checkin.objects.latest('date')
-
-    def daterange(date1, date2):
-        for n in range(int ((date2 - date1).days)+1):
-            yield date1 + timedelta(n)
-
-    dates = set()
-    for week in daterange(getattr(oldestWeek, 'date'), getattr(currWeek, 'date')):
-        start = week - timedelta(days=week.weekday())
-        dates.add(start)
-
-    dates = sorted(list(dates))
-
-    queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
-    queryData = queryset.values('weekstart', 'sumHours')
-    
-    finalSet = []
-    for d in dates:
-        hours = 0
-        for val in queryData:
-            if val['weekstart'] == d:
-                hours = val['sumHours']
-        finalSet.append({'weekstart': d, 'sumHours' : hours})
-
-    for entry in finalSet:
-        labels.append(entry['weekstart'])
-        data.append(entry['sumHours'] / 60)
-
-    return JsonResponse(data={
-        'labels': labels,
-        'data': data
-    })
-
 # Visitors Per Week by Semester Line Chart
-def visitor_chart4(request):
+def visitor_chart1(request):
 
     # Set up objects to return for graphing
     labels = []
@@ -197,7 +119,7 @@ def visitor_chart4(request):
     # suggested colors for future semesters: #e8c3b9, #c45850
 
 # Visitor Hours Per Week by Semester Line Chart
-def visitor_chart5(request):
+def visitor_chart2(request):
     # Set up objects to return for graphing
     labels = []
     for x in range(1, 17):
@@ -290,6 +212,84 @@ def visitor_chart5(request):
 
     # suggested colors for future semesters: #e8c3b9, #c45850
 
+# Visitors Per Week Chart
+def visitor_chart3(request):
+    labels = []
+    data = []
+
+    oldestWeek = Checkin.objects.earliest('date')
+    currWeek = Checkin.objects.latest('date')
+
+    def daterange(date1, date2):
+        for n in range(int ((date2 - date1).days)+1):
+            yield date1 + timedelta(n)
+
+    dates = set()
+    for week in daterange(getattr(oldestWeek, 'date'), getattr(currWeek, 'date')):
+        start = week - timedelta(days=week.weekday())
+        dates.add(start)
+    
+    dates = sorted(list(dates))
+
+    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
+    queryData = queryset.values('weekstart', 'count')
+
+    finalSet = []
+    for d in dates:
+        finalCount = 0
+        for val in queryData:
+            if val['weekstart'] == d:
+                finalCount = val['count']
+        finalSet.append({'weekstart': d, 'count' : finalCount})
+
+    for entry in finalSet:
+        labels.append(entry['weekstart'])
+        data.append(entry['count'])
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
+
+# Visitor Hours per Week Chart
+def visitor_chart4(request):
+    labels = []
+    data = []
+
+    oldestWeek = Checkin.objects.earliest('date')
+    currWeek = Checkin.objects.latest('date')
+
+    def daterange(date1, date2):
+        for n in range(int ((date2 - date1).days)+1):
+            yield date1 + timedelta(n)
+
+    dates = set()
+    for week in daterange(getattr(oldestWeek, 'date'), getattr(currWeek, 'date')):
+        start = week - timedelta(days=week.weekday())
+        dates.add(start)
+
+    dates = sorted(list(dates))
+
+    queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
+    queryData = queryset.values('weekstart', 'sumHours')
+    
+    finalSet = []
+    for d in dates:
+        hours = 0
+        for val in queryData:
+            if val['weekstart'] == d:
+                hours = val['sumHours']
+        finalSet.append({'weekstart': d, 'sumHours' : hours})
+
+    for entry in finalSet:
+        labels.append(entry['weekstart'])
+        data.append(entry['sumHours'] / 60)
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
+
 # Visits per Weekday Chart
 def visitor_chart6(request):
     labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
@@ -315,7 +315,7 @@ def visitor_chart6(request):
     })
 
 # Visits per Weekday-Hour Heatmap Chart
-def visitor_chart7(request):
+def visitor_chart9(request):
     label = "Visitors per Hour"
     day_strings = {
         1: "Sunday",
@@ -352,7 +352,7 @@ def visitor_chart7(request):
         'data': data
     })
 
-def visitor_chart10(request):
+def visitor_chart20(request):
     labels = []
     data = []
 

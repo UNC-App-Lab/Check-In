@@ -9,7 +9,7 @@ const dayStrings = {
 };
 
 $(function () {
-    const $vphChart = $("#visitor-chart7");
+    const $vphChart = $("#visitor-chart9");
     $.ajax({
         url: $vphChart.data("url"),
         success: function (data) {
@@ -123,7 +123,7 @@ $(function () {
             });
 
             // Create Legend
-            const grdCtx = $("#chart7-box")[0].getContext("2d");
+            const grdCtx = $("#chart9-box")[0].getContext("2d");
 
             var grd = grdCtx.createLinearGradient(0, 0, 200, 20);
             grd.addColorStop(0, color(0));
@@ -132,7 +132,7 @@ $(function () {
             // Fill with gradient
             grdCtx.fillStyle = grd;
             grdCtx.fillRect(10, 10, 300, 30);
-            $("#chart7-max").text(maxVal);
+            $("#chart9-max").text(maxVal);
         }
     });
 });

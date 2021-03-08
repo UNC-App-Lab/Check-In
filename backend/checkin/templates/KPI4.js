@@ -5,16 +5,22 @@ $(function() {
       success: function (data) {
         var ctx = $visitorChart[0].getContext("2d");
         new Chart(ctx, {
-          type: 'line',
+          type: 'bar',
           data: {
             labels: data.labels,
-            datasets: data.data          
+            datasets: [{
+              backgroundColor: '#145A89',
+              data: data.data, 
+            }]          
           },
           options: {
             responsive: true,
+            legend: {
+              display: false,
+            },
             title: {
               display: true,
-              text: 'Visitors Per Week by Semester',
+              text: 'Visitor-Hours Per Week',
               fontSize: 18,
               fontStyle: 'bold'
             },
@@ -25,7 +31,7 @@ $(function() {
                 },
                 scaleLabel: {
                   display: true, 
-                  labelString: '# Visitors',
+                  labelString: '# Visitor-Hours',
                   fontSize: 15,
                   fontStyle: 'bold'
                 }
@@ -33,7 +39,7 @@ $(function() {
               xAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Week',
+                  labelString: 'Week Starting',
                   fontSize: 15,
                   fontStyle: 'bold'
                 }
