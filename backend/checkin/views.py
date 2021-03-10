@@ -212,7 +212,7 @@ def visitor_chart2(request):
 
     # suggested colors for future semesters: #e8c3b9, #c45850
 
-# Visitors Per Week Chart
+# Visitors Per Week Bar Chart
 def visitor_chart3(request):
     labels = []
     data = []
@@ -251,7 +251,7 @@ def visitor_chart3(request):
         'data': data
     })
 
-# Visitor Hours per Week Chart
+# Visitor Hours Per Week Bar Chart
 def visitor_chart4(request):
     labels = []
     data = []
@@ -290,7 +290,91 @@ def visitor_chart4(request):
         'data': data
     })
 
-# Visits per Weekday Chart
+# Visitors per Weekday by Semester Grouped Bar Chart
+def visitor_chart5(request):
+    # Set up objects to return for graphing
+    labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    
+    data = []
+    # each semester will be a map that looks like this that is added to data array:
+    # {
+    #   label: "Africa",
+    #   backgroundColor: "#3e95cd",
+    #   data: [133,221,783,2478]
+    # }
+
+    # Helper time series function
+    def daterange(date1, date2):
+        for n in range(int ((date2 - date1).days)+1):
+            yield date1 + timedelta(n)
+
+    # Function for each semester
+    def addSem(startDate, endDate, dataIndex):
+
+        # filter queryset to get all dates within semester
+        # go through each entry and get weekday
+        # increment index of data array corresponding to weekday
+
+        # create set with all dates between semester start and end
+        dates = set()
+        for d in daterange(startDate, endDate):
+            dates.add(d)
+
+        # Get all the data
+        queryset = Checkin.objects.all()
+
+        weekdayData = [0,0,0,0,0]
+        # Iterate over all checkins and increment respective index for that weekday if date is within semester
+        for entry in queryset.values("date"):
+            if (entry['date'] in dates):
+                # Get the raw datetime object from the entry
+                dateObj = list(entry.values())[0]
+                # Get the weekday, where 0 is monday and 6 is sunday
+                weekdayIndex = dateObj.weekday()
+                # Nobody checks in on weekends
+                if (weekdayIndex == 5 or weekdayIndex == 6):
+                    continue
+                weekdayData[weekdayIndex] += 1
+        data[dataIndex]['data'] = weekdayData
+    
+    # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2020",
+        'backgroundColor': "#3e95cd"
+    })
+    startDate = datetime.strptime('2020-01-09', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2020-04-24', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 0)
+    
+    # Fall 2020: Mon. Aug 17 - Tues. Nov 17 (14 weeks)
+    data.append({
+        'data': [],
+        'label': "Fall 2020",
+        'backgroundColor': "#8e5ea2"
+    }) 
+    startDate = datetime.strptime('2020-08-17', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2020-11-17', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 1)
+
+    # Spring 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2021",
+        'backgroundColor': "#3cba9f"
+    }) 
+    startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 2)
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
+
+    # suggested colors for future semesters: #e8c3b9, #c45850
+
+# Visits per Weekday (Aggregate) Bar Chart
 def visitor_chart6(request):
     labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     data = [0, 0, 0, 0, 0]
@@ -314,7 +398,7 @@ def visitor_chart6(request):
         'data': data
     })
 
-# Visits per Weekday-Hour Heatmap Chart
+# Visits per Weekday-Hour (Aggregate) Heatmap
 def visitor_chart9(request):
     label = "Visitors per Hour"
     day_strings = {
