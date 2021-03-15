@@ -9,7 +9,7 @@ const options =
 'Class Announcement', 'Email (Class)',
 'Club Announcement', 'Email (Club)', 'Newsletter (Club)', 'WICS',
 'Email (Department)', 'CS Newsletter', 'Newsletter (Department)', 'Department Announcement',
-'Facebook', 'Instagram', 'Discord', 'Slack', 'App Lab Slack', 
+'Facebook', 'Instagram', 'Slack', 'App Lab Slack', 
 'Website', 'App Lab Website', 'Web Search', 'Google'];
 
 function escapeRegexCharacters(str) {
