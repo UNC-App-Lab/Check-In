@@ -398,6 +398,10 @@ def visitor_chart6(request):
         'data': data
     })
 
+# New vs. Repeat Visitors per Week Grouped Bar Chart 
+def visitor_chart7(request):
+
+
 # How New Visitors are Hearing About AL Bar Chart
 def visitor_chart8(request):
     queryset = Checkin.objects.all()
@@ -435,7 +439,6 @@ def visitor_chart8(request):
         'labels': labels,
         'data': data
     })
-
 
 # Visits per Weekday-Hour (Aggregate) Heatmap
 def visitor_chart9(request):
