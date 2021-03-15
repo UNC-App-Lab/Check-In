@@ -36,6 +36,7 @@ urlpatterns = [
     path('visitor-chart4/', views.visitor_chart4, name="visitor-chart4"),
     path('visitor-chart5/', views.visitor_chart5, name="visitor-chart5"),
     path('visitor-chart6/', views.visitor_chart6, name="visitor-chart6"),
+    path('visitor-chart8/', views.visitor_chart8, name="visitor-chart8"),
     path('visitor-chart9/', views.visitor_chart9, name="visitor-chart9"),
     path('visitor-chart20/', views.visitor_chart20, name="visitor-chart20"),
 ]
