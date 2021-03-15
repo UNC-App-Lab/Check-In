@@ -1,5 +1,5 @@
 $(function() {
-    var $visitorChart = $("#visitor-chart6");
+    var $visitorChart = $("#visitor-chart8");
     $.ajax({
       url: $visitorChart.data("url"),
       success: function (data) {
@@ -9,7 +9,7 @@ $(function() {
           data: {
             labels: data.labels,
             datasets: [{
-              backgroundColor: '#99BADD',
+              backgroundColor: '#145A89',
               data: data.data, 
             }]          
           },
@@ -20,7 +20,7 @@ $(function() {
             },
             title: {
               display: true,
-              text: 'Visitors Per Weekday (Aggregate)',
+              text: 'How New Visitors are Hearing About AL',
               fontSize: 18,
               fontStyle: 'bold'
             },
@@ -31,7 +31,7 @@ $(function() {
                 },
                 scaleLabel: {
                   display: true, 
-                  labelString: '# of Visitors',
+                  labelString: '# Visitors',
                   fontSize: 15,
                   fontStyle: 'bold'
                 }
@@ -39,7 +39,7 @@ $(function() {
               xAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Weekday',
+                  labelString: 'Method',
                   fontSize: 15,
                   fontStyle: 'bold'
                 }

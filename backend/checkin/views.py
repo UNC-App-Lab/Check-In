@@ -398,6 +398,45 @@ def visitor_chart6(request):
         'data': data
     })
 
+# How New Visitors are Hearing about AL Bar Chart
+def visitor_chart8(request):
+    queryset = Checkin.objects.all()
+
+    labels = ["Poster", "Friend", "Class", "Club", "Department", "Facebook", "Instagram", "Slack", "Website", "Web Search", "Other"]
+    data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    for entry in queryset.values("heard_about_al_through"):
+        method = entry['heard_about_al_through']
+        if (method != ""):
+            if (method == 'Flyer' or method == 'Poster' or method == 'Sign in CS Building'):
+                data[0] += 1
+            elif (method == 'Friend' or method == 'Word of Mouth'):
+                data[1] += 1
+            elif (method == 'Class Announcement' or method == 'Email (Class)'):
+                data[2] += 1
+            elif (method == 'Club Announcement' or method == 'Email (Club)' or method == 'Newsletter (Club)' or method == 'WICS'):
+                data[3] += 1
+            elif (method == 'Email (Department)' or method == 'CS Newsletter' or method == 'Newsletter (Department)' or method == 'Department Announcement'):
+                data[4] += 1
+            elif (method == 'Facebook'):
+                data[5] += 1
+            elif (method == 'Instagram'):
+                data[6] += 1
+            elif (method == 'Slack' or method == 'App Lab Slack'):
+                data[7] += 1
+            elif (method == 'Website' or method == 'App Lab Website'):
+                data[8] += 1
+            elif (method == 'Web Search' or method == 'Google'):
+                data[9] += 1
+            else:
+                data[10] += 1
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
+
+
 # Visits per Weekday-Hour (Aggregate) Heatmap
 def visitor_chart9(request):
     label = "Visitors per Hour"
