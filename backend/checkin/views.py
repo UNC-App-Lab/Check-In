@@ -399,7 +399,7 @@ def visitor_chart6(request):
     })
 
 # New vs. Repeat Visitors per Week Grouped Bar Chart 
-def visitor_chart7(request):
+# def visitor_chart7(request):
 
 
 # How New Visitors are Hearing About AL Bar Chart
