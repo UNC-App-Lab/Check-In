@@ -218,14 +218,14 @@ def visitor_chart3(request):
     data = []
 
     oldestWeek = Checkin.objects.earliest('date')
-    currWeek = Checkin.objects.latest('date')
+    currWeek = date.today()
 
     def daterange(date1, date2):
         for n in range(int ((date2 - date1).days)+1):
             yield date1 + timedelta(n)
 
     dates = set()
-    for week in daterange(getattr(oldestWeek, 'date'), getattr(currWeek, 'date')):
+    for week in daterange(getattr(oldestWeek, 'date'), currWeek):
         start = week - timedelta(days=week.weekday())
         dates.add(start)
     
@@ -257,14 +257,14 @@ def visitor_chart4(request):
     data = []
 
     oldestWeek = Checkin.objects.earliest('date')
-    currWeek = Checkin.objects.latest('date')
+    currWeek = date.today()
 
     def daterange(date1, date2):
         for n in range(int ((date2 - date1).days)+1):
             yield date1 + timedelta(n)
 
     dates = set()
-    for week in daterange(getattr(oldestWeek, 'date'), getattr(currWeek, 'date')):
+    for week in daterange(getattr(oldestWeek, 'date'), currWeek):
         start = week - timedelta(days=week.weekday())
         dates.add(start)
 
@@ -399,8 +399,52 @@ def visitor_chart6(request):
     })
 
 # New vs. Repeat Visitors per Week Grouped Bar Chart 
-# def visitor_chart7(request):
+def visitor_chart7(request):
+    startDate = datetime.strptime('2021-02-01', '%Y-%m-%d').date()
+    endDate = date.today()
 
+    # helper time series function
+    def daterange(date1, date2):
+        for n in range(int ((date2 - date1).days)+1):
+            yield date1 + timedelta(n)
+    
+    # create ordered list with all week start dates between semester start and end
+    dates = set()
+    for week in daterange(startDate, endDate):
+        start = week - timedelta(days=week.weekday())
+        dates.add(start)
+    dates = sorted(list(dates))
+    
+    # Set up objects to return for graphing
+    labels = dates
+    data = [
+        {
+        'label': "New",
+        'backgroundColor': "#FFA500",
+        'data': [0] * len(dates)
+        },
+        {
+        'label': "Repeat",
+        'backgroundColor': "#1C74AF",
+        'data': [0] * len(dates)
+        }
+    ] 
+    
+    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).order_by('weekstart')
+
+    for entry in queryset.values():
+        for i in range(0, len(dates)):
+            if (dates[i] == entry['weekstart']):
+                if (entry['firstTime']):
+                    data[0]['data'][i] += 1
+                else:
+                    data[1]['data'][i] += 1
+                break
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data
+    })
 
 # How New Visitors are Hearing About AL Bar Chart
 def visitor_chart8(request):
