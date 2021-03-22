@@ -59,7 +59,7 @@ $(function () {
 				options: {
                     title: {
                         display: true,
-                        text: 'Visitors Per Hour',
+                        text: 'Visitors Per Hour (Aggregate)',
                         fontSize: 18,
                         fontStyle: 'bold'
                       },
@@ -84,7 +84,7 @@ $(function () {
 						xAxes: [{
                             scaleLabel: {
                                 display: true, 
-                                labelString: 'Day',
+                                labelString: 'Hour',
                                 fontSize: 15,
                                 fontStyle: 'bold'
                               },
@@ -109,7 +109,7 @@ $(function () {
                             type: 'category',
                             scaleLabel: {
                                 display: true, 
-                                labelString: 'Hour',
+                                labelString: 'Day',
                                 fontSize: 15,
                                 fontStyle: 'bold'
                               },
