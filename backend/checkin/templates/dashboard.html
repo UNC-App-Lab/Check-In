@@ -20,7 +20,8 @@
     <script src="{% static 'KPI6.js' %}"></script>
     <script src="{% static 'KPI7.js' %}"></script>
     <script src="{% static 'KPI8.js' %}"></script>
-    <script src="{% static 'KPIVisitsPerHour.js' %}"></script>
+    <script src="{% static 'KPI9.js' %}"></script>
+    <script src="{% static 'KPI10.js' %}"></script>
     <!-- <script src="{% static 'testKPI.js' %}"></script> -->
     <style>
         .item {
@@ -65,6 +66,14 @@
             <div id="chart9-min">0</div>
             <canvas id="chart9-box"></canvas>
             <div id="chart9-max">0</div>
+        </div>
+    </div>
+    <div id="container10" style="width: 40%; display: flex; flex-direction: column;">
+        <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
+        <div style="display: flex;">
+            <div id="chart10-min">0</div>
+            <canvas id="chart10-box"></canvas>
+            <div id="chart10-max">0</div>
         </div>
     </div>
   </div>
