@@ -39,7 +39,7 @@ $(function() {
               xAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Method',
+                  labelString: 'Mode',
                   fontSize: 15,
                   fontStyle: 'bold'
                 }

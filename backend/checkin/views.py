@@ -66,13 +66,13 @@ def visitor_chart1(request):
             finalSet.append({'weekstart': d, 'count' : finalCount})
         for x in finalSet:
             data[dataIndex]['data'].append(x['count'])
-        # didn't start using check-in app till week 7 in Spring 2020
+        # didn't start using check-in app till week 8 in Spring 2020
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
-        # 3/15/21 is week 9 of Spring 2021 (remove weeks after that for now)
+        # 3/22/21 is week 10 of Spring 2021 (remove weeks after that for now)
         if (dataIndex == 2):
-            for x in range(10, 17):
+            for x in range(11, 17):
                 data[2]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
@@ -160,13 +160,13 @@ def visitor_chart2(request):
             finalSet.append({'weekstart': d, 'sumHours' : hours})
         for x in finalSet:
             data[dataIndex]['data'].append(x['sumHours'] / 60)
-        # didn't start using check-in app till week 7 in Spring 2020
+        # didn't start using check-in app till week 8 in Spring 2020
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
-        # 3/15/21 is week 9 of Spring 2021 (remove weeks after that for now)
+        # 3/22/21 is week 10 of Spring 2021 (remove weeks after that for now)
         if (dataIndex == 2):
-            for x in range(10, 17):
+            for x in range(11, 17):
                 data[2]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
