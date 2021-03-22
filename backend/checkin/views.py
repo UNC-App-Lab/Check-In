@@ -484,8 +484,48 @@ def visitor_chart8(request):
         'data': data
     })
 
-# Visits per Weekday-Hour (Aggregate) Heatmap
+# Visits per Weekday-Hour by Semester Heatmap
 def visitor_chart9(request):
+    label = "Visitors per Hour"
+    dayStrings = {
+        1: "Sunday",
+        2: "Monday",
+        3: "Tuesday",
+        4: "Wednesday",
+        5: "Thursday",
+        6: "Friday",
+        7: "Saturday"
+    }
+    days = {}
+    data = {}
+    hour_list = set()
+
+    for day in range(1, 8):
+        hour_dict = {}
+        day_name = dayStrings[day]
+        # Filters date range for spring 2021 semester: Jan. 19 - May 5
+        queryset = Checkin.objects.filter(date__range=["2021-01-19", "2021-05-05"]).filter(date__week_day=day).annotate(startHour=ExtractHour('timeIn'), endHour=ExtractHour('timeOut')).values('startHour', 'endHour')
+        for entry in queryset:
+            for i in range(entry['startHour'], entry['endHour'] + 1):
+                hour_list.add(i)
+                if i in hour_dict:
+                    hour_dict[i] += 1
+                else:
+                    hour_dict[i] = 1
+
+        data[day] = hour_dict
+    for hour_dict in data.values():
+        for hour in hour_list:
+            if not hour in hour_dict:
+                hour_dict[hour] = 0
+
+    return JsonResponse(data={
+        'label': label,
+        'data': data
+    })
+
+# Visits per Weekday-Hour (Aggregate) Heatmap
+def visitor_chart10(request):
     label = "Visitors per Hour"
     day_strings = {
         1: "Sunday",
