@@ -20,7 +20,7 @@ $(function() {
             },
             title: {
               display: true,
-              text: 'How New Visitors are Hearing About AL',
+              text: 'How New Visitors are Hearing About the AL',
               fontSize: 18,
               fontStyle: 'bold'
             },
