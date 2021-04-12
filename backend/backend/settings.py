@@ -33,7 +33,7 @@ SECRET_KEY = '=od%1kocldgpxyv&cyc9(lj636%$b7!)3&f(l+%7b^^3316u5b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["app-lab-check-in.herokuapp.com", '127.0.0.1', "localhost", 'check-in-pip-kpis-njxdalr2yzej.herokuapp.com/']
+ALLOWED_HOSTS = ["app-lab-check-in.herokuapp.com", '127.0.0.1', "localhost", 'check-in-pip-kpis-njxdalr2yzej.herokuapp.com']
 # "checkin-prod-reviewapp-roctbto.herokuapp.com"
 
 # Application definition
