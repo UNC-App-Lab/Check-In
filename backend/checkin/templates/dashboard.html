@@ -22,13 +22,24 @@
     <script src="{% static 'KPI8.js' %}"></script>
     <script src="{% static 'KPI9.js' %}"></script>
     <script src="{% static 'KPI10.js' %}"></script>
+    <script src="{% static 'scroll.js' %}"></script>
     <style>
         .item {
             flex-grow: 1;
         }
         .graphs > * + * {
-            margin-left: 50px;
+            margin-left: 30px;
             margin-bottom: 10px;
+        }
+        .graphs > * {
+            margin-right: 30px;
+        }
+        #container1 {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        #container2 {
+            margin-right: 30px;
         }
     </style>
 </head>
@@ -36,40 +47,40 @@
 <body>
   <h1 style="text-align: center;">App Lab KPIs Dashboard</h1>
   <div class="graphs" style="display: flex; flex-wrap: wrap; justify-content: center">
-    <div id="item container1" style="width: 40%;">
+    <div class="item" id="container1" style="width: 40%;">
         <canvas id="visitor-chart1" data-url="{% url 'visitor-chart1' %}"></canvas>
     </div>
-    <div id="item container2" style="width: 40%;">
+    <div class="item" id="container2" style="width: 40%;">
         <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
     </div>
-    <div id="item container3" style="width: 40%; overflow-x: auto; overflow-y: hidden">
-        <div style="width: 800px; height: 300px">
-            <canvas id="visitor-chart3" data-url="{% url 'visitor-chart3' %}" height="300" width="0"></canvas>
+    <div class="item" id="container3" style="width: 40%; overflow-x: auto; overflow-y: hidden;">
+        <div id="chart3" style="width: 900px; height: 350px">
+            <canvas id="visitor-chart3" data-url="{% url 'visitor-chart3' %}" height="350" width="0"></canvas>
         </div>
     </div>
-    <div id="item container4" style="width: 40%; overflow-x: auto; overflow-y: hidden">
-        <div style="width: 800px; height: 300px">
-            <canvas id="visitor-chart4" data-url="{% url 'visitor-chart4' %}" height="300" width="0"></canvas>
+    <div class="item" id="container4" style="width: 40%; overflow-x: auto; overflow-y: hidden">
+        <div style="width: 900px; height: 350px">
+            <canvas id="visitor-chart4" data-url="{% url 'visitor-chart4' %}" height="350" width="0"></canvas>
         </div>
     </div>
-    <div id="item container5" style="width: 40%;">
+    <div class="item" id="container5" style="width: 40%;">
         <canvas id="visitor-chart5" data-url="{% url 'visitor-chart5' %}"></canvas>
     </div>
-    <div id="item container6" style="width: 40%;">
+    <div class="item" id="container6" style="width: 40%;">
         <canvas id="visitor-chart6" data-url="{% url 'visitor-chart6' %}"></canvas>
     </div>
-    <!-- <div id="item container7" style="width: 40%; overflow-x: auto; overflow-y: hidden">
+    <!-- <div id="container7" style="width: 40%; overflow-x: auto; overflow-y: hidden">
         <div style="width: 800px; height: 250px">
             <canvas id="visitor-chart7" data-url="{% url 'visitor-chart7' %}" height="250" width="0"></canvas>
         </div>
     </div> -->
-    <div id="item container7" style="width: 40%;">
+    <div class="item" id="container7" style="width: 40%;">
         <canvas id="visitor-chart7" data-url="{% url 'visitor-chart7' %}"></canvas>
     </div>
-    <div id="item container8" style="width: 40%;">
+    <div class="item" id="container8" style="width: 40%;">
         <canvas id="visitor-chart8" data-url="{% url 'visitor-chart8' %}"></canvas>
     </div>
-    <div id="item container9" style="width: 40%; display: flex; flex-direction: column;">
+    <div class="item" id="container9" style="width: 40%; display: flex; flex-direction: column;">
         <canvas id="visitor-chart9" data-url="{% url 'visitor-chart9' %}"></canvas>
         <div style="display: flex;">
             <div id="chart9-min">0</div>
@@ -77,7 +88,7 @@
             <div id="chart9-max">0</div>
         </div>
     </div>
-    <div id="item container10" style="width: 40%; display: flex; flex-direction: column;">
+    <div class="item" id="container10" style="width: 40%; display: flex; flex-direction: column;">
         <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
         <div style="display: flex;">
             <div id="chart10-min">0</div>
