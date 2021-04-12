@@ -7,7 +7,7 @@
   "private": true,
   "proxy": "http://127.0.0.1:8000",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "moment": "^2.27.0",
     "react": "^16.13.1",
     "react-autosuggest": "^10.1.0",
