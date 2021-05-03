@@ -80,7 +80,7 @@ After making changes to the front-end (src folder), run `npm run build` in the r
 Updating fields in the database:
 
 1. Add, remove, or change the desired field(s) in backend/checkin/models.py.
-2. In the terminal (in the backend directory containing the manage.py file), run `python manage.py makemigrations checkin` and `python manage.py migrate todo`.
+2. In the terminal (in the backend directory containing the manage.py file), run `python manage.py makemigrations checkin` and `python manage.py migrate checkin`.
 3. Update backend/checkin/admin.py and backend/checkin/serializers.py with the altered fields. 
 
 ## Check-In Data KPIs Dashboard
