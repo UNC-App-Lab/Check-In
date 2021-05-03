@@ -13,6 +13,8 @@ $(function() {
               data: data.data, 
             }]          
           },
+          maintainAspectRatio: false,
+          responsive: true,
           options: {
             responsive: true,
             legend: {
@@ -47,7 +49,6 @@ $(function() {
             }
           }
         });
-
       }
     });
   });

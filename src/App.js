@@ -8,8 +8,6 @@ import Navigation from './Screens/Navigation';
 import favicon from './favicon.js'
 import Favicon from 'react-favicon';
 
-// http://oflisback.github.io/react-favicon/img/github.ico
-
 class App extends Component {
   render() {
     return (      

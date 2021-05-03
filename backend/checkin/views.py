@@ -70,10 +70,11 @@ def visitor_chart1(request):
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
-        # 4/26/21 is week 15 of Spring 2021 (remove weeks after that for now)
-        if (dataIndex == 2):
-            for x in range(16, 17):
-                data[2]['data'].pop()
+        # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
+        # Change the range (1st parameter) each week to add next data point
+        if (dataIndex == 3):
+            for x in range(2, 17):
+                data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
     data.append({
@@ -111,12 +112,25 @@ def visitor_chart1(request):
     endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
     addSem(startDate, endDate, 2)
 
+    # CHANGE DATES ACCORDINGLY
+    # Fall 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    # data.append({
+    #     'data': [],
+    #     'label': "Fall 2021",
+    #     'borderColor': "#e8c3b9",
+    #     'fill': 'false',
+    #     'lineTension': 0
+    # }) 
+    # startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
+    # endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
+    # addSem(startDate, endDate, 3)
+
+    # suggested color for spring 2022: #c45850
+
     return JsonResponse(data={
         'labels': labels,
         'data': data
     })
-
-    # suggested colors for future semesters: #e8c3b9, #c45850
 
 # Visitor Hours Per Week by Semester Line Chart
 def visitor_chart2(request):
@@ -164,10 +178,11 @@ def visitor_chart2(request):
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
-        # 4/26/21 is week 15 of Spring 2021 (remove weeks after that for now)
-        if (dataIndex == 2):
-            for x in range(16, 17):
-                data[2]['data'].pop()
+        # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
+        # Increment the range (1st parameter) each week to add next data point
+        if (dataIndex == 3):
+            for x in range(2, 17):
+                data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
     data.append({
@@ -205,12 +220,25 @@ def visitor_chart2(request):
     endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
     addSem(startDate, endDate, 2)
 
+    # CHANGE DATES ACCORDINGLY
+    # Fall 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    # data.append({
+    #     'data': [],
+    #     'label': "Fall 2021",
+    #     'borderColor': "#e8c3b9",
+    #     'fill': 'false',
+    #     'lineTension': 0
+    # }) 
+    # startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
+    # endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
+    # addSem(startDate, endDate, 3)
+
+    # suggested color for spring 2022: #c45850
+
     return JsonResponse(data={
         'labels': labels,
         'data': data
     })
-
-    # suggested colors for future semesters: #e8c3b9, #c45850
 
 # Visitors Per Week Bar Chart
 def visitor_chart3(request):
