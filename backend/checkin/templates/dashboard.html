@@ -42,6 +42,12 @@
         #container2 {
             margin-right: 30px;
         }
+        .chartWrapper > canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            pointer-events:none;
+        }
     </style>
 </head>
 
@@ -54,10 +60,11 @@
     <div class="item" id="container2" style="width: 40%;">
         <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
     </div>
-    <div class="item" id="container3" style="width: 40%; overflow-x: auto; overflow-y: hidden;">
+    <div class="chartWrapper item" id="container3" style="width: 40%; overflow-x: auto; overflow-y: hidden;">
         <div id="chart3" style="width: 900px; height: 350px">
             <canvas id="visitor-chart3" data-url="{% url 'visitor-chart3' %}" height="350" width="0"></canvas>
         </div>
+        <canvas id="myChartAxis" height="350" width="0"></canvas>
     </div>
     <div class="item" id="container4" style="width: 40%; overflow-x: auto; overflow-y: hidden">
         <div style="width: 900px; height: 350px">
