@@ -121,6 +121,7 @@ def visitor_chart1(request):
     #     'fill': 'false',
     #     'lineTension': 0
     # }) 
+    # CHANGE DATES IN NEXT 2 LINES:
     # startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
     # endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
     # addSem(startDate, endDate, 3)
@@ -229,6 +230,7 @@ def visitor_chart2(request):
     #     'fill': 'false',
     #     'lineTension': 0
     # }) 
+    # CHANGE DATES IN NEXT 2 LINES:
     # startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
     # endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
     # addSem(startDate, endDate, 3)
@@ -395,12 +397,24 @@ def visitor_chart5(request):
     endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
     addSem(startDate, endDate, 2)
 
+    # CHANGE DATES
+    # Fall 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    # data.append({
+    #     'data': [],
+    #     'label': "Fall 2021",
+    #     'backgroundColor': "#e8c3b9"
+    # }) 
+    # CHANGE DATES IN NEXT 2 LINES:
+    # startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
+    # endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
+    # addSem(startDate, endDate, 3)
+
     return JsonResponse(data={
         'labels': labels,
         'data': data
     })
 
-    # suggested colors for future semesters: #e8c3b9, #c45850
+    # suggested colors for spring 2022: #c45850
 
 # Visits per Weekday (Aggregate) Bar Chart
 def visitor_chart6(request):
