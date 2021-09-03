@@ -73,7 +73,7 @@ def visitor_chart1(request):
         # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
         # Change the range (1st parameter) each week to add next data point
         if (dataIndex == 3):
-            for x in range(2, 17):
+            for x in range(3, 17):
                 data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
@@ -112,21 +112,31 @@ def visitor_chart1(request):
     endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
     addSem(startDate, endDate, 2)
 
+    # Fall 2021: Wed. Aug 18 - Wed. Dec 1 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Fall 2021",
+        'borderColor': "#e8c3b9",
+        'fill': 'false',
+        'lineTension': 0
+    }) 
+    startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 3)
+
     # CHANGE DATES ACCORDINGLY
-    # Fall 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    # Spring 2022: Wed. Aug 18 - Wed. Dec 1 (16 weeks)
     # data.append({
     #     'data': [],
-    #     'label': "Fall 2021",
-    #     'borderColor': "#e8c3b9",
+    #     'label': "Spring 2022",
+    #     'borderColor': "#c45850",
     #     'fill': 'false',
     #     'lineTension': 0
     # }) 
     # CHANGE DATES IN NEXT 2 LINES:
-    # startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
-    # endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
-    # addSem(startDate, endDate, 3)
-
-    # suggested color for spring 2022: #c45850
+    # startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
+    # endDate = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
+    # addSem(startDate, endDate, 4)
 
     return JsonResponse(data={
         'labels': labels,
@@ -182,7 +192,7 @@ def visitor_chart2(request):
         # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
         # Increment the range (1st parameter) each week to add next data point
         if (dataIndex == 3):
-            for x in range(2, 17):
+            for x in range(3, 17):
                 data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
@@ -221,21 +231,31 @@ def visitor_chart2(request):
     endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
     addSem(startDate, endDate, 2)
 
+    # Fall 2021: Wed. Aug 18 - Wed. Dec 1 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Fall 2021",
+        'borderColor': "#e8c3b9",
+        'fill': 'false',
+        'lineTension': 0
+    }) 
+    startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 3)
+
     # CHANGE DATES ACCORDINGLY
-    # Fall 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    # Spring 2022: Tues. Jan 19 - Wed. May 5 (16 weeks)
     # data.append({
     #     'data': [],
-    #     'label': "Fall 2021",
-    #     'borderColor': "#e8c3b9",
+    #     'label': "Spring 2022",
+    #     'borderColor': "#c45850",
     #     'fill': 'false',
     #     'lineTension': 0
     # }) 
     # CHANGE DATES IN NEXT 2 LINES:
     # startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
     # endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
-    # addSem(startDate, endDate, 3)
-
-    # suggested color for spring 2022: #c45850
+    # addSem(startDate, endDate, 4)
 
     return JsonResponse(data={
         'labels': labels,
@@ -397,24 +417,32 @@ def visitor_chart5(request):
     endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
     addSem(startDate, endDate, 2)
 
+    # Fall 2021: Wed. Aug 18 - Wed. Dec 1 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Fall 2021",
+        'backgroundColor': "#e8c3b9"
+    }) 
+    startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 3)
+
     # CHANGE DATES
-    # Fall 2021: Tues. Jan 19 - Wed. May 5 (16 weeks)
+    # Spring 2022: Tues. Jan 19 - Wed. May 5 (16 weeks)
     # data.append({
     #     'data': [],
-    #     'label': "Fall 2021",
-    #     'backgroundColor': "#e8c3b9"
+    #     'label': "Spring 2022",
+    #     'backgroundColor': "#c45850"
     # }) 
     # CHANGE DATES IN NEXT 2 LINES:
     # startDate = datetime.strptime('2021-01-19', '%Y-%m-%d').date()
     # endDate = datetime.strptime('2021-05-05', '%Y-%m-%d').date()
-    # addSem(startDate, endDate, 3)
+    # addSem(startDate, endDate, 4)
 
     return JsonResponse(data={
         'labels': labels,
         'data': data
     })
-
-    # suggested colors for spring 2022: #c45850
 
 # Visits per Weekday (Aggregate) Bar Chart
 def visitor_chart6(request):
