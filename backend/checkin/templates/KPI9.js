@@ -59,7 +59,7 @@ $(function () {
 				options: {
                     title: {
                         display: true,
-                        text: 'Visitors Per Weekday-Hour (Spring 2021)',
+                        text: 'Visitors Per Weekday-Hour (Fall 2021)',
                         fontSize: 18,
                         fontStyle: 'bold'
                       },
