@@ -573,8 +573,8 @@ def visitor_chart9(request):
     for day in range(1, 8):
         hour_dict = {}
         day_name = dayStrings[day]
-        # Filters date range for spring 2021 semester: Jan. 19 - May 5
-        queryset = Checkin.objects.filter(date__range=["2021-01-19", "2021-05-05"]).filter(date__week_day=day).annotate(startHour=ExtractHour('timeIn'), endHour=ExtractHour('timeOut')).values('startHour', 'endHour')
+        # Filters date range for Fall 2021 semester: Aug 18 - Dec 1
+        queryset = Checkin.objects.filter(date__range=["2021-08-18", "2021-12-01"]).filter(date__week_day=day).annotate(startHour=ExtractHour('timeIn'), endHour=ExtractHour('timeOut')).values('startHour', 'endHour')
         for entry in queryset:
             for i in range(entry['startHour'], entry['endHour'] + 1):
                 hour_list.add(i)
