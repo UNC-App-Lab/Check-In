@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import dj_database_url
 import dotenv
-# import django_heroku
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -33,7 +32,7 @@ SECRET_KEY = '=od%1kocldgpxyv&cyc9(lj636%$b7!)3&f(l+%7b^^3316u5b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["app-lab-check-in.herokuapp.com", '127.0.0.1', "localhost", 'check-in-pip-kpis-njxdalr2yzej.herokuapp.com']
+ALLOWED_HOSTS = ["app-lab-check-in.herokuapp.com", '127.0.0.1', "localhost", 'check-in-pip-kpis-njxdalr2yzej.herokuapp.com', '.herokuapp.com']
 # "checkin-prod-reviewapp-roctbto.herokuapp.com"
 
 # Application definition
@@ -149,12 +148,10 @@ USE_TZ = True
 PROJECT_DIR = os.path.dirname(os.path.abspath('manage.py'))
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "..", "backend", "static")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "..", "build", "static"), os.path.join(BASE_DIR, "..", "backend", "checkin", "templates")) # update the STATICFILES_DIRS
+STATICFILES_DIRS = (os.path.normpath(os.path.join(BASE_DIR, "..", "build", "static")), os.path.normpath(os.path.join(BASE_DIR, "..", "backend", "checkin", "templates"))) # update the STATICFILES_DIRS
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # we whitelist localhost:8000 because that's where frontend will be served
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:8000', 'http://50.19.103.36:5000', 'https://app-lab-check-in.herokuapp.com', 'https://applab-checkin.herokuapp.com', 'https://check-in-pip-kpis-njxdalr2yzej.herokuapp.com']
-
-# django_heroku.settings(locals())

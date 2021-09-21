@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "moment": "^2.27.0",
+    "npm-watch": "^0.11.0",
     "react": "^16.13.1",
     "react-autosuggest": "^10.1.0",
     "react-confirm-alert": "^2.6.1",
@@ -24,7 +25,16 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js,jsx,css"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
