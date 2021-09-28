@@ -54,9 +54,9 @@ After initial setup and installations, only the commands `cd backend`, `pipenv s
 
 Make sure you're in the backend directory that contains the `manage.py` file (`cd backend` from the root folder):
 
-`python manage.py runserver`
+Run `npm watch build` in this directory (from a seperate terminal) to build the website and automatically update it.
 
-To automatically build the frontend when it changes, run `npm watch build` in this directory (from a seperate terminal)
+`python manage.py runserver`
 
 ### Local host addresses
 
