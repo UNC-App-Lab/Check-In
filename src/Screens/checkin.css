@@ -1,0 +1,23 @@
+.checkin-form {
+    display: grid;
+    grid-template-columns: [label] auto [input] 1fr;
+    padding-right: 15em;
+    padding-left: 15em;
+    grid-gap: 5px 2em;
+}
+
+.checkin-label {
+    grid-column: label;
+    align-self: center;
+    justify-self: left;
+}
+
+.checkin-input {
+    grid-column: input;
+    align-self: center;
+}
+
+.checkin-centered {
+    grid-column: 1 / -1;
+    justify-self: center;
+}

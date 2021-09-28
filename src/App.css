@@ -69,6 +69,8 @@ button:active {
   height: 150px;
   width: 40%;
   text-decoration:none;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 .dialogdiv {

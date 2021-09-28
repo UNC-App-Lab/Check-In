@@ -1,16 +1,17 @@
 import React from 'react';
 import axios from "axios";
 import '../App.css';
+import './checkin.css';
 import Autosuggest from 'react-autosuggest';
 
-const options = 
-['Flyer', 'Poster', 'Sign in CS Building',
-'Friend', 'Word of Mouth', 
-'Class Announcement', 'Email (Class)',
-'Club Announcement', 'Email (Club)', 'Newsletter (Club)', 'WICS',
-'Email (Department)', 'CS Newsletter', 'Newsletter (Department)', 'Department Announcement',
-'Facebook', 'Instagram', 'Slack', 'App Lab Slack', 
-'Website', 'App Lab Website', 'Web Search', 'Google'];
+const options =
+  ['Flyer', 'Poster', 'Sign in CS Building',
+    'Friend', 'Word of Mouth',
+    'Class Announcement', 'Email (Class)',
+    'Club Announcement', 'Email (Club)', 'Newsletter (Club)', 'WICS',
+    'Email (Department)', 'CS Newsletter', 'Newsletter (Department)', 'Department Announcement',
+    'Facebook', 'Instagram', 'Slack', 'App Lab Slack',
+    'Website', 'App Lab Website', 'Web Search', 'Google'];
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -20,7 +21,7 @@ function getSuggestions(value) {
   if (value === "" || value.trim().length === 0) { return options; }
 
   const escapedValue = escapeRegexCharacters(value.trim());
-  
+
   if (escapedValue === '') {
     return [];
   }
@@ -70,7 +71,7 @@ export default class CheckIn extends React.Component {
     }
     else if (!noPID && (name === "" || pid === "" || reason === "")) {
       alert("Please enter name, PID, and reason for visit");
-    } 
+    }
     else if (firstVisit && hear === "") {
       alert("Please enter how you heard about the App Lab");
     } else {
@@ -96,19 +97,21 @@ export default class CheckIn extends React.Component {
       // need to figure out how to send authorization token in http requests 
       //axios.post('/api/checkins/', item);
 
-      axios({ method: 'POST', url: '/api/checkins/', headers: {authorization: localStorage.token}, data: { 
-        name: name,
-        PID: pid,
-        date: date,
-        timeIn: time,
-        timeOut: '00:00',
-        reason: reason,
-        staff: "",
-        checkedIn: true,
-        hasPID: !noPID,
-        firstTime: firstVisit,
-        heard_about_al_through: hear
-      } });
+      axios({
+        method: 'POST', url: '/api/checkins/', headers: { authorization: localStorage.token }, data: {
+          name: name,
+          PID: pid,
+          date: date,
+          timeIn: time,
+          timeOut: '00:00',
+          reason: reason,
+          staff: "",
+          checkedIn: true,
+          hasPID: !noPID,
+          firstTime: firstVisit,
+          heard_about_al_through: hear
+        }
+      });
 
       // navigate back to home
       this.props.history.push('');
@@ -116,11 +119,11 @@ export default class CheckIn extends React.Component {
   }
 
   handleChecked() {
-    this.setState({isChecked: !this.state.isChecked});
+    this.setState({ isChecked: !this.state.isChecked });
   }
 
   handleFirstTimeChecked() {
-    this.setState({firstTime: !this.state.firstTime});
+    this.setState({ firstTime: !this.state.firstTime });
   }
 
   onChange = (event, { newValue, method }) => {
@@ -128,7 +131,7 @@ export default class CheckIn extends React.Component {
       value: newValue
     });
   };
-  
+
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value)
@@ -150,36 +153,29 @@ export default class CheckIn extends React.Component {
     return (
       <div class="checkin">
         <h2>Check In</h2>
-        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}>
-          <div class="textbox">
-            <label>
-              Name:
-                  <input type="text" name="name" id="name" />
-            </label>
-          </div>
-          <div class="textbox">
-            <label>
-              PID:
-                  <input type="text" name="pid" id="pid" disabled={this.state.isChecked} />
-            </label><br></br>
-            <input type="checkbox" id="noPID" class="noPID" onChange = {this.handleChecked}/>
+        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}
+          class="checkin-form">
+          <label class="checkin-label">Name:</label>
+          <input class="checkin-input" type="text" name="name" id="name" />
+          <p class="checkin-centered">(Scanner can be used to input PID)</p>
+          <label class="checkin-label">PID:</label>
+          <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} />
+          <div class="checkin-centered">
+            <input type="checkbox" id="noPID" class="noPID" onChange={this.handleChecked} />
             <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
-            {/* <p>(Scanner can be used to input PID)</p> */}
           </div>
-          <div class="textbox">
-            <label>
-              Reason:
-                  <input type="text" name="reason" id="reason" />
-            </label>
-          </div>
-          <div>
-            <input type="checkbox" id="firstTime" class="firstTime" onChange = {this.handleFirstTimeChecked}/>
+          <label class="checkin-label">
+            Reason:
+          </label>
+          <input class="checkin-input" type="text" name="reason" id="reason" />
+          <div class="checkin-centered">
+            <input type="checkbox" id="firstTime" class="firstTime" onChange={this.handleFirstTimeChecked} />
             <label id="firstTimeLabel" for="firstTime"> Check if you are visiting the App Lab for the first time</label>
           </div>
-          <div class="textbox" style={{display: this.state.firstTime ? 'block' : 'none' }}>
+          <div class="textbox checkin-centered" style={{ display: this.state.firstTime ? 'block' : 'none' }}>
             <label>
               How did you hear about us?
-            </label><br></br>
+            </label>
             <Autosuggest
               name="hear"
               id="hear"
@@ -189,9 +185,9 @@ export default class CheckIn extends React.Component {
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={renderSuggestion}
               shouldRenderSuggestions={shouldRenderSuggestions}
-              inputProps={inputProps}  />
+              inputProps={inputProps} />
           </div>
-          <button class="check-in">Submit</button>
+          <button class="check-in checkin-centered">Submit</button>
         </form>
       </div>
     );
