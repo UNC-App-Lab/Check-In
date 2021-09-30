@@ -2,6 +2,7 @@ import React from 'react';
 import axios from "axios";
 import '../App.css';
 import './checkin.css';
+import Modal from 'react-modal';
 import Autosuggest from 'react-autosuggest';
 
 const options =
@@ -11,7 +12,7 @@ const options =
     'Club Announcement', 'Email (Club)', 'Newsletter (Club)', 'WICS',
     'Email (Department)', 'CS Newsletter', 'Newsletter (Department)', 'Department Announcement',
     'Facebook', 'Instagram', 'Slack', 'App Lab Slack',
-    'Website', 'App Lab Website', 'Web Search', 'Google'];
+    'Website', 'App Lab Website', 'Web Search', 'Google', 'Other'];
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -53,7 +54,9 @@ export default class CheckIn extends React.Component {
       isChecked: false,
       firstTime: false,
       value: '',
-      suggestions: []
+      suggestions: [],
+      modalOpen: false,
+      modalText: ""
     };
     this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
     this.handleFirstTimeChecked = this.handleFirstTimeChecked.bind(this);
@@ -67,13 +70,27 @@ export default class CheckIn extends React.Component {
     // if noPID = true, make sure name and reason are there
     // if noPID = false, make sure name and PID and reason are there
     if (noPID && (name === "" || reason === "")) {
-      alert("Please enter name and reason for visit");
+      this.setState({
+        modalText: "Please enter name and reason for visit",
+        modalOpen: true
+      });
     }
     else if (!noPID && (name === "" || pid === "" || reason === "")) {
-      alert("Please enter name, PID, and reason for visit");
+      this.setState({
+        modalText: "Please enter name, PID, and reason for visit",
+        modalOpen: true
+      });
     }
     else if (firstVisit && hear === "") {
-      alert("Please enter how you heard about the App Lab");
+      this.setState({
+        modalText: "Please enter how you heard about the App Lab",
+        modalOpen: true
+      });
+    } else if (firstVisit && !options.includes(hear)) {
+      this.setState({
+        modalText: "Please select and existing option for how you heard about the App Lab (or use Other)",
+        modalOpen: true
+      });
     } else {
 
       var today = new Date();
@@ -152,9 +169,17 @@ export default class CheckIn extends React.Component {
     };
     return (
       <div class="checkin">
+        <Modal
+          isOpen={this.state.modalOpen}
+          onRequestClose={() => this.setState({ modalOpen: false })}
+          className="modal"
+          overlayClassName="modalOverlay">
+          <h2>Error Submitting Check In</h2>
+          <p class="modal-content">{this.state.modalText}</p>
+          <button type="button" onClick={() => {this.setState({modalOpen: false})}}>Close</button>
+        </Modal>
         <h2>Check In</h2>
-        <form onSubmit={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}
-          class="checkin-form">
+        <form class="checkin-form">
           <label class="checkin-label">Name:</label>
           <input class="checkin-input" type="text" name="name" id="name" />
           <p class="checkin-centered">(Scanner can be used to input PID)</p>
@@ -185,9 +210,10 @@ export default class CheckIn extends React.Component {
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={renderSuggestion}
               shouldRenderSuggestions={shouldRenderSuggestions}
+              alwaysRenderSuggestions={true}
               inputProps={inputProps} />
           </div>
-          <button class="check-in checkin-centered">Submit</button>
+          <button type="button" class="check-in checkin-centered" onClick={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}>Submit</button>
         </form>
       </div>
     );
