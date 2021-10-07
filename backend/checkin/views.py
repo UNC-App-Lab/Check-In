@@ -72,10 +72,14 @@ def visitor_chart1(request):
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
+
+        # Find the week are currently in, and place that in the chart. 
+        remainingWeeks = findRemainingWeeks(); 
+
         # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
         # Change the range (1st parameter) each week to add next data point
         if (dataIndex == 3):
-            for x in range(7, 17):
+            for x in range(remainingWeeks, 17):
                 data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
@@ -191,10 +195,14 @@ def visitor_chart2(request):
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
+
+        remainingWeeks = findRemainingWeeks()
+
         # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
         # Increment the range (1st parameter) each week to add next data point
         if (dataIndex == 3):
-            for x in range(7, 17):
+            # Update with every request. 
+            for x in range(remainingWeeks, 17):
                 data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
@@ -283,7 +291,8 @@ def visitor_chart3(request):
     
     dates = sorted(list(dates))
 
-    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
+    # queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
+    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart').annotate(timeOut=F('timeOut')).exclude(timeOut='00:00:00')
     queryData = queryset.values('weekstart', 'count')
 
     finalSet = []
@@ -322,7 +331,8 @@ def visitor_chart4(request):
 
     dates = sorted(list(dates))
 
-    queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
+    queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart').annotate(timeOut=F('timeOut')).exclude(timeOut='00:00:00')
+    
     queryData = queryset.values('weekstart', 'sumHours')
     
     finalSet = []
@@ -642,6 +652,7 @@ def checkin_data(request):
     data = serializers.serialize('json', dataset)
     return JsonResponse(data, safe=False)
 
+
 def pid_to_name(request):
     data = json.loads(request.body)
     result = Checkin.objects.filter(PID=data['pid']).values("name").first()
@@ -650,3 +661,10 @@ def pid_to_name(request):
     else:
         returnData = {"name": None}
     return JsonResponse(data=returnData)
+
+# Finds the number of weeks remaining in the year. 
+def findRemainingWeeks():
+    startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
+    endDate = date.today()
+    return 16 - round((endDate - startDate).days / 7)
+
