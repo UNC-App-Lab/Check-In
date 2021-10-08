@@ -289,8 +289,7 @@ def visitor_chart3(request):
     
     dates = sorted(list(dates))
 
-    # queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
-    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart').annotate(timeOut=F('timeOut')).exclude(timeOut='00:00:00')
+    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
     queryData = queryset.values('weekstart', 'count')
 
     finalSet = []
