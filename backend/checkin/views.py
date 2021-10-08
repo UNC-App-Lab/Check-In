@@ -177,7 +177,7 @@ def visitor_chart2(request):
             dates.add(start)
         dates = sorted(list(dates))
         # get total hours per week in queryData (unordered set)
-        queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
+        queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart').annotate(timeOut=F('timeOut')).exclude(timeOut='00:00:00')
         queryData = queryset.values('weekstart', 'sumHours')
         # put hours per week (in sequential order) in data array that will be returned
         finalSet = []
