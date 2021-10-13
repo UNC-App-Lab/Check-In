@@ -10,6 +10,8 @@ from django.db.models import Count, DateField, Sum, F, Min
 from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime, date, timedelta  
 from functools import reduce
+from django.views.decorators.csrf import ensure_csrf_cookie
+import json
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
@@ -649,8 +651,19 @@ def checkin_data(request):
     data = serializers.serialize('json', dataset)
     return JsonResponse(data, safe=False)
 
+
+def pid_to_name(request):
+    data = json.loads(request.body)
+    result = Checkin.objects.filter(PID=data['pid']).values("name").first()
+    if (result):
+        returnData = {"name": result["name"]}
+    else:
+        returnData = {"name": None}
+    return JsonResponse(data=returnData)
+
 # Finds the number of weeks remaining in the year. 
 def findRemainingWeeks():
     startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
     endDate = date.today()
     return 16 - round((endDate - startDate).days / 7)
+
