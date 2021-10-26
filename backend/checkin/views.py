@@ -77,7 +77,7 @@ def visitor_chart1(request):
         # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
         # Change the range (1st parameter) each week to add next data point
         if (dataIndex == 3):
-            for x in range(remainingWeeks, 17):
+            for x in range(17 - remainingWeeks, 17):
                 data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
@@ -195,12 +195,13 @@ def visitor_chart2(request):
                 data[0]['data'][x] = None
 
         remainingWeeks = findRemainingWeeks()
+        # remainingWeeks =
 
         # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
         # Increment the range (1st parameter) each week to add next data point
         if (dataIndex == 3):
             # Update with every request. 
-            for x in range(remainingWeeks, 17):
+            for x in range(17 - remainingWeeks, 17):
                 data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
