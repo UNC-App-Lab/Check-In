@@ -10,6 +10,8 @@ from django.db.models import Count, DateField, Sum, F, Min
 from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime, date, timedelta  
 from functools import reduce
+from django.views.decorators.csrf import ensure_csrf_cookie
+import json
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
@@ -177,7 +179,7 @@ def visitor_chart2(request):
             dates.add(start)
         dates = sorted(list(dates))
         # get total hours per week in queryData (unordered set)
-        queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart')
+        queryset = Checkin.objects.all().annotate(durationDiff=F('timeOut') - F('timeIn'), duration=(ExtractHour('durationDiff')*60+ExtractMinute('durationDiff')), weekstart = TruncWeek('date')).values('weekstart').annotate(sumHours = Sum('duration')).order_by('weekstart').annotate(timeOut=F('timeOut')).exclude(timeOut='00:00:00')
         queryData = queryset.values('weekstart', 'sumHours')
         # put hours per week (in sequential order) in data array that will be returned
         finalSet = []
@@ -290,8 +292,7 @@ def visitor_chart3(request):
     
     dates = sorted(list(dates))
 
-    # queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
-    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart').annotate(timeOut=F('timeOut')).exclude(timeOut='00:00:00')
+    queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
     queryData = queryset.values('weekstart', 'count')
 
     finalSet = []
@@ -651,8 +652,19 @@ def checkin_data(request):
     data = serializers.serialize('json', dataset)
     return JsonResponse(data, safe=False)
 
+
+def pid_to_name(request):
+    data = json.loads(request.body)
+    result = Checkin.objects.filter(PID=data['pid']).values("name").first()
+    if (result):
+        returnData = {"name": result["name"]}
+    else:
+        returnData = {"name": None}
+    return JsonResponse(data=returnData)
+
 # Finds the number of weeks remaining in the year. 
 def findRemainingWeeks():
     startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
     endDate = date.today()
     return 16 - round((endDate - startDate).days / 7)
+

@@ -4,6 +4,7 @@ import '../App.css';
 import './checkin.css';
 import Modal from 'react-modal';
 import Autosuggest from 'react-autosuggest';
+import { csrfToken } from '../Utilities/csrfUtils';
 
 const options =
   ['Flyer', 'Poster', 'Sign in CS Building',
@@ -56,13 +57,18 @@ export default class CheckIn extends React.Component {
       value: '',
       suggestions: [],
       modalOpen: false,
-      modalText: ""
+      modalText: "",
+      keypresses: Array(9).fill(null),
+      pid: "",
+      name: ""
     };
     this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
     this.handleFirstTimeChecked = this.handleFirstTimeChecked.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
+    this.nameRef = React.createRef();
+    this.reasonRef = React.createRef();
   }
 
   SubmitCheckIn(name, pid, reason, noPID, firstVisit, hear) {
@@ -115,7 +121,7 @@ export default class CheckIn extends React.Component {
       //axios.post('/api/checkins/', item);
 
       axios({
-        method: 'POST', url: '/api/checkins/', headers: { authorization: localStorage.token }, data: {
+        method: 'POST', url: '/api/checkins/', headers: { 'X-CSRFToken': csrfToken }, data: {
           name: name,
           PID: pid,
           date: date,
@@ -161,6 +167,67 @@ export default class CheckIn extends React.Component {
     });
   };
 
+  handleKeyPress = (e) => {
+    if( e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA" ) return;
+    if( e.target.isContentEditable ) return;
+
+    const newArray = this.state.keypresses.slice(1, 9);
+    newArray.push(String.fromCharCode(e.keyCode));
+    
+    if (newArray.every(x => !isNaN(parseInt(x)))) {
+      this.setState({
+        pid: newArray.join(""),
+        keypresses: Array(9).fill(null)
+      });
+      axios({
+        method: "POST",
+        url: "/pid-to-name/",
+        headers: { 'X-CSRFToken': csrfToken },
+        data: {
+          pid: this.state.pid
+        }
+      }).then((response => {
+        if (response.data.name) {
+          if (this.state.name.trim() === "") {
+            this.setState({
+              name: response.data.name,
+            });
+          }
+          this.reasonRef.current.focus();
+        } else {
+          this.nameRef.current.focus();
+          this.setState({
+            firstTime: true
+          });
+        } 
+      }));
+    } else {
+      this.setState({
+        keypresses: newArray
+      });
+    }
+  }
+
+  pidChange = (event) => {
+    this.setState({
+      pid: event.target.value
+    });
+  }
+
+  nameChange = (event) => {
+    this.setState({
+      name: event.target.value
+    });
+  }  
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress)
+  }
+
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
@@ -181,10 +248,10 @@ export default class CheckIn extends React.Component {
         <h2>Check In</h2>
         <form class="checkin-form">
           <label class="checkin-label">Name:</label>
-          <input class="checkin-input" type="text" name="name" id="name" />
+          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} />
           <p class="checkin-centered">(Scanner can be used to input PID)</p>
           <label class="checkin-label">PID:</label>
-          <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} />
+          <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} />
           <div class="checkin-centered">
             <input type="checkbox" id="noPID" class="noPID" onChange={this.handleChecked} />
             <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
@@ -192,9 +259,9 @@ export default class CheckIn extends React.Component {
           <label class="checkin-label">
             Reason:
           </label>
-          <input class="checkin-input" type="text" name="reason" id="reason" />
+          <input class="checkin-input" type="text" name="reason" id="reason" ref={this.reasonRef} />
           <div class="checkin-centered">
-            <input type="checkbox" id="firstTime" class="firstTime" onChange={this.handleFirstTimeChecked} />
+            <input type="checkbox" id="firstTime" class="firstTime" onChange={this.handleFirstTimeChecked} checked={this.state.firstTime} />
             <label id="firstTimeLabel" for="firstTime"> Check if you are visiting the App Lab for the first time</label>
           </div>
           <div class="textbox checkin-centered" style={{ display: this.state.firstTime ? 'block' : 'none' }}>
