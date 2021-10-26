@@ -16,7 +16,15 @@ import json
 
 class CheckinView(viewsets.ModelViewSet):       
     serializer_class = CheckinSerializer          
-    queryset = Checkin.objects.all()          
+    queryset = Checkin.objects.all()   
+
+SEMESTER_START = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
+SEMESTER_END = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
+
+# Helper time series function
+def daterange(date1, date2):
+    for n in range(int ((date2 - date1).days)+1):
+        yield date1 + timedelta(n)
 
 @api_view(["POST", "GET"])
 def index(request):
@@ -43,18 +51,10 @@ def visitor_chart1(request):
     #     fill: false
     # }
 
-    # Helper time series function
-    def daterange(date1, date2):
-        for n in range(int ((date2 - date1).days)+1):
-            yield date1 + timedelta(n)
-
     # Function for each semester
     def addSem(startDate, endDate, dataIndex):
         # create set of all start dates between semester start and end
-        dates = set()
-        for week in daterange(startDate, endDate):
-            start = week - timedelta(days=week.weekday())
-            dates.add(start)
+        dates = getSemesterWeeks(startDate, endDate)
         dates = sorted(list(dates))
         # get count per week in queryData (unordered set)
         queryset = Checkin.objects.annotate(weekstart = TruncWeek('date')).values('weekstart').annotate(count = Count('id')).order_by('weekstart')
@@ -583,11 +583,23 @@ def visitor_chart9(request):
     data = {}
     hour_list = set()
 
+    print(request.GET)
+
+    weeks = getCurrentSemesterWeeks()
+
+    search_range = ["2021-08-18", "2021-12-01"]
+    if ('week' in request.GET):
+        chosenWeek = request.GET['week']
+        if chosenWeek != 'all':
+            date_obj = datetime.strptime(chosenWeek, '%Y-%m-%d').date()
+            end_date = date_obj + timedelta(days=7)
+            search_range = [chosenWeek, end_date.strftime('%Y-%m-%d')]
+
     for day in range(1, 8):
         hour_dict = {}
         day_name = dayStrings[day]
         # Filters date range for Fall 2021 semester: Aug 18 - Dec 1
-        queryset = Checkin.objects.filter(date__range=["2021-08-18", "2021-12-01"]).filter(date__week_day=day).annotate(startHour=ExtractHour('timeIn'), endHour=ExtractHour('timeOut')).values('startHour', 'endHour')
+        queryset = Checkin.objects.filter(date__range=search_range).filter(date__week_day=day).annotate(startHour=ExtractHour('timeIn'), endHour=ExtractHour('timeOut')).values('startHour', 'endHour')
         for entry in queryset:
             for i in range(entry['startHour'], entry['endHour'] + 1):
                 hour_list.add(i)
@@ -604,7 +616,8 @@ def visitor_chart9(request):
 
     return JsonResponse(data={
         'label': label,
-        'data': data
+        'data': data,
+        'weeks': list(map(lambda x: x.strftime('%Y-%m-%d'), weeks)),
     })
 
 # Visits per Weekday-Hour (Aggregate) Heatmap
@@ -682,7 +695,15 @@ def checked_in(request):
 
 # Finds the number of weeks remaining in the year. 
 def findRemainingWeeks():
-    startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
     endDate = date.today()
-    return 16 - round((endDate - startDate).days / 7)
+    return 16 - round((endDate - SEMESTER_START).days / 7)
 
+def getSemesterWeeks(startDate, endDate):
+    dates = set()
+    for week in daterange(startDate, endDate):
+        start = week - timedelta(days=week.weekday())
+        dates.add(start)
+    return dates
+
+def getCurrentSemesterWeeks():
+    return getSemesterWeeks(SEMESTER_START, SEMESTER_END)

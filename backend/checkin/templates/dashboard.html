@@ -89,6 +89,7 @@
         <canvas id="visitor-chart8" data-url="{% url 'visitor-chart8' %}"></canvas>
     </div>
     <div class="item" id="container9" style="width: 40%; display: flex; flex-direction: column;">
+
         <canvas id="visitor-chart9" data-url="{% url 'visitor-chart9' %}"></canvas>
         <div style="display: flex;">
             <div id="chart9-min">0</div>
@@ -97,6 +98,10 @@
         </div>
     </div>
     <div class="item" id="container10" style="width: 40%; display: flex; flex-direction: column;">
+        <label for="chart9-weeks">Select Week</label>
+        <select id="chart9-weeks" name="chart9-weeks">
+            <option value="all">Whole Semester</option>
+        </select>
         <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
         <div style="display: flex;">
             <div id="chart10-min">0</div>
