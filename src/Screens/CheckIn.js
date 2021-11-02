@@ -167,6 +167,31 @@ export default class CheckIn extends React.Component {
     });
   };
 
+  checkForHistory = (pid) => {
+    axios({
+      method: "POST",
+      url: "/pid-to-name/",
+      headers: { 'X-CSRFToken': csrfToken },
+      data: {
+        pid: pid
+      }
+    }).then((response => {
+      if (response.data.name) {
+        if (this.state.name.trim() === "") {
+          this.setState({
+            name: response.data.name,
+          });
+        }
+        this.reasonRef.current.focus();
+      } else {
+        this.nameRef.current.focus();
+        this.setState({
+          firstTime: true
+        });
+      } 
+    }));
+  }
+
   handleKeyPress = (e) => {
     if( e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA" ) return;
     if( e.target.isContentEditable ) return;
@@ -175,32 +200,12 @@ export default class CheckIn extends React.Component {
     newArray.push(String.fromCharCode(e.keyCode));
     
     if (newArray.every(x => !isNaN(parseInt(x)))) {
+      const newPid = newArray.join("");
       this.setState({
-        pid: newArray.join(""),
+        pid: newPid,
         keypresses: Array(9).fill(null)
       });
-      axios({
-        method: "POST",
-        url: "/pid-to-name/",
-        headers: { 'X-CSRFToken': csrfToken },
-        data: {
-          pid: this.state.pid
-        }
-      }).then((response => {
-        if (response.data.name) {
-          if (this.state.name.trim() === "") {
-            this.setState({
-              name: response.data.name,
-            });
-          }
-          this.reasonRef.current.focus();
-        } else {
-          this.nameRef.current.focus();
-          this.setState({
-            firstTime: true
-          });
-        } 
-      }));
+      this.checkForHistory(newPid);
     } else {
       this.setState({
         keypresses: newArray
@@ -222,6 +227,12 @@ export default class CheckIn extends React.Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress);
+    if (this.props.location.state && this.props.location.state.pid) {
+      this.setState({
+        pid: this.props.location.state.pid
+      });
+      this.checkForHistory(this.props.location.state.pid);
+    }
   }
 
   componentWillUnmount() {

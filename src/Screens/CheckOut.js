@@ -3,6 +3,7 @@ import axios from "axios";
 import '../App.css';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import {checkUserOut} from '../Utilities/checkoutUtils'
 
 
 export default class CheckOut extends React.Component {
@@ -37,38 +38,11 @@ export default class CheckOut extends React.Component {
           });
       };
 
-    checkOut(obj) {
-        
-        // if clicked => mark checkedIn as false and set timeOut to current time
-        var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes();
-
-        const item = {
-            name: obj.name,
-            PID: obj.PID,
-            date: obj.date,
-            timeIn: obj.timeIn,
-            timeOut: time,
-            reason: obj.reason,
-            checkedIn: false,
-            staff: obj.staff
-        };
-
-        //axios.put(`/api/checkins/${obj.id}/`, item)
-        axios({ method: 'PUT', url: `/api/checkins/${obj.id}/`, headers: {authorization: localStorage.token}, data: { 
-            name: obj.name,
-            PID: obj.PID,
-            date: obj.date,
-            timeIn: obj.timeIn,
-            timeOut: time,
-            reason: obj.reason,
-            checkedIn: false,
-            staff: obj.staff
-          } });
-
+      checkOut(obj) {
+        checkUserOut(obj);
         // navigate back to home
-        this.props.history.push('');
-    }
+        this.props.history.push("");
+      }
 
     render() {
         let { visitors } = this.state;
