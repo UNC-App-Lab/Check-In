@@ -123,7 +123,8 @@ $(function () {
             });
 
             // Create Legend
-            const grdCtx = $("#chart10-box")[0].getContext("2d");
+            const canvas = $("#chart10-box")[0];
+            const grdCtx = canvas.getContext("2d");
 
             var grd = grdCtx.createLinearGradient(0, 0, 200, 20);
             grd.addColorStop(0, color(0));
@@ -131,7 +132,7 @@ $(function () {
 
             // Fill with gradient
             grdCtx.fillStyle = grd;
-            grdCtx.fillRect(10, 10, 300, 30);
+            grdCtx.fillRect(0, 0, canvas.width, canvas.height);
             $("#chart10-max").text(maxVal);
         }
     });
