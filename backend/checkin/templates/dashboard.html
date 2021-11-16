@@ -26,12 +26,18 @@
     <script src="{% static 'scroll.js' %}"></script>
     <link rel="stylesheet" href="{% static 'dashboardStyles.css' %}" />
     <style>
+        .graphs {
+	        display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+        }
         .item {
             flex-grow: 1;
         }
         .graphs > * + * {
             margin-left: 30px;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
         }
         .graphs > * {
             margin-right: 30px;
@@ -54,7 +60,7 @@
 
 <body>
   <h1 style="text-align: center;">App Lab KPIs Dashboard</h1>
-  <div class="graphs" style="display: flex; flex-wrap: wrap; justify-content: center">
+  <div class="graphs">
     <div class="item" id="container1" style="width: 40%;">
         <canvas id="visitor-chart1" data-url="{% url 'visitor-chart1' %}"></canvas>
     </div>
@@ -90,10 +96,12 @@
         <canvas id="visitor-chart8" data-url="{% url 'visitor-chart8' %}"></canvas>
     </div>
     <div class="item" id="container9" style="width: 40%; display: flex; flex-direction: column;">
-        <label for="chart9-weeks">Select Week</label>
-        <select id="chart9-weeks" name="chart9-weeks">
-            <option value="all">Whole Semester</option>
-        </select>
+        <div style="display: flex;">
+            <label for="chart9-weeks" style="margin-left: 3.2em;">Select Week:</label>
+            <select id="chart9-weeks" name="chart9-weeks" style="margin-left: 1em;" class="select">
+                <option value="all">Whole Semester</option>
+            </select>
+        </div>
         <canvas id="visitor-chart9" data-url="{% url 'visitor-chart9' %}"></canvas>
         <div class="heatMapLegend">
             <div id="chart9-min" class="heatMapLegendEntry">0</div>
