@@ -4,13 +4,14 @@ from rest_framework import viewsets
 from .serializers import CheckinSerializer      
 from .models import Checkin     
 from rest_framework.decorators import api_view  
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core import serializers       
 from django.db.models import Count, DateField, Sum, F, Min
 from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime, date, timedelta  
 from functools import reduce
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.forms.models import model_to_dict
 import json
 
 class CheckinView(viewsets.ModelViewSet):       
@@ -652,7 +653,6 @@ def checkin_data(request):
     data = serializers.serialize('json', dataset)
     return JsonResponse(data, safe=False)
 
-
 def pid_to_name(request):
     data = json.loads(request.body)
     result = Checkin.objects.filter(PID=data['pid']).values("name").first()
@@ -661,6 +661,24 @@ def pid_to_name(request):
     else:
         returnData = {"name": None}
     return JsonResponse(data=returnData)
+
+def checked_in(request):
+    data = json.loads(request.body)
+    result = Checkin.objects.filter(PID=data['pid'], checkedIn=True)
+    if (result):
+        resultDict = model_to_dict(result.first())
+        resultDict['date'] = resultDict['date'].strftime("%Y-%m-%d")
+        resultDict['timeIn'] = resultDict['timeIn'].strftime("%H:%M:%S")
+        resultDict['timeOut'] = resultDict['timeOut'].strftime("%H:%M:%S")
+        print(resultDict)
+
+        jsonResult = json.dumps(resultDict)
+        return HttpResponse(jsonResult, content_type="application/json")
+    else:
+        returnData = {"name": None, "checkedIn": False}
+        return JsonResponse(data=returnData, safe=False)
+
+    
 
 # Finds the number of weeks remaining in the year. 
 def findRemainingWeeks():
