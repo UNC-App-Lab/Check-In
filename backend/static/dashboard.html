@@ -1,85 +1,119 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <title>Checkin Dashboard</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@0.1.3/dist/chartjs-chart-matrix.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script src="https://d3js.org/d3-color.v2.min.js"></script>
+    <script src="https://d3js.org/d3-format.v2.min.js"></script>
+    <script src="https://d3js.org/d3-interpolate.v2.min.js"></script>
+    <script src="https://d3js.org/d3-scale.v3.min.js"></script>
     {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     <script src="{% static 'KPI1.js' %}"></script>
     <script src="{% static 'KPI2.js' %}"></script>
-    <script src="{% static 'testKPI.js' %}"></script>
+    <script src="{% static 'KPI3.js' %}"></script>
+    <script src="{% static 'KPI4.js' %}"></script>
+    <script src="{% static 'KPI5.js' %}"></script>
+    <script src="{% static 'KPI6.js' %}"></script>
+    <script src="{% static 'KPI7.js' %}"></script>
+    <script src="{% static 'KPI8.js' %}"></script>
+    <script src="{% static 'KPI9.js' %}"></script>
+    <script src="{% static 'KPI10.js' %}"></script>
+    <script src="{% static 'scroll.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'dashboardStyles.css' %}" />
+    <style>
+        .item {
+            flex-grow: 1;
+        }
+        .graphs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .graphs > * + * {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        .graphs > * {
+            margin-right: 30px;
+        }
+        #container1 {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        #container2 {
+            margin-right: 30px;
+        }
+        .chartWrapper > canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            pointer-events:none;
+        }
+    </style>
 </head>
 
 <body>
   <h1 style="text-align: center;">App Lab KPIs Dashboard</h1>
-  <div id="container" style="width: 40%;">
-    <canvas id="visitor-chart" data-url="{% url 'visitor-chart' %}"></canvas>
+  <div class="graphs">
+    <div class="item" id="container1" style="width: 40%;">
+        <canvas id="visitor-chart1" data-url="{% url 'visitor-chart1' %}"></canvas>
+    </div>
+    <div class="item" id="container2" style="width: 40%;">
+        <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
+    </div>
+    <div class="chartWrapper item" id="container3" style="width: 40%; overflow-x: auto; overflow-y: hidden;">
+        <div id="chart3" style="width: 900px; height: 350px">
+            <canvas id="visitor-chart3" data-url="{% url 'visitor-chart3' %}" height="350" width="0"></canvas>
+        </div>
+        <canvas id="myChartAxis" height="350" width="0"></canvas>
+    </div>
+    <div class="item" id="container4" style="width: 40%; overflow-x: auto; overflow-y: hidden">
+        <div style="width: 900px; height: 350px">
+            <canvas id="visitor-chart4" data-url="{% url 'visitor-chart4' %}" height="350" width="0"></canvas>
+        </div>
+    </div>
+    <div class="item" id="container5" style="width: 40%;">
+        <canvas id="visitor-chart5" data-url="{% url 'visitor-chart5' %}"></canvas>
+    </div>
+    <div class="item" id="container6" style="width: 40%;">
+        <canvas id="visitor-chart6" data-url="{% url 'visitor-chart6' %}"></canvas>
+    </div>
+    <!-- <div id="container7" style="width: 40%; overflow-x: auto; overflow-y: hidden">
+        <div style="width: 800px; height: 250px">
+            <canvas id="visitor-chart7" data-url="{% url 'visitor-chart7' %}" height="250" width="0"></canvas>
+        </div>
+    </div> -->
+    <div class="item" id="container7" style="width: 40%;">
+        <canvas id="visitor-chart7" data-url="{% url 'visitor-chart7' %}"></canvas>
+    </div>
+    <div class="item" id="container8" style="width: 40%;">
+        <canvas id="visitor-chart8" data-url="{% url 'visitor-chart8' %}"></canvas>
+    </div>
+    <div class="item" id="container9" style="width: 40%; display: flex; flex-direction: column;">
+        <label for="chart9-weeks">Select Week</label>
+        <select id="chart9-weeks" name="chart9-weeks">
+            <option value="all">Whole Semester</option>
+        </select>
+        <canvas id="visitor-chart9" data-url="{% url 'visitor-chart9' %}"></canvas>
+        <div class="heatMapLegend">
+            <div id="chart9-min" class="heatMapLegendEntry">0</div>
+            <canvas id="chart9-box" height="30px" width="400px" class="heatMapLegendEntry"></canvas>
+            <div id="chart9-max" class="heatMapLegendEntry">0</div>
+        </div>
+    </div>
+    <div class="item" id="container10" style="width: 40%; display: flex; flex-direction: column;">
+        <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
+        <div class="heatMapLegend">
+            <div id="chart10-min" class="heatMapLegendEntry">0</div>
+            <canvas id="chart10-box"  height="30px" width="400px" class="heatMapLegendEntry"></canvas>
+            <div id="chart10-max" class="heatMapLegendEntry">0</div>
+        </div>
+    </div>
   </div>
-  <div id="container2" style="width: 40%;">
-    <canvas id="visitor-chart2" data-url="{% url 'visitor-chart2' %}"></canvas>
-  </div>
-  <!-- <div id="container10" style="width: 40%;">
-    <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
-  </div> -->
 </body>
-
-<!-- <head>
-    <meta charset="UTF-8">
-    <title>Checkin Dashboard</title>
-    <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.flexmonster.com/demo.css">
-    <script>
-        function processData(dataset) {
-            var result = []
-            dataset = JSON.parse(dataset);
-            dataset.forEach(item => result.push(item.fields));
-            return result;
-        }
-        $.ajax({
-            url: $("#checkin-table-container").attr("data-url"),
-            dataType: 'json',
-            success: function(data) {
-                new Flexmonster({
-                    container: "#checkin-table-container",
-                    componentFolder: "https://cdn.flexmonster.com/",
-                    width: "100%",
-                    height: 430,
-                    toolbar: true,
-                    report: {
-                        dataSource: {
-                            type: "json",
-                            data: processData(data)
-                        },
-                        slice: {}
-                    }
-                });
-                new Flexmonster({
-                    container: "#checkin-chart-container",
-                    componentFolder: "https://cdn.flexmonster.com/",
-                    width: "100%",
-                    height: 430,
-                    //toolbar: true,
-                    report: {
-                        dataSource: {
-                            type: "json",
-                            data: processData(data)
-                        },
-                        slice: {},
-                        "options": {
-                            "viewType": "charts",
-                            "chart": {
-                                "type": "pie"
-                            }
-                        }
-                    }
-                });
-            }
-        });
-    </script>
-</head>
-<body>
-  <h1>Dashboard</h1>
-  <div id="checkin-table-container" data-url="{% url 'checkin_data' %}"></div>
-  <div id="checkin-chart-container"></div>
-</body> -->
