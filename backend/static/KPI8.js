@@ -1,20 +1,26 @@
 $(function() {
-    var $visitorChart = $("#visitor-chart1");
+    var $visitorChart = $("#visitor-chart8");
     $.ajax({
       url: $visitorChart.data("url"),
       success: function (data) {
         var ctx = $visitorChart[0].getContext("2d");
         new Chart(ctx, {
-          type: 'line',
+          type: 'bar',
           data: {
             labels: data.labels,
-            datasets: data.data          
+            datasets: [{
+              backgroundColor: '#145A89',
+              data: data.data, 
+            }]          
           },
           options: {
             responsive: true,
+            legend: {
+              display: false,
+            },
             title: {
               display: true,
-              text: 'Visitors Per Week by Semester',
+              text: 'How New Visitors are Hearing About the AL',
               fontSize: 18,
               fontStyle: 'bold'
             },
@@ -33,7 +39,7 @@ $(function() {
               xAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Week',
+                  labelString: 'Mode',
                   fontSize: 15,
                   fontStyle: 'bold'
                 }

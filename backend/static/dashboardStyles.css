@@ -1,0 +1,13 @@
+.heatMapLegend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 100px;
+}
+
+.heatMapLegendEntry {
+  margin: 0.1em;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  color: gray;
+}

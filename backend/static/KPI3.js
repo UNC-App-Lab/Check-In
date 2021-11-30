@@ -1,20 +1,28 @@
 $(function() {
-    var $visitorChart = $("#visitor-chart1");
+    var $visitorChart = $("#visitor-chart3");
     $.ajax({
       url: $visitorChart.data("url"),
       success: function (data) {
         var ctx = $visitorChart[0].getContext("2d");
         new Chart(ctx, {
-          type: 'line',
+          type: 'bar',
           data: {
             labels: data.labels,
-            datasets: data.data          
+            datasets: [{
+              backgroundColor: '#99BADD',
+              data: data.data, 
+            }]          
           },
+          maintainAspectRatio: false,
+          responsive: true,
           options: {
             responsive: true,
+            legend: {
+              display: false,
+            },
             title: {
               display: true,
-              text: 'Visitors Per Week by Semester',
+              text: 'Visitors Per Week',
               fontSize: 18,
               fontStyle: 'bold'
             },
@@ -33,7 +41,7 @@ $(function() {
               xAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Week',
+                  labelString: 'Week Starting',
                   fontSize: 15,
                   fontStyle: 'bold'
                 }
@@ -41,7 +49,6 @@ $(function() {
             }
           }
         });
-
       }
     });
   });

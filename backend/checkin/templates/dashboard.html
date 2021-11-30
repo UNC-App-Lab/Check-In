@@ -24,13 +24,20 @@
     <script src="{% static 'KPI9.js' %}"></script>
     <script src="{% static 'KPI10.js' %}"></script>
     <script src="{% static 'scroll.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'dashboardStyles.css' %}" />
     <style>
+        .graphs {
+	        display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+        }
         .item {
             flex-grow: 1;
         }
         .graphs > * + * {
             margin-left: 30px;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
         }
         .graphs > * {
             margin-right: 30px;
@@ -53,7 +60,7 @@
 
 <body>
   <h1 style="text-align: center;">App Lab KPIs Dashboard</h1>
-  <div class="graphs" style="display: flex; flex-wrap: wrap; justify-content: center">
+  <div class="graphs">
     <div class="item" id="container1" style="width: 40%;">
         <canvas id="visitor-chart1" data-url="{% url 'visitor-chart1' %}"></canvas>
     </div>
@@ -89,19 +96,25 @@
         <canvas id="visitor-chart8" data-url="{% url 'visitor-chart8' %}"></canvas>
     </div>
     <div class="item" id="container9" style="width: 40%; display: flex; flex-direction: column;">
-        <canvas id="visitor-chart9" data-url="{% url 'visitor-chart9' %}"></canvas>
         <div style="display: flex;">
-            <div id="chart9-min">0</div>
-            <canvas id="chart9-box"></canvas>
-            <div id="chart9-max">0</div>
+            <label for="chart9-weeks" style="margin-left: 3.2em;">Select Week:</label>
+            <select id="chart9-weeks" name="chart9-weeks" style="margin-left: 1em;" class="select">
+                <option value="all">Whole Semester</option>
+            </select>
+        </div>
+        <canvas id="visitor-chart9" data-url="{% url 'visitor-chart9' %}"></canvas>
+        <div class="heatMapLegend">
+            <div id="chart9-min" class="heatMapLegendEntry">0</div>
+            <canvas id="chart9-box" height="30px" width="400px" class="heatMapLegendEntry"></canvas>
+            <div id="chart9-max" class="heatMapLegendEntry">0</div>
         </div>
     </div>
     <div class="item" id="container10" style="width: 40%; display: flex; flex-direction: column;">
         <canvas id="visitor-chart10" data-url="{% url 'visitor-chart10' %}"></canvas>
-        <div style="display: flex;">
-            <div id="chart10-min">0</div>
-            <canvas id="chart10-box"></canvas>
-            <div id="chart10-max">0</div>
+        <div class="heatMapLegend">
+            <div id="chart10-min" class="heatMapLegendEntry">0</div>
+            <canvas id="chart10-box"  height="30px" width="400px" class="heatMapLegendEntry"></canvas>
+            <div id="chart10-max" class="heatMapLegendEntry">0</div>
         </div>
     </div>
   </div>
