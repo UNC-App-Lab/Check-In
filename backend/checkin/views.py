@@ -131,6 +131,18 @@ def visitor_chart1(request):
     endDate = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
     addSem(startDate, endDate, 3)
 
+    # Spring 2022: Mon. Jan 10 - Mon. Apr 29 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2022",
+        'borderColor': "#de425b",
+        'fill': 'false',
+        'lineTension': 0
+    }) 
+    startDate = datetime.strptime('2022-01-10', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2022-04-29', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 4)
+
     # CHANGE DATES ACCORDINGLY
     # Spring 2022: Wed. Aug 18 - Wed. Dec 1 (16 weeks)
     # data.append({
@@ -254,6 +266,18 @@ def visitor_chart2(request):
     startDate = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
     endDate = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
     addSem(startDate, endDate, 3)
+
+    # Spring 2022: Mon. Jan 10 - Mon. Apr 29 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2022",
+        'borderColor': "#de425b",
+        'fill': 'false',
+        'lineTension': 0
+    }) 
+    startDate = datetime.strptime('2022-01-10', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2022-04-29', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 4)
 
     # CHANGE DATES ACCORDINGLY
     # Spring 2022: Tues. Jan 19 - Wed. May 5 (16 weeks)
@@ -587,7 +611,7 @@ def visitor_chart9(request):
 
     weeks = getCurrentSemesterWeeks()
 
-    search_range = ["2021-08-18", "2021-12-01"]
+    search_range = ["2022-01-10", "2022-04-29"]
     if ('week' in request.GET):
         chosenWeek = request.GET['week']
         if chosenWeek != 'all':
