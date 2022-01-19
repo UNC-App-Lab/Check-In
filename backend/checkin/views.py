@@ -62,26 +62,19 @@ def visitor_chart1(request):
         # put count per week (in sequential order) in data array that will be returned
         finalSet = []
         for d in dates:
-            finalCount = 0
-            for val in queryData:
-                if val['weekstart'] == d:
-                    finalCount = val['count']
-            finalSet.append({'weekstart': d, 'count' : finalCount})
+            # We don't include dates after the current date
+            if (d < date.today()):
+                finalCount = 0
+                for val in queryData:
+                    if val['weekstart'] == d:
+                        finalCount = val['count']
+                finalSet.append({'weekstart': d, 'count' : finalCount})
         for x in finalSet:
             data[dataIndex]['data'].append(x['count'])
         # didn't start using check-in app till week 8 in Spring 2020
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
-
-        # Find the week are currently in, and place that in the chart. 
-        remainingWeeks = findRemainingWeeks(); 
-
-        # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
-        # Change the range (1st parameter) each week to add next data point
-        if (dataIndex == 3):
-            for x in range(17 - remainingWeeks, 17):
-                data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
     data.append({
@@ -141,7 +134,7 @@ def visitor_chart1(request):
     }) 
     startDate = datetime.strptime('2022-01-10', '%Y-%m-%d').date()
     endDate = datetime.strptime('2022-04-29', '%Y-%m-%d').date()
-    addSem(startDate, endDate, 4)
+    addSem(startDate, endDate, 4) # Remove current semester marker after end of semester
 
     # CHANGE DATES ACCORDINGLY
     # Spring 2022: Wed. Aug 18 - Wed. Dec 1 (16 weeks)
@@ -197,27 +190,19 @@ def visitor_chart2(request):
         # put hours per week (in sequential order) in data array that will be returned
         finalSet = []
         for d in dates:
-            hours = 0
-            for val in queryData:
-                if val['weekstart'] == d:
-                    hours = val['sumHours']
-            finalSet.append({'weekstart': d, 'sumHours' : hours})
+            # We don't include dates after today
+            if d < date.today():
+                hours = 0
+                for val in queryData:
+                    if val['weekstart'] == d:
+                        hours = val['sumHours']
+                finalSet.append({'weekstart': d, 'sumHours' : hours})
         for x in finalSet:
             data[dataIndex]['data'].append(x['sumHours'] / 60)
         # didn't start using check-in app till week 8 in Spring 2020
         if (dataIndex == 0):
             for x in range (0,7):
                 data[0]['data'][x] = None
-
-        remainingWeeks = findRemainingWeeks()
-        # remainingWeeks =
-
-        # 8/23/21 is week 1 of Fall 2021 (remove weeks after that for now)
-        # Increment the range (1st parameter) each week to add next data point
-        if (dataIndex == 3):
-            # Update with every request. 
-            for x in range(17 - remainingWeeks, 17):
-                data[3]['data'].pop()
     
     # Spring 2020: Thurs. Jan 9 - Fri. April 24 (16 weeks)
     data.append({
@@ -724,13 +709,6 @@ def checked_in(request):
     else:
         returnData = {"name": None, "checkedIn": False}
         return JsonResponse(data=returnData, safe=False)
-
-    
-
-# Finds the number of weeks remaining in the year. 
-def findRemainingWeeks():
-    endDate = date.today()
-    return 16 - round((endDate - SEMESTER_START).days / 7)
 
 def getSemesterWeeks(startDate, endDate):
     dates = set()
