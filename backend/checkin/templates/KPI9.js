@@ -68,7 +68,7 @@ function createChart(data) {
     chartOptions = {
         title: {
             display: true,
-            text: 'Visitors Per Weekday-Hour (Fall 2021)',
+            text: 'Visitors Per Weekday-Hour (Fall 2022)',
             fontSize: 18,
             fontStyle: 'bold'
             },

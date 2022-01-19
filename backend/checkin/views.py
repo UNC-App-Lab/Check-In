@@ -464,6 +464,16 @@ def visitor_chart5(request):
     endDate = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
     addSem(startDate, endDate, 3)
 
+    # Spring 2022: Mon. Jan 10 - Mon. Apr 29 (16 weeks)
+    data.append({
+        'data': [],
+        'label': "Spring 2022",
+        'backgroundColor': "#de425b"
+    }) 
+    startDate = datetime.strptime('2022-01-10', '%Y-%m-%d').date()
+    endDate = datetime.strptime('2022-04-29', '%Y-%m-%d').date()
+    addSem(startDate, endDate, 4)
+
     # CHANGE DATES
     # Spring 2022: Tues. Jan 19 - Wed. May 5 (16 weeks)
     # data.append({
