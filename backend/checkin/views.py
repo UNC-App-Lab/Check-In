@@ -18,8 +18,8 @@ class CheckinView(viewsets.ModelViewSet):
     serializer_class = CheckinSerializer          
     queryset = Checkin.objects.all()   
 
-SEMESTER_START = datetime.strptime('2021-08-18', '%Y-%m-%d').date()
-SEMESTER_END = datetime.strptime('2021-12-01', '%Y-%m-%d').date()
+SEMESTER_START = datetime.strptime('2022-01-10', '%Y-%m-%d').date()
+SEMESTER_END = datetime.strptime('2022-04-27', '%Y-%m-%d').date()
 
 # Helper time series function
 def daterange(date1, date2):
