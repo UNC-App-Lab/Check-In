@@ -6,3 +6,4 @@ backend/static
 !/build/static/
 /build/static/*
 !/build/static/git-placeholder
+backend/checkin.log

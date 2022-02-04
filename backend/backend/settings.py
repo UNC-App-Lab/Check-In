@@ -30,7 +30,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = '=od%1kocldgpxyv&cyc9(lj636%$b7!)3&f(l+%7b^^3316u5b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["app-lab-check-in.herokuapp.com", '127.0.0.1', "localhost", 'check-in-pip-kpis-njxdalr2yzej.herokuapp.com', '.herokuapp.com']
 # "checkin-prod-reviewapp-roctbto.herokuapp.com"
@@ -155,3 +155,36 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:8000', 'http://50.19.103.36:5000', 'https://app-lab-check-in.herokuapp.com', 'https://applab-checkin.herokuapp.com', 'https://check-in-pip-kpis-njxdalr2yzej.herokuapp.com']
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'checkin.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'CHECKIN': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
