@@ -13,10 +13,8 @@ django-cors-headers = "*"
 gunicorn = "*"
 whitenoise = "*"
 matplotlib = "*"
-psycopg2-binary = "*"
 dj-database-url = "*"
 python-dotenv = "*"
-psycopg2 = "*"
 pandas = "*"
 
 [requires]

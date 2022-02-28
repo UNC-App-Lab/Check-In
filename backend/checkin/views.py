@@ -694,6 +694,16 @@ def pid_to_name(request):
         returnData = {"name": None}
     return JsonResponse(data=returnData)
 
+def name_to_pid(request):
+    print(request)
+    data = json.loads(request.body)
+    result = Checkin.objects.filter(NAME=data['name']).values("PID").first()
+    if (result):
+        returnData = {"pid": result["PID"]}
+    else:
+        returnData = {"pid": None}
+    return JsonResponse(data=returnData)
+
 def checked_in(request):
     data = json.loads(request.body)
     result = Checkin.objects.filter(PID=data['pid'], checkedIn=True)

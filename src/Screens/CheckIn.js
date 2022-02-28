@@ -27,7 +27,7 @@ function getSuggestions(value) {
   if (escapedValue === '') {
     return [];
   }
-
+ 
   const regex = new RegExp('^' + escapedValue, 'i');
 
   return options.filter(option => regex.test(option));
@@ -47,6 +47,13 @@ function shouldRenderSuggestions(value, reason) {
   return value.trim().length > 0 || reason === "suggestions-revealed" || reason === "suggestions-updated" || reason === "render";
 };
 
+// function search(){
+
+//   // TODO
+
+//   return  recs;
+// }
+
 export default class CheckIn extends React.Component {
 
   constructor() {
@@ -60,7 +67,8 @@ export default class CheckIn extends React.Component {
       modalText: "",
       keypresses: Array(9).fill(null),
       pid: "",
-      name: ""
+      name: "",
+      keys: []
     };
     this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
     this.handleFirstTimeChecked = this.handleFirstTimeChecked.bind(this);
@@ -167,6 +175,12 @@ export default class CheckIn extends React.Component {
     });
   };
 
+  clearArray = () => {
+    this.setState({
+      keypresses: Array(9).fill(null)
+    })
+  }
+
   checkForHistory = (pid) => {
     axios({
       method: "POST",
@@ -193,24 +207,77 @@ export default class CheckIn extends React.Component {
   }
 
   handleKeyPress = (e) => {
-    if( e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA" ) return;
-    if( e.target.isContentEditable ) return;
-
-    const newArray = this.state.keypresses.slice(1, 9);
-    newArray.push(String.fromCharCode(e.keyCode));
-    
-    if (newArray.every(x => !isNaN(parseInt(x)))) {
-      const newPid = newArray.join("");
-      this.setState({
-        pid: newPid,
-        keypresses: Array(9).fill(null)
-      });
-      this.checkForHistory(newPid);
+    if (!(e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA")) {
+      const pidArray = this.state.keypresses.slice(1, 9);
+      pidArray.push(String.fromCharCode(e.keyCode));
+      console.log(pidArray);
+      if (pidArray.every(x => !isNaN(parseInt(x)))) {
+        const newPid = pidArray.join("");
+        console.log(newPid);
+        console.log(e.target)
+          this.setState({
+            pid: newPid.substring(0, newPid.length),
+            keypresses: Array(9).fill(null)
+          });
+        this.checkForHistory(newPid);
+      }
+      else {
+        this.setState({
+          keypresses: pidArray
+        });
+      }
     } else {
-      this.setState({
-        keypresses: newArray
-      });
+
+      if (!(String.fromCharCode(e.keyCode) === '\b')) {
+        this.state.keys.push(String.fromCharCode(e.keyCode))
+      }
+      else {
+        this.state.keys.pop()
+      }
+
+      console.log(this.state.keys)
+      if (this.state.keys.length === 9){
+        const pidArray = this.state.keys.slice(0, 9);
+        console.log(pidArray);
+        if (pidArray.every(x => !isNaN(parseInt(x)))) {
+          const newPid = pidArray.join("");
+          console.log(newPid);
+          console.log(e.target)
+          this.checkForHistory(newPid);
+        }
+        else {
+          this.setState({
+            keypresses: pidArray
+          });
+        }
+      }
     }
+  }
+
+  checkForHistoryName = (name) => {
+    
+    axios({
+      method: "POST",
+      url: "/name-to-pid/",
+      headers: { 'X-CSRFToken': csrfToken },
+      data: {
+        name: "Vitor"
+      }
+    }).then((response => {
+      if (response.data.pid) {
+        if (this.state.pid.trim() === "") {
+          this.setState({
+            pid: response.data.pid,
+          });
+        }
+        this.reasonRef.current.focus();
+      } else {
+        this.pidRef.current.focus(); //? pidRef?
+        this.setState({
+          firstTime: true
+        });
+      } 
+    }));
   }
 
   pidChange = (event) => {
@@ -258,15 +325,15 @@ export default class CheckIn extends React.Component {
         </Modal>
         <h2>Check In</h2>
         <form class="checkin-form">
-          <label class="checkin-label">Name:</label>
-          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} />
-          <p class="checkin-centered">(Scanner can be used to input PID)</p>
           <label class="checkin-label">PID:</label>
-          <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} />
+          <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} onClick={this.clearArray}/>
           <div class="checkin-centered">
             <input type="checkbox" id="noPID" class="noPID" onChange={this.handleChecked} />
             <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
           </div>
+          <label class="checkin-label">Name:</label>
+          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} />
+          <p class="checkin-centered">(Scanner can be used to input PID)</p>
           <label class="checkin-label">
             Reason:
           </label>
