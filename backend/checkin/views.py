@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.shortcuts import render
 from django.shortcuts import redirect
 from rest_framework import viewsets          
@@ -687,7 +688,9 @@ def checkin_data(request):
 
 def pid_to_name(request):
     data = json.loads(request.body)
+    print(data)
     result = Checkin.objects.filter(PID=data['pid']).values("name").first()
+    print(result)
     if (result):
         returnData = {"name": result["name"]}
     else:
@@ -697,7 +700,10 @@ def pid_to_name(request):
 def name_to_pid(request):
     print(request)
     data = json.loads(request.body)
-    result = Checkin.objects.filter(NAME=data['name']).values("PID").first()
+    name = data['name']
+    print(name.lower())
+    result = Checkin.objects.filter(name_lower=name.lower()).values("PID").first()
+    print(result)
     if (result):
         returnData = {"pid": result["PID"]}
     else:

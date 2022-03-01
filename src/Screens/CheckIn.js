@@ -202,7 +202,7 @@ export default class CheckIn extends React.Component {
         this.setState({
           firstTime: true
         });
-      } 
+      }
     }));
   }
 
@@ -211,6 +211,7 @@ export default class CheckIn extends React.Component {
       const pidArray = this.state.keypresses.slice(1, 9);
       pidArray.push(String.fromCharCode(e.keyCode));
       console.log(pidArray);
+      
       if (pidArray.every(x => !isNaN(parseInt(x)))) {
         const newPid = pidArray.join("");
         console.log(newPid);
@@ -228,10 +229,9 @@ export default class CheckIn extends React.Component {
       }
     } else {
 
-      if (!(String.fromCharCode(e.keyCode) === '\b')) {
+      if ((!(String.fromCharCode(e.keyCode) === '\b') && (!(String.fromCharCode(e.keyCode) === '\x10')) && (!(String.fromCharCode(e.keyCode) === '\r'))) && (!(String.fromCharCode(e.keyCode) === '\t')) && (!(String.fromCharCode(e.keyCode) === '\x14'))) {
         this.state.keys.push(String.fromCharCode(e.keyCode))
-      }
-      else {
+      } else if (String.fromCharCode(e.keyCode) === '\b'){
         this.state.keys.pop()
       }
 
@@ -250,6 +250,15 @@ export default class CheckIn extends React.Component {
             keypresses: pidArray
           });
         }
+      } else if (this.state.keys.some(x => isNaN(parseInt(x)))){
+        const nameArray = this.state.keys;
+        console.log(nameArray);
+        if (String.fromCharCode(e.keyCode) === '\r' || String.fromCharCode(e.keyCode) === '\t') { 
+          const newName = nameArray.join("");
+          console.log(newName);
+          console.log(e.target)
+          this.checkForHistoryName(newName);
+        }
       }
     }
   }
@@ -261,18 +270,18 @@ export default class CheckIn extends React.Component {
       url: "/name-to-pid/",
       headers: { 'X-CSRFToken': csrfToken },
       data: {
-        name: "Vitor"
+        name: name
       }
     }).then((response => {
-      if (response.data.pid) {
-        if (this.state.pid.trim() === "") {
+      if (response.data.name) {
+        if (this.state.name.trim() === "") {
           this.setState({
-            pid: response.data.pid,
+            name: response.data.name,
           });
         }
         this.reasonRef.current.focus();
       } else {
-        this.pidRef.current.focus(); //? pidRef?
+        this.nameRef.current.focus();
         this.setState({
           firstTime: true
         });
@@ -358,7 +367,7 @@ export default class CheckIn extends React.Component {
               alwaysRenderSuggestions={true}
               inputProps={inputProps} />
           </div>
-          <button type="button" class="check-in checkin-centered" onClick={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}>Submit</button>
+          <button type="button" class="check-in checkin-centered" onClick={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("name").value.toLowerCase(), document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}>Submit</button>
         </form>
       </div>
     );

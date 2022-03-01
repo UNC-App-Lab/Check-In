@@ -4,4 +4,4 @@ from .models import Checkin
 class CheckinSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkin
-        fields = ('id', 'name', 'PID', 'date', 'timeIn', 'timeOut', 'reason', 'staff', 'checkedIn', 'hasPID', 'firstTime', 'heard_about_al_through', 'comments')
+        fields = ('id', 'name', 'name_lower', 'PID', 'date', 'timeIn', 'timeOut', 'reason', 'staff', 'checkedIn', 'hasPID', 'firstTime', 'heard_about_al_through', 'comments')
