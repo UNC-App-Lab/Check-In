@@ -273,15 +273,15 @@ export default class CheckIn extends React.Component {
         name: name
       }
     }).then((response => {
-      if (response.data.name) {
-        if (this.state.name.trim() === "") {
+      if (response.data.pid) {
+        if (this.state.pid.trim() === "") {
           this.setState({
-            name: response.data.name,
+            pid: response.data.pid,
           });
         }
         this.reasonRef.current.focus();
       } else {
-        this.nameRef.current.focus();
+        this.pidRef.current.focus();
         this.setState({
           firstTime: true
         });
@@ -334,15 +334,15 @@ export default class CheckIn extends React.Component {
         </Modal>
         <h2>Check In</h2>
         <form class="checkin-form">
+          <label class="checkin-label">Name:</label>
+          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} />
+          <p class="checkin-centered">(Scanner can be used to input PID)</p>
           <label class="checkin-label">PID:</label>
           <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} onClick={this.clearArray}/>
           <div class="checkin-centered">
             <input type="checkbox" id="noPID" class="noPID" onChange={this.handleChecked} />
             <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
           </div>
-          <label class="checkin-label">Name:</label>
-          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} />
-          <p class="checkin-centered">(Scanner can be used to input PID)</p>
           <label class="checkin-label">
             Reason:
           </label>

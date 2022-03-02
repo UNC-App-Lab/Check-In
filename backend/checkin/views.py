@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers       
 from django.db.models import Count, DateField, Sum, F, Min
-from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
+from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute, Lower
 from datetime import datetime, date, timedelta  
 from functools import reduce
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -701,8 +701,7 @@ def name_to_pid(request):
     print(request)
     data = json.loads(request.body)
     name = data['name']
-    print(name.lower())
-    result = Checkin.objects.filter(name_lower=name.lower()).values("PID").first()
+    result = Checkin.objects.filter(name__iexact=name).values("PID").first()
     print(result)
     if (result):
         returnData = {"pid": result["PID"]}
