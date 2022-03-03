@@ -16,8 +16,8 @@ matplotlib = "*"
 psycopg2-binary = "*"
 dj-database-url = "*"
 python-dotenv = "*"
-psycopg2 = "*"
 pandas = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
