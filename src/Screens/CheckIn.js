@@ -59,6 +59,7 @@ export default class CheckIn extends React.Component {
       modalOpen: false,
       modalText: "",
       keypresses: Array(9).fill(null),
+      keysPidBox: [],
       pid: "",
       name: ""
     };
@@ -192,24 +193,47 @@ export default class CheckIn extends React.Component {
     }));
   }
 
-  handleKeyPress = (e) => {
-    if( e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA" ) return;
-    if( e.target.isContentEditable ) return;
+  clearArray = () => {
+    this.setState({
+      keypresses: Array(9).fill(null)
+    })
+  }
 
-    const newArray = this.state.keypresses.slice(1, 9);
-    newArray.push(String.fromCharCode(e.keyCode));
-    
-    if (newArray.every(x => !isNaN(parseInt(x)))) {
-      const newPid = newArray.join("");
-      this.setState({
-        pid: newPid,
-        keypresses: Array(9).fill(null)
-      });
-      this.checkForHistory(newPid);
+  handleKeyPress = (e) => {
+    if (!(e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA")) {
+      const pidArray = this.state.keypresses.slice(1, 9);
+      pidArray.push(String.fromCharCode(e.keyCode));
+      if (pidArray.every(x => !isNaN(parseInt(x)))) {
+        const newPid = pidArray.join("");
+        this.setState({
+          pid: newPid.substring(0, newPid.length),
+          keypresses: Array(9).fill(null)
+        });
+        this.checkForHistory(newPid);
+      } else {
+        this.setState({
+          keypresses: pidArray
+          });
+      }
     } else {
-      this.setState({
-        keypresses: newArray
-      });
+      if (!(String.fromCharCode(e.keyCode) === '\b')) {
+        this.state.keysPidBox.push(String.fromCharCode(e.keyCode))
+      } else {
+        this.state.keysPidBox.pop()
+      }
+
+      if (this.state.keysPidBox.length === 9){
+        const pidArray = this.state.keysPidBox.slice(0, 9);
+        if (pidArray.every(x => !isNaN(parseInt(x)))) {
+          const newPid = pidArray.join("");
+          this.checkForHistory(newPid);
+        }
+        else {
+          this.setState({
+            keypresses: pidArray
+          });
+        }
+      }
     }
   }
 
@@ -262,7 +286,7 @@ export default class CheckIn extends React.Component {
           <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} />
           <p class="checkin-centered">(Scanner can be used to input PID)</p>
           <label class="checkin-label">PID:</label>
-          <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} />
+          <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} onClick={this.clearArray}/>
           <div class="checkin-centered">
             <input type="checkbox" id="noPID" class="noPID" onChange={this.handleChecked} />
             <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
