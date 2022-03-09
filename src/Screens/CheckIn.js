@@ -196,7 +196,7 @@ export default class CheckIn extends React.Component {
   clearArray = () => {
     this.setState({
       keypresses: Array(9).fill(null)
-    })
+    });
   }
 
   handleKeyPress = (e) => {
