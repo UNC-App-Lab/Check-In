@@ -11,6 +11,7 @@ from django.db.models.functions import TruncWeek, ExtractHour, ExtractMinute
 from datetime import datetime, date, timedelta  
 from functools import reduce
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 import json
 
@@ -685,6 +686,7 @@ def checkin_data(request):
     data = serializers.serialize('json', dataset)
     return JsonResponse(data, safe=False)
 
+@csrf_exempt
 def pid_to_name(request):
     data = json.loads(request.body)
     result = Checkin.objects.filter(PID=data['pid']).values("name").first()
@@ -692,6 +694,17 @@ def pid_to_name(request):
         returnData = {"name": result["name"]}
     else:
         returnData = {"name": None}
+    return JsonResponse(data=returnData)
+
+@csrf_exempt
+def name_to_pid(request):
+    data = json.loads(request.body)
+    name = data['name']
+    result = Checkin.objects.filter(name__iexact=name.lower()).values("PID").first()
+    if (result):
+        returnData = {"pid": result["PID"]}
+    else:
+        returnData = {"pid": None}
     return JsonResponse(data=returnData)
 
 def checked_in(request):

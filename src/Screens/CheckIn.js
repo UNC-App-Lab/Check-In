@@ -200,7 +200,7 @@ export default class CheckIn extends React.Component {
   }
 
   handleKeyPress = (e) => {
-    if (!(e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA")) {
+    if (!(e.target.nodeName === "INPUT" || e.target.nodeName === "TEXTAREA")) {
       const pidArray = this.state.keypresses.slice(1, 9);
       pidArray.push(String.fromCharCode(e.keyCode));
       if (pidArray.every(x => !isNaN(parseInt(x)))) {
@@ -216,9 +216,9 @@ export default class CheckIn extends React.Component {
           });
       }
     } else {
-      if (!(String.fromCharCode(e.keyCode) === '\b')) {
+      if ((!(String.fromCharCode(e.keyCode) === '\b') && (!(String.fromCharCode(e.keyCode) === '\x10')) && (!(String.fromCharCode(e.keyCode) === '\r'))) && (!(String.fromCharCode(e.keyCode) === '\t')) && (!(String.fromCharCode(e.keyCode) === '\x14'))) {
         this.state.keysPidBox.push(String.fromCharCode(e.keyCode))
-      } else {
+      } else if (String.fromCharCode(e.keyCode) === '\b'){
         this.state.keysPidBox.pop()
       }
 
@@ -232,9 +232,44 @@ export default class CheckIn extends React.Component {
           this.setState({
             keypresses: pidArray
           });
+        }  
+      } else if (this.state.keysPidBox.some(x => isNaN(parseInt(x)))){
+          const nameArray = this.state.keysPidBox;
+          console.log(nameArray);
+          if (String.fromCharCode(e.keyCode) === '\r' || String.fromCharCode(e.keyCode) === '\t') { 
+            const newName = nameArray.join("");
+            console.log(newName);
+            console.log(e.target);
+            this.checkForHistoryName(newName);
         }
       }
     }
+  }
+
+  checkForHistoryName = (name) => {
+
+    axios({
+      method: "POST",
+      url: "/name-to-pid/",
+      headers: { 'X-CSRFToken': csrfToken },
+      data: {
+        name: name
+      }
+    }).then((response => {
+      if (response.data.pid) {
+        if (this.state.pid.trim() === "") {
+          this.setState({
+            pid: response.data.pid,
+          });
+        }
+        this.reasonRef.current.focus();
+      } else {
+        this.pidRef.current.focus()
+        this.setState({
+          firstTime: true
+        });
+      } 
+    }));
   }
 
   pidChange = (event) => {
