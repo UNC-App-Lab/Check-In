@@ -41,6 +41,6 @@ urlpatterns = [
     path('visitor-chart9/', views.visitor_chart9, name="visitor-chart9"),
     path('visitor-chart10/', views.visitor_chart10, name="visitor-chart10"),
     path('pid-to-name/', views.pid_to_name, name="pid-to-name"),
+    path('name-to-pid/', views.name_to_pid, name="name-to-pid"),
     path('checked-in/', views.checked_in, name="checked-in")
 ]
-
