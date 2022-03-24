@@ -131,6 +131,7 @@ export default class CheckIn extends React.Component {
 
   handleChecked() {
     this.setState({ isChecked: !this.state.isChecked });
+    this.setState({ });
   }
 
   handleFirstTimeChecked() {
@@ -244,11 +245,11 @@ export default class CheckIn extends React.Component {
         if (this.state.pid.trim() === "") {
           this.setState({
             pid: response.data.pid,
+            firstTime: false
           });
         }
         this.reasonRef.current.focus();
       } else {
-        this.pidRef.current.focus()
         this.setState({
           firstTime: true
         });
@@ -309,7 +310,7 @@ export default class CheckIn extends React.Component {
         <h2>Check In</h2>
         <form class="checkin-form">
           <label class="checkin-label">Name:</label>
-          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} />
+          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} onBlur={() => this.checkForHistoryName(this.state.name)}/>
           <p class="checkin-centered">(Scanner can be used to input PID)</p>
           <label class="checkin-label">PID:</label>
           <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} onClick={this.clearArray}/>
