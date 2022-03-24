@@ -61,7 +61,8 @@ export default class CheckIn extends React.Component {
       keypresses: Array(9).fill(null),
       keysPidBox: [],
       pid: "",
-      name: ""
+      name: "",
+      reason: ''
     };
     this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
     this.handleFirstTimeChecked = this.handleFirstTimeChecked.bind(this);
@@ -103,20 +104,6 @@ export default class CheckIn extends React.Component {
       var today = new Date();
       var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
       var time = today.getHours() + ":" + today.getMinutes();
-
-      const item = {
-        name: name, // add name input field, make blank=false
-        PID: pid,
-        date: date,
-        timeIn: time,
-        timeOut: '00:00', // leave empty
-        reason: reason,
-        staff: "",
-        checkedIn: true,
-        hasPID: !noPID,
-        firstTime: false,
-        heard_about_al_through: ""
-      };
 
       // need to figure out how to send authorization token in http requests 
       //axios.post('/api/checkins/', item);
@@ -281,6 +268,12 @@ export default class CheckIn extends React.Component {
     });
   }
 
+  reasonChange = (event) => {
+    this.setState({
+      reason: event.target.value
+    });
+  }
+
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress);
     if (this.props.location.state && this.props.location.state.pid) {
@@ -321,13 +314,13 @@ export default class CheckIn extends React.Component {
           <label class="checkin-label">PID:</label>
           <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} onClick={this.clearArray}/>
           <div class="checkin-centered">
-            <input type="checkbox" id="noPID" class="noPID" onChange={this.handleChecked} />
+            <input type="checkbox" id="noPID" class="noPID" checked={this.state.isChecked} onChange={this.handleChecked} />
             <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
           </div>
           <label class="checkin-label">
             Reason:
           </label>
-          <input class="checkin-input" type="text" name="reason" id="reason" ref={this.reasonRef} />
+          <input class="checkin-input" type="text" name="reason" id="reason" ref={this.reasonRef} value={this.state.reason} onChange={this.reasonChange} />
           
           {this.state.firstTime ? 
           <div class="checkin-centered">
@@ -351,7 +344,8 @@ export default class CheckIn extends React.Component {
               alwaysRenderSuggestions={true}
               inputProps={inputProps} />
           </div>
-          <button type="button" class="check-in checkin-centered" onClick={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}>Submit</button>
+          <button type="button" class="check-in checkin-centered" onClick={() => { this.SubmitCheckIn(this.state.name, 
+            this.state.pid, this.state.reason, this.state.isChecked, this.state.firstTime, this.state.value) }}>Submit</button>
         </form>
       </div>
     );
