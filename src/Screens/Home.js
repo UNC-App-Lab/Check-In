@@ -29,7 +29,7 @@ const Home = () => {
     }
 
     const handleKeyPress = (e) => {
-      if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA")
+      if (e.target.nodeName === "INPUT" || e.target.nodeName === "TEXTAREA")
         return;
       if (e.target.isContentEditable) return;
 

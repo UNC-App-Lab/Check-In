@@ -61,7 +61,8 @@ export default class CheckIn extends React.Component {
       keypresses: Array(9).fill(null),
       keysPidBox: [],
       pid: "",
-      name: ""
+      name: "",
+      reason: ''
     };
     this.handleChecked = this.handleChecked.bind(this); // set this, because you need get methods from CheckBox 
     this.handleFirstTimeChecked = this.handleFirstTimeChecked.bind(this);
@@ -104,20 +105,6 @@ export default class CheckIn extends React.Component {
       var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
       var time = today.getHours() + ":" + today.getMinutes();
 
-      const item = {
-        name: name, // add name input field, make blank=false
-        PID: pid,
-        date: date,
-        timeIn: time,
-        timeOut: '00:00', // leave empty
-        reason: reason,
-        staff: "",
-        checkedIn: true,
-        hasPID: !noPID,
-        firstTime: false,
-        heard_about_al_through: ""
-      };
-
       // need to figure out how to send authorization token in http requests 
       //axios.post('/api/checkins/', item);
 
@@ -144,6 +131,7 @@ export default class CheckIn extends React.Component {
 
   handleChecked() {
     this.setState({ isChecked: !this.state.isChecked });
+    this.setState({ });
   }
 
   handleFirstTimeChecked() {
@@ -200,7 +188,7 @@ export default class CheckIn extends React.Component {
   }
 
   handleKeyPress = (e) => {
-    if (!(e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA")) {
+    if (!(e.target.nodeName === "INPUT" || e.target.nodeName === "TEXTAREA")) {
       const pidArray = this.state.keypresses.slice(1, 9);
       pidArray.push(String.fromCharCode(e.keyCode));
       if (pidArray.every(x => !isNaN(parseInt(x)))) {
@@ -216,9 +204,9 @@ export default class CheckIn extends React.Component {
           });
       }
     } else {
-      if (!(String.fromCharCode(e.keyCode) === '\b')) {
+      if ((!(String.fromCharCode(e.keyCode) === '\b') && (!(String.fromCharCode(e.keyCode) === '\x10')) && (!(String.fromCharCode(e.keyCode) === '\r'))) && (!(String.fromCharCode(e.keyCode) === '\t')) && (!(String.fromCharCode(e.keyCode) === '\x14'))) {
         this.state.keysPidBox.push(String.fromCharCode(e.keyCode))
-      } else {
+      } else if (String.fromCharCode(e.keyCode) === '\b'){
         this.state.keysPidBox.pop()
       }
 
@@ -232,9 +220,41 @@ export default class CheckIn extends React.Component {
           this.setState({
             keypresses: pidArray
           });
+        }  
+      } else if (this.state.keysPidBox.some(x => isNaN(parseInt(x)))){
+          const nameArray = this.state.keysPidBox;
+          if (String.fromCharCode(e.keyCode) === '\r' || String.fromCharCode(e.keyCode) === '\t') { 
+            const newName = nameArray.join("");
+            this.checkForHistoryName(newName);
         }
       }
     }
+  }
+
+  checkForHistoryName = (name) => {
+
+    axios({
+      method: "POST",
+      url: "/name-to-pid/",
+      headers: { 'X-CSRFToken': csrfToken },
+      data: {
+        name: name
+      }
+    }).then((response => {
+      if (response.data.pid) {
+        if (this.state.pid.trim() === "") {
+          this.setState({
+            pid: response.data.pid,
+            firstTime: false
+          });
+        }
+        this.reasonRef.current.focus();
+      } else {
+        this.setState({
+          firstTime: true
+        });
+      }
+    }));
   }
 
   pidChange = (event) => {
@@ -247,7 +267,13 @@ export default class CheckIn extends React.Component {
     this.setState({
       name: event.target.value
     });
-  }  
+  }
+
+  reasonChange = (event) => {
+    this.setState({
+      reason: event.target.value
+    });
+  }
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress);
@@ -269,6 +295,7 @@ export default class CheckIn extends React.Component {
       value,
       onChange: this.onChange
     };
+
     return (
       <div class="checkin">
         <Modal
@@ -283,22 +310,25 @@ export default class CheckIn extends React.Component {
         <h2>Check In</h2>
         <form class="checkin-form">
           <label class="checkin-label">Name:</label>
-          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} />
+          <input class="checkin-input" type="text" name="name" id="name" value={this.state.name} onChange={this.nameChange} ref={this.nameRef} onBlur={() => this.checkForHistoryName(this.state.name)}/>
           <p class="checkin-centered">(Scanner can be used to input PID)</p>
           <label class="checkin-label">PID:</label>
           <input class="checkin-input" type="text" name="pid" id="pid" disabled={this.state.isChecked} value={this.state.pid} onChange={this.pidChange} onClick={this.clearArray}/>
           <div class="checkin-centered">
-            <input type="checkbox" id="noPID" class="noPID" onChange={this.handleChecked} />
+            <input type="checkbox" id="noPID" class="noPID" checked={this.state.isChecked} onChange={this.handleChecked} />
             <label id="noPIDLabel" for="noPID"> Check if you are a non-UNC student or do not have a PID</label>
           </div>
           <label class="checkin-label">
             Reason:
           </label>
-          <input class="checkin-input" type="text" name="reason" id="reason" ref={this.reasonRef} />
+          <input class="checkin-input" type="text" name="reason" id="reason" ref={this.reasonRef} value={this.state.reason} onChange={this.reasonChange} />
+          
+          {this.state.firstTime ? 
           <div class="checkin-centered">
             <input type="checkbox" id="firstTime" class="firstTime" onChange={this.handleFirstTimeChecked} checked={this.state.firstTime} />
             <label id="firstTimeLabel" for="firstTime"> Check if you are visiting the App Lab for the first time</label>
-          </div>
+          </div> : ""}
+
           <div class="textbox checkin-centered" style={{ display: this.state.firstTime ? 'block' : 'none' }}>
             <label>
               How did you hear about us?
@@ -315,7 +345,8 @@ export default class CheckIn extends React.Component {
               alwaysRenderSuggestions={true}
               inputProps={inputProps} />
           </div>
-          <button type="button" class="check-in checkin-centered" onClick={() => { this.SubmitCheckIn(document.getElementById("name").value, document.getElementById("pid").value, document.getElementById("reason").value, document.getElementById("noPID").checked, document.getElementById("firstTime").checked, this.state.value) }}>Submit</button>
+          <button type="button" class="check-in checkin-centered" onClick={() => { this.SubmitCheckIn(this.state.name, 
+            this.state.pid, this.state.reason, this.state.isChecked, this.state.firstTime, this.state.value) }}>Submit</button>
         </form>
       </div>
     );
