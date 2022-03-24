@@ -221,7 +221,6 @@ export default class CheckIn extends React.Component {
       } else if (String.fromCharCode(e.keyCode) === '\b'){
         this.state.keysPidBox.pop()
       }
-      console.log(this.keysPidBox)
 
       if (this.state.keysPidBox.length === 9){
         const pidArray = this.state.keysPidBox.slice(0, 9);
@@ -236,7 +235,6 @@ export default class CheckIn extends React.Component {
         }  
       } else if (this.state.keysPidBox.some(x => isNaN(parseInt(x)))){
           const nameArray = this.state.keysPidBox;
-          console.log(nameArray);
           if (String.fromCharCode(e.keyCode) === '\r' || String.fromCharCode(e.keyCode) === '\t') { 
             const newName = nameArray.join("");
             this.checkForHistoryName(newName);
@@ -268,7 +266,6 @@ export default class CheckIn extends React.Component {
           firstTime: true
         });
       }
-      console.log(this.state.firstTime)
     }));
   }
 
@@ -304,14 +301,6 @@ export default class CheckIn extends React.Component {
       value,
       onChange: this.onChange
     };
-    let firstTimeBox;
-    if (this.state.firstTime === true) {
-      console.log('got')
-      firstTimeBox = <div class="checkin-centered">
-                        <input type="checkbox" id="firstTime" class="firstTime" onChange={this.handleFirstTimeChecked} checked={this.state.firstTime} />
-                        <label id="firstTimeLabel" for="firstTime"> Check if you are visiting the App Lab for the first time</label>
-                      </div>
-    }
 
     return (
       <div class="checkin">
@@ -340,7 +329,11 @@ export default class CheckIn extends React.Component {
           </label>
           <input class="checkin-input" type="text" name="reason" id="reason" ref={this.reasonRef} />
           
-          {firstTimeBox}
+          {this.state.firstTime ? 
+          <div class="checkin-centered">
+            <input type="checkbox" id="firstTime" class="firstTime" onChange={this.handleFirstTimeChecked} checked={this.state.firstTime} />
+            <label id="firstTimeLabel" for="firstTime"> Check if you are visiting the App Lab for the first time</label>
+          </div> : ""}
 
           <div class="textbox checkin-centered" style={{ display: this.state.firstTime ? 'block' : 'none' }}>
             <label>
