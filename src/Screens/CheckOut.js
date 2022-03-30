@@ -24,11 +24,12 @@ export default class CheckOut extends React.Component {
     }
 
     submit = (obj) => {
-        let notify = false;
+        let notify = true;
         const currentDate = getDateTime().date;
-        if (currentDate != obj.date) {
-            obj.date = currentDate;
-            notify = true;
+        console.log(currentDate);
+        console.log(obj.date);
+        if (currentDate === obj.date) {
+            notify = false;
         }
         console.log(notify)
         confirmAlert({
@@ -40,7 +41,7 @@ export default class CheckOut extends React.Component {
                     Yes
                   </button>
                   <button class="dialog" onClick={onClose}>No</button>
-                  {this.notify ? <p>YES!</p> : ""}
+                  {notify ? <button class="dialog">Notify</button> : ""}
                 </div>
               );
             }
