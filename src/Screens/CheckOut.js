@@ -3,7 +3,8 @@ import axios from "axios";
 import '../App.css';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import {checkUserOut} from '../Utilities/checkoutUtils'
+import {checkUserOut} from '../Utilities/checkoutUtils';
+import { getDateTime } from "../Utilities/timeUtils";
 
 
 export default class CheckOut extends React.Component {
@@ -23,15 +24,23 @@ export default class CheckOut extends React.Component {
     }
 
     submit = (obj) => {
+        let notify = false;
+        const currentDate = getDateTime().date;
+        if (currentDate != obj.date) {
+            obj.date = currentDate;
+            notify = true;
+        }
+        console.log(notify)
         confirmAlert({
             customUI: ({ onClose }) => {
               return (
                 <div className='custom-ui' class="dialogdiv">
-                  <h1>Are you sure you want to check out?</h1>
+                    <h1>Are you sure you want to check out?</h1>
                   <button class="dialog" onClick={() => {this.checkOut(obj); onClose();}}>
                     Yes
                   </button>
                   <button class="dialog" onClick={onClose}>No</button>
+                  {this.notify ? <p>YES!</p> : ""}
                 </div>
               );
             }
