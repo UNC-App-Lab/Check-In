@@ -26,22 +26,17 @@ export default class CheckOut extends React.Component {
     submit = (obj) => {
         let notify = true;
         const currentDate = getDateTime().date;
-        console.log(currentDate);
-        console.log(obj.date);
         if (currentDate === obj.date) {
             notify = false;
         }
-        console.log(notify)
         confirmAlert({
             customUI: ({ onClose }) => {
               return (
                 <div className='custom-ui' class="dialogdiv">
                     <h1>Are you sure you want to check out?</h1>
-                  <button class="dialog" onClick={() => {this.checkOut(obj); onClose();}}>
-                    Yes
-                  </button>
-                  <button class="dialog" onClick={onClose}>No</button>
-                  {notify ? <button class="dialog">Notify</button> : ""}
+                  {!notify ? <button class="dialog" onClick={() => {this.checkOut(obj); onClose();}}>Yes</button> : ""}
+                  {!notify ? <button class="dialog" onClick={onClose}>No</button> : ""}
+                  {notify ? <button class="dialog" onClick={onClose}>Something went wrong. Please notify a manager!</button> : ""}
                 </div>
               );
             }
