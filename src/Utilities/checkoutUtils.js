@@ -1,10 +1,10 @@
 import axios from "axios";
+import { getDateTime } from "./timeUtils";
 
 export const checkUserOut = (obj) => {
         
     // if clicked => mark checkedIn as false and set timeOut to current time
-    var today = new Date();
-    var time = today.getHours() + ":" + today.getMinutes();
+    const time =  getDateTime().time
 
     const item = {
         name: obj.name,
